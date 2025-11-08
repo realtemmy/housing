@@ -5,4 +5,50 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  output = "../generated/schema"
+}
+
+// User, houses(types- apartment, hostel, room services etc), reviews, location
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  username  String?
+  firstName String
+  lastName  String
+  role      UserEnum @default(USER)
+}
+
+
+// Space, no of rooms?
+model building {
+  id             String       @id @default(uuid())
+  name           String
+  location       Location     @relation(fields: [locationId], references: [id])
+  locationId     String
+  type           BuildingEnum @default(APARTMENT)
+}
+
+
+model Location {
+  id         String     @id @default(uuid())
+  street     String
+  LGA        String
+  state      String
+  country    String     @default("Nigeria") //Create an enum for countries?
+  postalCode String?
+  latitude   Float?
+  longitude  Float?
+  building   building[]
+}
+
+enum UserEnum {
+  USER
+  OWNER
+}
+
+enum BuildingEnum {
+  HOSTEL
+  APARTMENT
 }
