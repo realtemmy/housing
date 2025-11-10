@@ -1,25 +1,40 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../client/prisma";
-import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { OAuth2Client, TokenPayload } from "google-auth-library";
 import { userValidator } from "../validators/userValidator";
 import AppError from "../utils/appError";
 import { User } from "../generated/schema";
 
+const client = new OAuth2Client();
+
+const verifyGoogleToken = async (token: string) => {
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.GOOGLE_CLIENT_ID!,
+  });
+
+  const payload = ticket.getPayload();
+  if (!payload) {
+    throw new AppError("Invalid Google token", 401);
+  }
+
+  const { email, given_name, picture, sub } = payload;
+  return { email, name: given_name, photo: picture, sub };
+};
+
 export const signUp = async (req: Request, res: Response) => {
   const validatedUser = userValidator.parse(req.body);
-  const { email, password, role, firstName, lastName, username } =
-    validatedUser;
+  const { email, password, role, name } = validatedUser;
   const hashedPassword = bcrypt.hashSync(password, 10);
   const createdUser = await prisma.user.create({
     data: {
       email,
-      firstName,
-      lastName,
+      passwordHash: hashedPassword,
       role,
-      password: hashedPassword,
-      username,
+      name,
+      provider: "local",
     },
   });
   res.status(201).json({
@@ -38,7 +53,15 @@ export const login = async (
 
   if (!user) return next(new AppError("No user with email found.", 404));
 
-  const matches = await bcrypt.compare(password, user.password);
+  if (!user.passwordHash)
+    return next(
+      new AppError(
+        "This account doesn't have a password. Please sign in with OAuth",
+        400
+      )
+    );
+
+  const matches = await bcrypt.compare(password, user.passwordHash);
   if (!matches) return next(new AppError("Incorrect password", 401));
 
   const accessToken = jwt.sign(
@@ -129,9 +152,75 @@ export const restrictTo =
 
     if (!roles.includes(user.role)) {
       return next(
-        new AppError("Forbidden: you do not have permission to perform this action", 403)
+        new AppError(
+          "Forbidden: you do not have permission to perform this action",
+          403
+        )
       );
     }
 
     next();
   };
+
+export const authGoogle = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = req.body.token as string;
+  const { email, photo, name, sub } = await verifyGoogleToken(token);
+  const { role } = req.body;
+
+  if (!email || !name)
+    return next(
+      new AppError("Authentication with Google failed. No email provided.", 400)
+    );
+
+  let user = await prisma.user.findFirst({
+    where: {
+      OR: [{ provider: "google", providerId: sub }, { email }],
+    },
+  });
+
+  if (!user) {
+    user = await prisma.user.create({
+      data: {
+        name,
+        photo: photo ?? null,
+        email,
+        role,
+        provider: "google",
+        providerId: sub,
+      },
+    });
+  } else {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { provider: "google", providerId: sub, name, photo: photo ?? null },
+    });
+  }
+
+  // Create tokens and response
+  const accessToken = jwt.sign(
+    { id: user.id },
+    process.env.ACCESS_TOKEN_SECRET!,
+    { expiresIn: "10m" }
+  );
+
+  const refreshToken = jwt.sign(
+    { id: user.id },
+    process.env.REFRESH_TOKEN_SECRET!,
+    { expiresIn: "1d" }
+  );
+
+  res.cookie("jwt", refreshToken, {
+    httpOnly: true,
+    sameSite: "none",
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: { user, accessToken },
+  });
+};

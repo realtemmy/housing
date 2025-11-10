@@ -52,31 +52,28 @@ enum MaintenanceStatus {
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
-  name         String?
+  name         String
   phone        String?  @unique
   bio          String?
   photo        String?
   role         UserRole @default(USER)
-  passwordHash String
+  passwordHash String?
+  provider     String   @default("local")
+  providerId   String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  // Relations
-  properties          Property[]           @relation("UserProperties") // for landlords/managers
-  unitsManaged        Unit[]               @relation("ManagerUnits")
-  leases              Lease[]
-  payments            Payment[]
-  maintenanceReq      MaintenanceRequest[] @relation("Requester")
-  assignedRequests    MaintenanceRequest[] @relation("Assignee")
-  maintenanceRequests MaintenanceRequest[] @relation("UserMaintenance")
-  notifications       Notification[]
-  documents           Document[]
-  property            Property?            @relation(fields: [propertyId], references: [id])
-  propertyId          String?
-  Tenant              Tenant?
-  MaintenanceNote     MaintenanceNote[]
-  Attachment          Attachment[]
-  Unit                Unit[]
+  // Relationships
+  properties       Property[]           @relation("UserProperties") // Only admins will have these
+  leases           Lease[]
+  payments         Payment[]
+  maintenanceReq   MaintenanceRequest[] @relation("Requester") // Submitted by this tenant
+  assignedRequests MaintenanceRequest[] @relation("Assignee") // Assigned to this admin
+  notifications    Notification[]
+  tenant           Tenant?
+  maintenanceNote  MaintenanceNote[]
+  attachment       Attachment[]
+  unit             Unit[]
 }
 
 model Property {
@@ -85,15 +82,14 @@ model Property {
   description String?
   type        PropertyType
   address     Address?
-  owner       User         @relation(fields: [ownerId], references: [id], name: "UserProperties")
+  owner       User         @relation("UserProperties", fields: [ownerId], references: [id])
   ownerId     String
   buildings   Building[]
   units       Unit[]
-  amenities   Amenity[]    @relation("PropertyAmenities")
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   isActive    Boolean      @default(true)
-  User        User[]
+  verified    Boolean      @default(false)
 }
 
 model Building {
@@ -116,6 +112,8 @@ model Address {
   country    String
   property   Property? @relation(fields: [propertyId], references: [id])
   propertyId String?   @unique
+  longitude  Float?
+  latitude   Float?
 }
 
 model Unit {
@@ -141,7 +139,6 @@ model Unit {
   updatedAt   DateTime             @updatedAt
   user        User?                @relation(fields: [userId], references: [id])
   userId      String?
-  userUnits   User[]               @relation("ManagerUnits")
 
   @@unique([propertyId, unitNumber])
 }
@@ -198,7 +195,7 @@ model Payment {
   payer          User          @relation(fields: [payerId], references: [id])
   payerId        String
   amount         Float
-  currency       String        @default("USD")
+  currency       String        @default("NGN")
   method         String?
   status         PaymentStatus @default(PENDING)
   transactionRef String?       @unique
@@ -222,23 +219,28 @@ model Invoice {
 }
 
 model MaintenanceRequest {
-  id          String            @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String?
-  unit        Unit              @relation(fields: [unitId], references: [id])
-  unitId      String
-  requester   User              @relation("Requester", fields: [requesterId], references: [id])
+
+  unit   Unit   @relation(fields: [unitId], references: [id])
+  unitId String
+
+  // Tenant who submitted the request
+  requester   User   @relation("Requester", fields: [requesterId], references: [id])
   requesterId String
-  assignee    User?             @relation("Assignee", fields: [assigneeId], references: [id])
-  assigneeId  String?
+
+  // Admin (landlord) responsible for handling request
+  assignee   User   @relation("Assignee", fields: [assigneeId], references: [id])
+  assigneeId String
+
   status      MaintenanceStatus @default(OPEN)
   priority    Int? // 1-5
   requestedAt DateTime          @default(now())
   resolvedAt  DateTime?
+
   attachments Attachment[]
   notes       MaintenanceNote[]
-  relatedUser User?             @relation("UserMaintenance", fields: [userId], references: [id])
-  userId      String?
 
   @@index([requesterId])
   @@index([assigneeId])
@@ -274,23 +276,6 @@ model Photo {
   unit      Unit?    @relation(fields: [unitId], references: [id])
   unitId    String?
   createdAt DateTime @default(now())
-}
-
-model Amenity {
-  id          String     @id @default(uuid())
-  name        String
-  description String?
-  properties  Property[] @relation("PropertyAmenities")
-}
-
-model Document {
-  id           String   @id @default(uuid())
-  title        String
-  url          String
-  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
-  uploadedById String
-  metadata     Json?
-  createdAt    DateTime @default(now())
 }
 
 model Notification {

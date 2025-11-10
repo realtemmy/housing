@@ -123,34 +123,183 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password: 'password',
-  username: 'username',
-  firstName: 'firstName',
-  lastName: 'lastName',
-  role: 'role'
+  name: 'name',
+  phone: 'phone',
+  bio: 'bio',
+  photo: 'photo',
+  role: 'role',
+  passwordHash: 'passwordHash',
+  provider: 'provider',
+  providerId: 'providerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PropertyScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  type: 'type',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isActive: 'isActive',
+  verified: 'verified'
 };
 
 exports.Prisma.BuildingScalarFieldEnum = {
   id: 'id',
+  propertyId: 'propertyId',
   name: 'name',
-  locationId: 'locationId',
-  type: 'type'
+  floors: 'floors',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.LocationScalarFieldEnum = {
+exports.Prisma.AddressScalarFieldEnum = {
   id: 'id',
   street: 'street',
-  LGA: 'LGA',
+  city: 'city',
   state: 'state',
-  country: 'country',
   postalCode: 'postalCode',
-  latitude: 'latitude',
-  longitude: 'longitude'
+  country: 'country',
+  propertyId: 'propertyId',
+  longitude: 'longitude',
+  latitude: 'latitude'
+};
+
+exports.Prisma.UnitScalarFieldEnum = {
+  id: 'id',
+  unitNumber: 'unitNumber',
+  floor: 'floor',
+  bedrooms: 'bedrooms',
+  bathrooms: 'bathrooms',
+  sqft: 'sqft',
+  status: 'status',
+  rentAmount: 'rentAmount',
+  depositAmount: 'depositAmount',
+  propertyId: 'propertyId',
+  buildingId: 'buildingId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.TenantScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movedInAt: 'movedInAt',
+  movedOutAt: 'movedOutAt',
+  emergencyContact: 'emergencyContact',
+  metadata: 'metadata'
+};
+
+exports.Prisma.LeaseScalarFieldEnum = {
+  id: 'id',
+  unitId: 'unitId',
+  tenantId: 'tenantId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  rentAmount: 'rentAmount',
+  securityDeposit: 'securityDeposit',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LeaseRenewalScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  requestedAt: 'requestedAt',
+  newStart: 'newStart',
+  newEnd: 'newEnd',
+  newRent: 'newRent',
+  approved: 'approved'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  invoiceId: 'invoiceId',
+  payerId: 'payerId',
+  amount: 'amount',
+  currency: 'currency',
+  method: 'method',
+  status: 'status',
+  transactionRef: 'transactionRef',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InvoiceScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  title: 'title',
+  description: 'description',
+  amount: 'amount',
+  dueDate: 'dueDate',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MaintenanceRequestScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  unitId: 'unitId',
+  requesterId: 'requesterId',
+  assigneeId: 'assigneeId',
+  status: 'status',
+  priority: 'priority',
+  requestedAt: 'requestedAt',
+  resolvedAt: 'resolvedAt'
+};
+
+exports.Prisma.MaintenanceNoteScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  authorId: 'authorId',
+  body: 'body',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AttachmentScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  filename: 'filename',
+  mimeType: 'mimeType',
+  size: 'size',
+  uploadedById: 'uploadedById',
+  maintenanceId: 'maintenanceId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PhotoScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  caption: 'caption',
+  unitId: 'unitId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  body: 'body',
+  read: 'read',
+  data: 'data',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -162,20 +311,67 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.UserEnum = exports.$Enums.UserEnum = {
-  USER: 'USER',
-  OWNER: 'OWNER'
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
 };
 
-exports.BuildingEnum = exports.$Enums.BuildingEnum = {
-  HOSTEL: 'HOSTEL',
-  APARTMENT: 'APARTMENT'
+exports.PropertyType = exports.$Enums.PropertyType = {
+  APARTMENT: 'APARTMENT',
+  HOUSE: 'HOUSE',
+  HOSTEL: 'HOSTEL'
+};
+
+exports.UnitStatus = exports.$Enums.UnitStatus = {
+  AVAILABLE: 'AVAILABLE',
+  OCCUPIED: 'OCCUPIED',
+  MAINTENANCE: 'MAINTENANCE',
+  RESERVED: 'RESERVED'
+};
+
+exports.LeaseStatus = exports.$Enums.LeaseStatus = {
+  ACTIVE: 'ACTIVE',
+  PENDING: 'PENDING',
+  TERMINATED: 'TERMINATED',
+  EXPIRED: 'EXPIRED'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+};
+
+exports.MaintenanceStatus = exports.$Enums.MaintenanceStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CANCELLED: 'CANCELLED'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
-  building: 'building',
-  Location: 'Location'
+  Property: 'Property',
+  Building: 'Building',
+  Address: 'Address',
+  Unit: 'Unit',
+  Tenant: 'Tenant',
+  Lease: 'Lease',
+  LeaseRenewal: 'LeaseRenewal',
+  Payment: 'Payment',
+  Invoice: 'Invoice',
+  MaintenanceRequest: 'MaintenanceRequest',
+  MaintenanceNote: 'MaintenanceNote',
+  Attachment: 'Attachment',
+  Photo: 'Photo',
+  Notification: 'Notification'
 };
 
 /**

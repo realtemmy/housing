@@ -95,34 +95,183 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password: 'password',
-  username: 'username',
-  firstName: 'firstName',
-  lastName: 'lastName',
-  role: 'role'
+  name: 'name',
+  phone: 'phone',
+  bio: 'bio',
+  photo: 'photo',
+  role: 'role',
+  passwordHash: 'passwordHash',
+  provider: 'provider',
+  providerId: 'providerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PropertyScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  type: 'type',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isActive: 'isActive',
+  verified: 'verified'
 };
 
 exports.Prisma.BuildingScalarFieldEnum = {
   id: 'id',
+  propertyId: 'propertyId',
   name: 'name',
-  locationId: 'locationId',
-  type: 'type'
+  floors: 'floors',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.LocationScalarFieldEnum = {
+exports.Prisma.AddressScalarFieldEnum = {
   id: 'id',
   street: 'street',
-  LGA: 'LGA',
+  city: 'city',
   state: 'state',
-  country: 'country',
   postalCode: 'postalCode',
-  latitude: 'latitude',
-  longitude: 'longitude'
+  country: 'country',
+  propertyId: 'propertyId',
+  longitude: 'longitude',
+  latitude: 'latitude'
+};
+
+exports.Prisma.UnitScalarFieldEnum = {
+  id: 'id',
+  unitNumber: 'unitNumber',
+  floor: 'floor',
+  bedrooms: 'bedrooms',
+  bathrooms: 'bathrooms',
+  sqft: 'sqft',
+  status: 'status',
+  rentAmount: 'rentAmount',
+  depositAmount: 'depositAmount',
+  propertyId: 'propertyId',
+  buildingId: 'buildingId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.TenantScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movedInAt: 'movedInAt',
+  movedOutAt: 'movedOutAt',
+  emergencyContact: 'emergencyContact',
+  metadata: 'metadata'
+};
+
+exports.Prisma.LeaseScalarFieldEnum = {
+  id: 'id',
+  unitId: 'unitId',
+  tenantId: 'tenantId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  rentAmount: 'rentAmount',
+  securityDeposit: 'securityDeposit',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LeaseRenewalScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  requestedAt: 'requestedAt',
+  newStart: 'newStart',
+  newEnd: 'newEnd',
+  newRent: 'newRent',
+  approved: 'approved'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  invoiceId: 'invoiceId',
+  payerId: 'payerId',
+  amount: 'amount',
+  currency: 'currency',
+  method: 'method',
+  status: 'status',
+  transactionRef: 'transactionRef',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InvoiceScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  title: 'title',
+  description: 'description',
+  amount: 'amount',
+  dueDate: 'dueDate',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MaintenanceRequestScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  unitId: 'unitId',
+  requesterId: 'requesterId',
+  assigneeId: 'assigneeId',
+  status: 'status',
+  priority: 'priority',
+  requestedAt: 'requestedAt',
+  resolvedAt: 'resolvedAt'
+};
+
+exports.Prisma.MaintenanceNoteScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  authorId: 'authorId',
+  body: 'body',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AttachmentScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  filename: 'filename',
+  mimeType: 'mimeType',
+  size: 'size',
+  uploadedById: 'uploadedById',
+  maintenanceId: 'maintenanceId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PhotoScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  caption: 'caption',
+  unitId: 'unitId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  body: 'body',
+  read: 'read',
+  data: 'data',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -134,20 +283,67 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.UserEnum = exports.$Enums.UserEnum = {
-  USER: 'USER',
-  OWNER: 'OWNER'
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
 };
 
-exports.BuildingEnum = exports.$Enums.BuildingEnum = {
-  HOSTEL: 'HOSTEL',
-  APARTMENT: 'APARTMENT'
+exports.PropertyType = exports.$Enums.PropertyType = {
+  APARTMENT: 'APARTMENT',
+  HOUSE: 'HOUSE',
+  HOSTEL: 'HOSTEL'
+};
+
+exports.UnitStatus = exports.$Enums.UnitStatus = {
+  AVAILABLE: 'AVAILABLE',
+  OCCUPIED: 'OCCUPIED',
+  MAINTENANCE: 'MAINTENANCE',
+  RESERVED: 'RESERVED'
+};
+
+exports.LeaseStatus = exports.$Enums.LeaseStatus = {
+  ACTIVE: 'ACTIVE',
+  PENDING: 'PENDING',
+  TERMINATED: 'TERMINATED',
+  EXPIRED: 'EXPIRED'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+};
+
+exports.MaintenanceStatus = exports.$Enums.MaintenanceStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CANCELLED: 'CANCELLED'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
-  building: 'building',
-  Location: 'Location'
+  Property: 'Property',
+  Building: 'Building',
+  Address: 'Address',
+  Unit: 'Unit',
+  Tenant: 'Tenant',
+  Lease: 'Lease',
+  LeaseRenewal: 'LeaseRenewal',
+  Payment: 'Payment',
+  Invoice: 'Invoice',
+  MaintenanceRequest: 'MaintenanceRequest',
+  MaintenanceNote: 'MaintenanceNote',
+  Attachment: 'Attachment',
+  Photo: 'Photo',
+  Notification: 'Notification'
 };
 /**
  * Create the Client
@@ -178,7 +374,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../prisma",
@@ -188,6 +384,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -196,13 +393,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/schema\"\n}\n\n// User, houses(types- apartment, hostel, room services etc), reviews, location\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  username  String?\n  firstName String\n  lastName  String\n  role      UserEnum @default(USER)\n}\n\n// Space, no of rooms?\nmodel building {\n  id         String       @id @default(uuid())\n  name       String\n  location   Location     @relation(fields: [locationId], references: [id])\n  locationId String\n  type       BuildingEnum @default(APARTMENT)\n}\n\nmodel Location {\n  id         String     @id @default(uuid())\n  street     String\n  LGA        String\n  state      String\n  country    String     @default(\"Nigeria\") //Create an enum for countries?\n  postalCode String?\n  latitude   Float?\n  longitude  Float?\n  building   building[]\n}\n\nenum UserEnum {\n  USER\n  OWNER\n}\n\nenum BuildingEnum {\n  HOSTEL\n  APARTMENT\n}\n",
-  "inlineSchemaHash": "4b18aeeaf0ad03999fe352abc86bb9805b69cda5525a0fbd618cc0a258362a76",
+  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/schema\"\n}\n\n// Enums\nenum UserRole {\n  ADMIN\n  USER\n}\n\nenum PropertyType {\n  APARTMENT\n  HOUSE\n  HOSTEL\n}\n\nenum UnitStatus {\n  AVAILABLE\n  OCCUPIED\n  MAINTENANCE\n  RESERVED\n}\n\nenum LeaseStatus {\n  ACTIVE\n  PENDING\n  TERMINATED\n  EXPIRED\n}\n\nenum PaymentStatus {\n  PENDING\n  COMPLETED\n  FAILED\n  REFUNDED\n}\n\nenum MaintenanceStatus {\n  OPEN\n  IN_PROGRESS\n  RESOLVED\n  CANCELLED\n}\n\n// Models\nmodel User {\n  id           String   @id @default(uuid())\n  email        String   @unique\n  name         String\n  phone        String?  @unique\n  bio          String?\n  photo        String?\n  role         UserRole @default(USER)\n  passwordHash String?\n  provider     String?\n  providerId   String?\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n\n  // Relationships\n  properties       Property[]           @relation(\"UserProperties\") // Only admins will have these\n  leases           Lease[]\n  payments         Payment[]\n  maintenanceReq   MaintenanceRequest[] @relation(\"Requester\") // Submitted by this tenant\n  assignedRequests MaintenanceRequest[] @relation(\"Assignee\") // Assigned to this admin\n  notifications    Notification[]\n  tenant           Tenant?\n  maintenanceNote  MaintenanceNote[]\n  attachment       Attachment[]\n  unit             Unit[]\n}\n\nmodel Property {\n  id          String       @id @default(uuid())\n  title       String\n  description String?\n  type        PropertyType\n  address     Address?\n  owner       User         @relation(\"UserProperties\", fields: [ownerId], references: [id])\n  ownerId     String\n  buildings   Building[]\n  units       Unit[]\n  createdAt   DateTime     @default(now())\n  updatedAt   DateTime     @updatedAt\n  isActive    Boolean      @default(true)\n  verified    Boolean      @default(false)\n}\n\nmodel Building {\n  id         String   @id @default(uuid())\n  property   Property @relation(fields: [propertyId], references: [id])\n  propertyId String\n  name       String?\n  floors     Int?\n  units      Unit[]\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n}\n\nmodel Address {\n  id         String    @id @default(uuid())\n  street     String\n  city       String\n  state      String\n  postalCode String\n  country    String\n  property   Property? @relation(fields: [propertyId], references: [id])\n  propertyId String?   @unique\n  longitude  Float?\n  latitude   Float?\n}\n\nmodel Unit {\n  id            String     @id @default(uuid())\n  unitNumber    String\n  floor         Int?\n  bedrooms      Int?\n  bathrooms     Float?\n  sqft          Int?\n  status        UnitStatus @default(AVAILABLE)\n  rentAmount    Float\n  depositAmount Float?\n\n  // relations\n  property    Property             @relation(fields: [propertyId], references: [id])\n  propertyId  String\n  building    Building?            @relation(fields: [buildingId], references: [id])\n  buildingId  String?\n  leases      Lease[]\n  maintenance MaintenanceRequest[]\n  photos      Photo[]\n  createdAt   DateTime             @default(now())\n  updatedAt   DateTime             @updatedAt\n  user        User?                @relation(fields: [userId], references: [id])\n  userId      String?\n\n  @@unique([propertyId, unitNumber])\n}\n\nmodel Tenant {\n  // Optional: separate Tenant model if you want tenant-specific fields that differ from User\n  id               String    @id @default(uuid())\n  user             User      @relation(fields: [userId], references: [id])\n  userId           String    @unique\n  movedInAt        DateTime?\n  movedOutAt       DateTime?\n  emergencyContact String?\n  metadata         Json?\n}\n\nmodel Lease {\n  id              String         @id @default(uuid())\n  unit            Unit           @relation(fields: [unitId], references: [id])\n  unitId          String\n  tenant          User           @relation(fields: [tenantId], references: [id])\n  tenantId        String\n  startDate       DateTime\n  endDate         DateTime\n  rentAmount      Float\n  securityDeposit Float?\n  status          LeaseStatus    @default(PENDING)\n  createdAt       DateTime       @default(now())\n  updatedAt       DateTime       @updatedAt\n  payments        Payment[]\n  invoices        Invoice[]\n  renewals        LeaseRenewal[]\n\n  @@index([tenantId])\n  @@index([unitId])\n}\n\nmodel LeaseRenewal {\n  id          String   @id @default(uuid())\n  lease       Lease    @relation(fields: [leaseId], references: [id])\n  leaseId     String\n  requestedAt DateTime @default(now())\n  newStart    DateTime\n  newEnd      DateTime\n  newRent     Float?\n  approved    Boolean? @default(false)\n}\n\nmodel Payment {\n  id             String        @id @default(uuid())\n  lease          Lease?        @relation(fields: [leaseId], references: [id])\n  leaseId        String?\n  invoice        Invoice?      @relation(fields: [invoiceId], references: [id])\n  invoiceId      String?\n  payer          User          @relation(fields: [payerId], references: [id])\n  payerId        String\n  amount         Float\n  currency       String        @default(\"NGN\")\n  method         String?\n  status         PaymentStatus @default(PENDING)\n  transactionRef String?       @unique\n  paidAt         DateTime?\n  createdAt      DateTime      @default(now())\n\n  @@index([payerId])\n}\n\nmodel Invoice {\n  id          String        @id @default(uuid())\n  lease       Lease?        @relation(fields: [leaseId], references: [id])\n  leaseId     String?\n  title       String\n  description String?\n  amount      Float\n  dueDate     DateTime?\n  status      PaymentStatus @default(PENDING)\n  payments    Payment[]\n  createdAt   DateTime      @default(now())\n}\n\nmodel MaintenanceRequest {\n  id          String  @id @default(uuid())\n  title       String\n  description String?\n\n  unit   Unit   @relation(fields: [unitId], references: [id])\n  unitId String\n\n  // Tenant who submitted the request\n  requester   User   @relation(\"Requester\", fields: [requesterId], references: [id])\n  requesterId String\n\n  // Admin (landlord) responsible for handling request\n  assignee   User   @relation(\"Assignee\", fields: [assigneeId], references: [id])\n  assigneeId String\n\n  status      MaintenanceStatus @default(OPEN)\n  priority    Int? // 1-5\n  requestedAt DateTime          @default(now())\n  resolvedAt  DateTime?\n\n  attachments Attachment[]\n  notes       MaintenanceNote[]\n\n  @@index([requesterId])\n  @@index([assigneeId])\n}\n\nmodel MaintenanceNote {\n  id        String             @id @default(uuid())\n  request   MaintenanceRequest @relation(fields: [requestId], references: [id])\n  requestId String\n  author    User               @relation(fields: [authorId], references: [id])\n  authorId  String\n  body      String\n  createdAt DateTime           @default(now())\n}\n\nmodel Attachment {\n  id            String              @id @default(uuid())\n  url           String\n  filename      String?\n  mimeType      String?\n  size          Int?\n  uploadedBy    User                @relation(fields: [uploadedById], references: [id])\n  uploadedById  String\n  maintenance   MaintenanceRequest? @relation(fields: [maintenanceId], references: [id])\n  maintenanceId String?\n  createdAt     DateTime            @default(now())\n}\n\nmodel Photo {\n  id        String   @id @default(uuid())\n  url       String\n  caption   String?\n  unit      Unit?    @relation(fields: [unitId], references: [id])\n  unitId    String?\n  createdAt DateTime @default(now())\n}\n\nmodel Notification {\n  id        String   @id @default(uuid())\n  user      User     @relation(fields: [userId], references: [id])\n  userId    String\n  title     String\n  body      String?\n  read      Boolean  @default(false)\n  data      Json?\n  createdAt DateTime @default(now())\n}\n",
+  "inlineSchemaHash": "b357719634cbd44652d0e7bc9fc3e2e7974f1c9285f3b4a0ef5c83c5186e4462",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserEnum\"}],\"dbName\":null},\"building\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"location\",\"kind\":\"object\",\"type\":\"Location\",\"relationName\":\"LocationTobuilding\"},{\"name\":\"locationId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"BuildingEnum\"}],\"dbName\":null},\"Location\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"street\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"LGA\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"country\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postalCode\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"building\",\"kind\":\"object\",\"type\":\"building\",\"relationName\":\"LocationTobuilding\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bio\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"photo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"properties\",\"kind\":\"object\",\"type\":\"Property\",\"relationName\":\"UserProperties\"},{\"name\":\"leases\",\"kind\":\"object\",\"type\":\"Lease\",\"relationName\":\"LeaseToUser\"},{\"name\":\"payments\",\"kind\":\"object\",\"type\":\"Payment\",\"relationName\":\"PaymentToUser\"},{\"name\":\"maintenanceReq\",\"kind\":\"object\",\"type\":\"MaintenanceRequest\",\"relationName\":\"Requester\"},{\"name\":\"assignedRequests\",\"kind\":\"object\",\"type\":\"MaintenanceRequest\",\"relationName\":\"Assignee\"},{\"name\":\"notifications\",\"kind\":\"object\",\"type\":\"Notification\",\"relationName\":\"NotificationToUser\"},{\"name\":\"tenant\",\"kind\":\"object\",\"type\":\"Tenant\",\"relationName\":\"TenantToUser\"},{\"name\":\"maintenanceNote\",\"kind\":\"object\",\"type\":\"MaintenanceNote\",\"relationName\":\"MaintenanceNoteToUser\"},{\"name\":\"attachment\",\"kind\":\"object\",\"type\":\"Attachment\",\"relationName\":\"AttachmentToUser\"},{\"name\":\"unit\",\"kind\":\"object\",\"type\":\"Unit\",\"relationName\":\"UnitToUser\"}],\"dbName\":null},\"Property\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"PropertyType\"},{\"name\":\"address\",\"kind\":\"object\",\"type\":\"Address\",\"relationName\":\"AddressToProperty\"},{\"name\":\"owner\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserProperties\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"buildings\",\"kind\":\"object\",\"type\":\"Building\",\"relationName\":\"BuildingToProperty\"},{\"name\":\"units\",\"kind\":\"object\",\"type\":\"Unit\",\"relationName\":\"PropertyToUnit\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Building\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"property\",\"kind\":\"object\",\"type\":\"Property\",\"relationName\":\"BuildingToProperty\"},{\"name\":\"propertyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"floors\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"units\",\"kind\":\"object\",\"type\":\"Unit\",\"relationName\":\"BuildingToUnit\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Address\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"street\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"city\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postalCode\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"country\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"property\",\"kind\":\"object\",\"type\":\"Property\",\"relationName\":\"AddressToProperty\"},{\"name\":\"propertyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\"}],\"dbName\":null},\"Unit\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"unitNumber\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"floor\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bedrooms\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bathrooms\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"sqft\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"UnitStatus\"},{\"name\":\"rentAmount\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"depositAmount\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"property\",\"kind\":\"object\",\"type\":\"Property\",\"relationName\":\"PropertyToUnit\"},{\"name\":\"propertyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"building\",\"kind\":\"object\",\"type\":\"Building\",\"relationName\":\"BuildingToUnit\"},{\"name\":\"buildingId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"leases\",\"kind\":\"object\",\"type\":\"Lease\",\"relationName\":\"LeaseToUnit\"},{\"name\":\"maintenance\",\"kind\":\"object\",\"type\":\"MaintenanceRequest\",\"relationName\":\"MaintenanceRequestToUnit\"},{\"name\":\"photos\",\"kind\":\"object\",\"type\":\"Photo\",\"relationName\":\"PhotoToUnit\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UnitToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Tenant\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TenantToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"movedInAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"movedOutAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"emergencyContact\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"}],\"dbName\":null},\"Lease\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"unit\",\"kind\":\"object\",\"type\":\"Unit\",\"relationName\":\"LeaseToUnit\"},{\"name\":\"unitId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tenant\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LeaseToUser\"},{\"name\":\"tenantId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"rentAmount\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"securityDeposit\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"LeaseStatus\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"payments\",\"kind\":\"object\",\"type\":\"Payment\",\"relationName\":\"LeaseToPayment\"},{\"name\":\"invoices\",\"kind\":\"object\",\"type\":\"Invoice\",\"relationName\":\"InvoiceToLease\"},{\"name\":\"renewals\",\"kind\":\"object\",\"type\":\"LeaseRenewal\",\"relationName\":\"LeaseToLeaseRenewal\"}],\"dbName\":null},\"LeaseRenewal\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lease\",\"kind\":\"object\",\"type\":\"Lease\",\"relationName\":\"LeaseToLeaseRenewal\"},{\"name\":\"leaseId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requestedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"newStart\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"newEnd\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"newRent\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"approved\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Payment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lease\",\"kind\":\"object\",\"type\":\"Lease\",\"relationName\":\"LeaseToPayment\"},{\"name\":\"leaseId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"invoice\",\"kind\":\"object\",\"type\":\"Invoice\",\"relationName\":\"InvoiceToPayment\"},{\"name\":\"invoiceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"payer\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PaymentToUser\"},{\"name\":\"payerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"currency\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"method\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"PaymentStatus\"},{\"name\":\"transactionRef\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"paidAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Invoice\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lease\",\"kind\":\"object\",\"type\":\"Lease\",\"relationName\":\"InvoiceToLease\"},{\"name\":\"leaseId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"dueDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"PaymentStatus\"},{\"name\":\"payments\",\"kind\":\"object\",\"type\":\"Payment\",\"relationName\":\"InvoiceToPayment\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"MaintenanceRequest\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"unit\",\"kind\":\"object\",\"type\":\"Unit\",\"relationName\":\"MaintenanceRequestToUnit\"},{\"name\":\"unitId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requester\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"Requester\"},{\"name\":\"requesterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"assignee\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"Assignee\"},{\"name\":\"assigneeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"MaintenanceStatus\"},{\"name\":\"priority\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"requestedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"resolvedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"attachments\",\"kind\":\"object\",\"type\":\"Attachment\",\"relationName\":\"AttachmentToMaintenanceRequest\"},{\"name\":\"notes\",\"kind\":\"object\",\"type\":\"MaintenanceNote\",\"relationName\":\"MaintenanceNoteToMaintenanceRequest\"}],\"dbName\":null},\"MaintenanceNote\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"request\",\"kind\":\"object\",\"type\":\"MaintenanceRequest\",\"relationName\":\"MaintenanceNoteToMaintenanceRequest\"},{\"name\":\"requestId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MaintenanceNoteToUser\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"body\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Attachment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"filename\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mimeType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"size\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"uploadedBy\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AttachmentToUser\"},{\"name\":\"uploadedById\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"maintenance\",\"kind\":\"object\",\"type\":\"MaintenanceRequest\",\"relationName\":\"AttachmentToMaintenanceRequest\"},{\"name\":\"maintenanceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Photo\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"caption\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"unit\",\"kind\":\"object\",\"type\":\"Unit\",\"relationName\":\"PhotoToUnit\"},{\"name\":\"unitId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Notification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"NotificationToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"body\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"read\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
