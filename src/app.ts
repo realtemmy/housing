@@ -16,6 +16,10 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+import propertyRoutes from "./routes/propertyRoutes";
+
+app.use("/api/v1/property", propertyRoutes);
+
 // Catch all unknown routes
 app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

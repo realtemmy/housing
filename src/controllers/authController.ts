@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { prisma } from "../client/prisma";
+import prisma from "../client/prisma";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { OAuth2Client, TokenPayload } from "google-auth-library";
@@ -176,7 +176,7 @@ export const authGoogle = async (
       new AppError("Authentication with Google failed. No email provided.", 400)
     );
 
-  let user = await prisma.user.findFirst({
+  let user = await prisma.user.findFirst({ 
     where: {
       OR: [{ provider: "google", providerId: sub }, { email }],
     },

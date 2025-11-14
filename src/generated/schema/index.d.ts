@@ -2747,7 +2747,7 @@ export namespace Prisma {
     photo: string | null
     role: $Enums.UserRole
     passwordHash: string | null
-    provider: string | null
+    provider: string
     providerId: string | null
     createdAt: Date
     updatedAt: Date
@@ -2881,7 +2881,7 @@ export namespace Prisma {
       photo: string | null
       role: $Enums.UserRole
       passwordHash: string | null
-      provider: string | null
+      provider: string
       providerId: string | null
       createdAt: Date
       updatedAt: Date
@@ -4167,7 +4167,6 @@ export namespace Prisma {
     updatedAt?: boolean
     isActive?: boolean
     verified?: boolean
-    address?: boolean | Property$addressArgs<ExtArgs>
     owner?: boolean | UserDefaultArgs<ExtArgs>
     buildings?: boolean | Property$buildingsArgs<ExtArgs>
     units?: boolean | Property$unitsArgs<ExtArgs>
@@ -4214,7 +4213,6 @@ export namespace Prisma {
 
   export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "type" | "ownerId" | "createdAt" | "updatedAt" | "isActive" | "verified", ExtArgs["result"]["property"]>
   export type PropertyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    address?: boolean | Property$addressArgs<ExtArgs>
     owner?: boolean | UserDefaultArgs<ExtArgs>
     buildings?: boolean | Property$buildingsArgs<ExtArgs>
     units?: boolean | Property$unitsArgs<ExtArgs>
@@ -4230,7 +4228,6 @@ export namespace Prisma {
   export type $PropertyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Property"
     objects: {
-      address: Prisma.$AddressPayload<ExtArgs> | null
       owner: Prisma.$UserPayload<ExtArgs>
       buildings: Prisma.$BuildingPayload<ExtArgs>[]
       units: Prisma.$UnitPayload<ExtArgs>[]
@@ -4639,7 +4636,6 @@ export namespace Prisma {
    */
   export interface Prisma__PropertyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    address<T extends Property$addressArgs<ExtArgs> = {}>(args?: Subset<T, Property$addressArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     buildings<T extends Property$buildingsArgs<ExtArgs> = {}>(args?: Subset<T, Property$buildingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     units<T extends Property$unitsArgs<ExtArgs> = {}>(args?: Subset<T, Property$unitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5077,25 +5073,6 @@ export namespace Prisma {
   }
 
   /**
-   * Property.address
-   */
-  export type Property$addressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Address
-     */
-    omit?: AddressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    where?: AddressWhereInput
-  }
-
-  /**
    * Property.buildings
    */
   export type Property$buildingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5184,8 +5161,9 @@ export namespace Prisma {
 
   export type BuildingMinAggregateOutputType = {
     id: string | null
-    propertyId: string | null
     name: string | null
+    propertyId: string | null
+    addressId: string | null
     floors: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5193,8 +5171,9 @@ export namespace Prisma {
 
   export type BuildingMaxAggregateOutputType = {
     id: string | null
-    propertyId: string | null
     name: string | null
+    propertyId: string | null
+    addressId: string | null
     floors: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5202,8 +5181,9 @@ export namespace Prisma {
 
   export type BuildingCountAggregateOutputType = {
     id: number
-    propertyId: number
     name: number
+    propertyId: number
+    addressId: number
     floors: number
     createdAt: number
     updatedAt: number
@@ -5221,8 +5201,9 @@ export namespace Prisma {
 
   export type BuildingMinAggregateInputType = {
     id?: true
-    propertyId?: true
     name?: true
+    propertyId?: true
+    addressId?: true
     floors?: true
     createdAt?: true
     updatedAt?: true
@@ -5230,8 +5211,9 @@ export namespace Prisma {
 
   export type BuildingMaxAggregateInputType = {
     id?: true
-    propertyId?: true
     name?: true
+    propertyId?: true
+    addressId?: true
     floors?: true
     createdAt?: true
     updatedAt?: true
@@ -5239,8 +5221,9 @@ export namespace Prisma {
 
   export type BuildingCountAggregateInputType = {
     id?: true
-    propertyId?: true
     name?: true
+    propertyId?: true
+    addressId?: true
     floors?: true
     createdAt?: true
     updatedAt?: true
@@ -5335,8 +5318,9 @@ export namespace Prisma {
 
   export type BuildingGroupByOutputType = {
     id: string
-    propertyId: string
     name: string | null
+    propertyId: string
+    addressId: string | null
     floors: number | null
     createdAt: Date
     updatedAt: Date
@@ -5363,20 +5347,23 @@ export namespace Prisma {
 
   export type BuildingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    propertyId?: boolean
     name?: boolean
+    propertyId?: boolean
+    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
+    address?: boolean | Building$addressArgs<ExtArgs>
     units?: boolean | Building$unitsArgs<ExtArgs>
     _count?: boolean | BuildingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["building"]>
 
   export type BuildingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    propertyId?: boolean
     name?: boolean
+    propertyId?: boolean
+    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5385,8 +5372,9 @@ export namespace Prisma {
 
   export type BuildingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    propertyId?: boolean
     name?: boolean
+    propertyId?: boolean
+    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5395,16 +5383,18 @@ export namespace Prisma {
 
   export type BuildingSelectScalar = {
     id?: boolean
-    propertyId?: boolean
     name?: boolean
+    propertyId?: boolean
+    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BuildingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "propertyId" | "name" | "floors" | "createdAt" | "updatedAt", ExtArgs["result"]["building"]>
+  export type BuildingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "propertyId" | "addressId" | "floors" | "createdAt" | "updatedAt", ExtArgs["result"]["building"]>
   export type BuildingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     property?: boolean | PropertyDefaultArgs<ExtArgs>
+    address?: boolean | Building$addressArgs<ExtArgs>
     units?: boolean | Building$unitsArgs<ExtArgs>
     _count?: boolean | BuildingCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -5419,12 +5409,14 @@ export namespace Prisma {
     name: "Building"
     objects: {
       property: Prisma.$PropertyPayload<ExtArgs>
+      address: Prisma.$AddressPayload<ExtArgs> | null
       units: Prisma.$UnitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      propertyId: string
       name: string | null
+      propertyId: string
+      addressId: string | null
       floors: number | null
       createdAt: Date
       updatedAt: Date
@@ -5823,6 +5815,7 @@ export namespace Prisma {
   export interface Prisma__BuildingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     property<T extends PropertyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PropertyDefaultArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    address<T extends Building$addressArgs<ExtArgs> = {}>(args?: Subset<T, Building$addressArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     units<T extends Building$unitsArgs<ExtArgs> = {}>(args?: Subset<T, Building$unitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5854,8 +5847,9 @@ export namespace Prisma {
    */
   interface BuildingFieldRefs {
     readonly id: FieldRef<"Building", 'String'>
-    readonly propertyId: FieldRef<"Building", 'String'>
     readonly name: FieldRef<"Building", 'String'>
+    readonly propertyId: FieldRef<"Building", 'String'>
+    readonly addressId: FieldRef<"Building", 'String'>
     readonly floors: FieldRef<"Building", 'Int'>
     readonly createdAt: FieldRef<"Building", 'DateTime'>
     readonly updatedAt: FieldRef<"Building", 'DateTime'>
@@ -6255,6 +6249,25 @@ export namespace Prisma {
   }
 
   /**
+   * Building.address
+   */
+  export type Building$addressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Address
+     */
+    select?: AddressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Address
+     */
+    omit?: AddressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AddressInclude<ExtArgs> | null
+    where?: AddressWhereInput
+  }
+
+  /**
    * Building.units
    */
   export type Building$unitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6326,9 +6339,9 @@ export namespace Prisma {
     state: string | null
     postalCode: string | null
     country: string | null
-    propertyId: string | null
     longitude: number | null
     latitude: number | null
+    buildingId: string | null
   }
 
   export type AddressMaxAggregateOutputType = {
@@ -6338,9 +6351,9 @@ export namespace Prisma {
     state: string | null
     postalCode: string | null
     country: string | null
-    propertyId: string | null
     longitude: number | null
     latitude: number | null
+    buildingId: string | null
   }
 
   export type AddressCountAggregateOutputType = {
@@ -6350,9 +6363,9 @@ export namespace Prisma {
     state: number
     postalCode: number
     country: number
-    propertyId: number
     longitude: number
     latitude: number
+    buildingId: number
     _all: number
   }
 
@@ -6374,9 +6387,9 @@ export namespace Prisma {
     state?: true
     postalCode?: true
     country?: true
-    propertyId?: true
     longitude?: true
     latitude?: true
+    buildingId?: true
   }
 
   export type AddressMaxAggregateInputType = {
@@ -6386,9 +6399,9 @@ export namespace Prisma {
     state?: true
     postalCode?: true
     country?: true
-    propertyId?: true
     longitude?: true
     latitude?: true
+    buildingId?: true
   }
 
   export type AddressCountAggregateInputType = {
@@ -6398,9 +6411,9 @@ export namespace Prisma {
     state?: true
     postalCode?: true
     country?: true
-    propertyId?: true
     longitude?: true
     latitude?: true
+    buildingId?: true
     _all?: true
   }
 
@@ -6497,9 +6510,9 @@ export namespace Prisma {
     state: string
     postalCode: string
     country: string
-    propertyId: string | null
     longitude: number | null
     latitude: number | null
+    buildingId: string | null
     _count: AddressCountAggregateOutputType | null
     _avg: AddressAvgAggregateOutputType | null
     _sum: AddressSumAggregateOutputType | null
@@ -6528,10 +6541,10 @@ export namespace Prisma {
     state?: boolean
     postalCode?: boolean
     country?: boolean
-    propertyId?: boolean
     longitude?: boolean
     latitude?: boolean
-    property?: boolean | Address$propertyArgs<ExtArgs>
+    buildingId?: boolean
+    building?: boolean | Address$buildingArgs<ExtArgs>
   }, ExtArgs["result"]["address"]>
 
   export type AddressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6541,10 +6554,10 @@ export namespace Prisma {
     state?: boolean
     postalCode?: boolean
     country?: boolean
-    propertyId?: boolean
     longitude?: boolean
     latitude?: boolean
-    property?: boolean | Address$propertyArgs<ExtArgs>
+    buildingId?: boolean
+    building?: boolean | Address$buildingArgs<ExtArgs>
   }, ExtArgs["result"]["address"]>
 
   export type AddressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6554,10 +6567,10 @@ export namespace Prisma {
     state?: boolean
     postalCode?: boolean
     country?: boolean
-    propertyId?: boolean
     longitude?: boolean
     latitude?: boolean
-    property?: boolean | Address$propertyArgs<ExtArgs>
+    buildingId?: boolean
+    building?: boolean | Address$buildingArgs<ExtArgs>
   }, ExtArgs["result"]["address"]>
 
   export type AddressSelectScalar = {
@@ -6567,26 +6580,26 @@ export namespace Prisma {
     state?: boolean
     postalCode?: boolean
     country?: boolean
-    propertyId?: boolean
     longitude?: boolean
     latitude?: boolean
+    buildingId?: boolean
   }
 
-  export type AddressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "street" | "city" | "state" | "postalCode" | "country" | "propertyId" | "longitude" | "latitude", ExtArgs["result"]["address"]>
+  export type AddressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "street" | "city" | "state" | "postalCode" | "country" | "longitude" | "latitude" | "buildingId", ExtArgs["result"]["address"]>
   export type AddressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    property?: boolean | Address$propertyArgs<ExtArgs>
+    building?: boolean | Address$buildingArgs<ExtArgs>
   }
   export type AddressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    property?: boolean | Address$propertyArgs<ExtArgs>
+    building?: boolean | Address$buildingArgs<ExtArgs>
   }
   export type AddressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    property?: boolean | Address$propertyArgs<ExtArgs>
+    building?: boolean | Address$buildingArgs<ExtArgs>
   }
 
   export type $AddressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Address"
     objects: {
-      property: Prisma.$PropertyPayload<ExtArgs> | null
+      building: Prisma.$BuildingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6595,9 +6608,9 @@ export namespace Prisma {
       state: string
       postalCode: string
       country: string
-      propertyId: string | null
       longitude: number | null
       latitude: number | null
+      buildingId: string | null
     }, ExtArgs["result"]["address"]>
     composites: {}
   }
@@ -6992,7 +7005,7 @@ export namespace Prisma {
    */
   export interface Prisma__AddressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    property<T extends Address$propertyArgs<ExtArgs> = {}>(args?: Subset<T, Address$propertyArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    building<T extends Address$buildingArgs<ExtArgs> = {}>(args?: Subset<T, Address$buildingArgs<ExtArgs>>): Prisma__BuildingClient<$Result.GetResult<Prisma.$BuildingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7028,9 +7041,9 @@ export namespace Prisma {
     readonly state: FieldRef<"Address", 'String'>
     readonly postalCode: FieldRef<"Address", 'String'>
     readonly country: FieldRef<"Address", 'String'>
-    readonly propertyId: FieldRef<"Address", 'String'>
     readonly longitude: FieldRef<"Address", 'Float'>
     readonly latitude: FieldRef<"Address", 'Float'>
+    readonly buildingId: FieldRef<"Address", 'String'>
   }
     
 
@@ -7427,22 +7440,22 @@ export namespace Prisma {
   }
 
   /**
-   * Address.property
+   * Address.building
    */
-  export type Address$propertyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Address$buildingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Property
+     * Select specific fields to fetch from the Building
      */
-    select?: PropertySelect<ExtArgs> | null
+    select?: BuildingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Property
+     * Omit specific fields from the Building
      */
-    omit?: PropertyOmit<ExtArgs> | null
+    omit?: BuildingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PropertyInclude<ExtArgs> | null
-    where?: PropertyWhereInput
+    include?: BuildingInclude<ExtArgs> | null
+    where?: BuildingWhereInput
   }
 
   /**
@@ -20338,8 +20351,9 @@ export namespace Prisma {
 
   export const BuildingScalarFieldEnum: {
     id: 'id',
-    propertyId: 'propertyId',
     name: 'name',
+    propertyId: 'propertyId',
+    addressId: 'addressId',
     floors: 'floors',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -20355,9 +20369,9 @@ export namespace Prisma {
     state: 'state',
     postalCode: 'postalCode',
     country: 'country',
-    propertyId: 'propertyId',
     longitude: 'longitude',
-    latitude: 'latitude'
+    latitude: 'latitude',
+    buildingId: 'buildingId'
   };
 
   export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
@@ -20742,7 +20756,7 @@ export namespace Prisma {
     photo?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     passwordHash?: StringNullableFilter<"User"> | string | null
-    provider?: StringNullableFilter<"User"> | string | null
+    provider?: StringFilter<"User"> | string
     providerId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -20767,7 +20781,7 @@ export namespace Prisma {
     photo?: SortOrderInput | SortOrder
     role?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
-    provider?: SortOrderInput | SortOrder
+    provider?: SortOrder
     providerId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20795,7 +20809,7 @@ export namespace Prisma {
     photo?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     passwordHash?: StringNullableFilter<"User"> | string | null
-    provider?: StringNullableFilter<"User"> | string | null
+    provider?: StringFilter<"User"> | string
     providerId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -20820,7 +20834,7 @@ export namespace Prisma {
     photo?: SortOrderInput | SortOrder
     role?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
-    provider?: SortOrderInput | SortOrder
+    provider?: SortOrder
     providerId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20841,7 +20855,7 @@ export namespace Prisma {
     photo?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
-    provider?: StringNullableWithAggregatesFilter<"User"> | string | null
+    provider?: StringWithAggregatesFilter<"User"> | string
     providerId?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -20860,7 +20874,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Property"> | Date | string
     isActive?: BoolFilter<"Property"> | boolean
     verified?: BoolFilter<"Property"> | boolean
-    address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     buildings?: BuildingListRelationFilter
     units?: UnitListRelationFilter
@@ -20876,7 +20889,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
     isActive?: SortOrder
     verified?: SortOrder
-    address?: AddressOrderByWithRelationInput
     owner?: UserOrderByWithRelationInput
     buildings?: BuildingOrderByRelationAggregateInput
     units?: UnitOrderByRelationAggregateInput
@@ -20895,7 +20907,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Property"> | Date | string
     isActive?: BoolFilter<"Property"> | boolean
     verified?: BoolFilter<"Property"> | boolean
-    address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     buildings?: BuildingListRelationFilter
     units?: UnitListRelationFilter
@@ -20936,23 +20947,27 @@ export namespace Prisma {
     OR?: BuildingWhereInput[]
     NOT?: BuildingWhereInput | BuildingWhereInput[]
     id?: StringFilter<"Building"> | string
-    propertyId?: StringFilter<"Building"> | string
     name?: StringNullableFilter<"Building"> | string | null
+    propertyId?: StringFilter<"Building"> | string
+    addressId?: StringNullableFilter<"Building"> | string | null
     floors?: IntNullableFilter<"Building"> | number | null
     createdAt?: DateTimeFilter<"Building"> | Date | string
     updatedAt?: DateTimeFilter<"Building"> | Date | string
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+    address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     units?: UnitListRelationFilter
   }
 
   export type BuildingOrderByWithRelationInput = {
     id?: SortOrder
-    propertyId?: SortOrder
     name?: SortOrderInput | SortOrder
+    propertyId?: SortOrder
+    addressId?: SortOrderInput | SortOrder
     floors?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     property?: PropertyOrderByWithRelationInput
+    address?: AddressOrderByWithRelationInput
     units?: UnitOrderByRelationAggregateInput
   }
 
@@ -20961,19 +20976,22 @@ export namespace Prisma {
     AND?: BuildingWhereInput | BuildingWhereInput[]
     OR?: BuildingWhereInput[]
     NOT?: BuildingWhereInput | BuildingWhereInput[]
-    propertyId?: StringFilter<"Building"> | string
     name?: StringNullableFilter<"Building"> | string | null
+    propertyId?: StringFilter<"Building"> | string
+    addressId?: StringNullableFilter<"Building"> | string | null
     floors?: IntNullableFilter<"Building"> | number | null
     createdAt?: DateTimeFilter<"Building"> | Date | string
     updatedAt?: DateTimeFilter<"Building"> | Date | string
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+    address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     units?: UnitListRelationFilter
   }, "id">
 
   export type BuildingOrderByWithAggregationInput = {
     id?: SortOrder
-    propertyId?: SortOrder
     name?: SortOrderInput | SortOrder
+    propertyId?: SortOrder
+    addressId?: SortOrderInput | SortOrder
     floors?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20989,8 +21007,9 @@ export namespace Prisma {
     OR?: BuildingScalarWhereWithAggregatesInput[]
     NOT?: BuildingScalarWhereWithAggregatesInput | BuildingScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Building"> | string
-    propertyId?: StringWithAggregatesFilter<"Building"> | string
     name?: StringNullableWithAggregatesFilter<"Building"> | string | null
+    propertyId?: StringWithAggregatesFilter<"Building"> | string
+    addressId?: StringNullableWithAggregatesFilter<"Building"> | string | null
     floors?: IntNullableWithAggregatesFilter<"Building"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Building"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Building"> | Date | string
@@ -21006,10 +21025,10 @@ export namespace Prisma {
     state?: StringFilter<"Address"> | string
     postalCode?: StringFilter<"Address"> | string
     country?: StringFilter<"Address"> | string
-    propertyId?: StringNullableFilter<"Address"> | string | null
     longitude?: FloatNullableFilter<"Address"> | number | null
     latitude?: FloatNullableFilter<"Address"> | number | null
-    property?: XOR<PropertyNullableScalarRelationFilter, PropertyWhereInput> | null
+    buildingId?: StringNullableFilter<"Address"> | string | null
+    building?: XOR<BuildingNullableScalarRelationFilter, BuildingWhereInput> | null
   }
 
   export type AddressOrderByWithRelationInput = {
@@ -21019,15 +21038,15 @@ export namespace Prisma {
     state?: SortOrder
     postalCode?: SortOrder
     country?: SortOrder
-    propertyId?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
-    property?: PropertyOrderByWithRelationInput
+    buildingId?: SortOrderInput | SortOrder
+    building?: BuildingOrderByWithRelationInput
   }
 
   export type AddressWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    propertyId?: string
+    buildingId?: string
     AND?: AddressWhereInput | AddressWhereInput[]
     OR?: AddressWhereInput[]
     NOT?: AddressWhereInput | AddressWhereInput[]
@@ -21038,8 +21057,8 @@ export namespace Prisma {
     country?: StringFilter<"Address"> | string
     longitude?: FloatNullableFilter<"Address"> | number | null
     latitude?: FloatNullableFilter<"Address"> | number | null
-    property?: XOR<PropertyNullableScalarRelationFilter, PropertyWhereInput> | null
-  }, "id" | "propertyId">
+    building?: XOR<BuildingNullableScalarRelationFilter, BuildingWhereInput> | null
+  }, "id" | "buildingId">
 
   export type AddressOrderByWithAggregationInput = {
     id?: SortOrder
@@ -21048,9 +21067,9 @@ export namespace Prisma {
     state?: SortOrder
     postalCode?: SortOrder
     country?: SortOrder
-    propertyId?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
+    buildingId?: SortOrderInput | SortOrder
     _count?: AddressCountOrderByAggregateInput
     _avg?: AddressAvgOrderByAggregateInput
     _max?: AddressMaxOrderByAggregateInput
@@ -21068,9 +21087,9 @@ export namespace Prisma {
     state?: StringWithAggregatesFilter<"Address"> | string
     postalCode?: StringWithAggregatesFilter<"Address"> | string
     country?: StringWithAggregatesFilter<"Address"> | string
-    propertyId?: StringNullableWithAggregatesFilter<"Address"> | string | null
     longitude?: FloatNullableWithAggregatesFilter<"Address"> | number | null
     latitude?: FloatNullableWithAggregatesFilter<"Address"> | number | null
+    buildingId?: StringNullableWithAggregatesFilter<"Address"> | string | null
   }
 
   export type UnitWhereInput = {
@@ -21936,7 +21955,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21961,7 +21980,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21986,7 +22005,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22011,7 +22030,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22036,7 +22055,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22051,7 +22070,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22066,7 +22085,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22081,7 +22100,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressCreateNestedOneWithoutPropertyInput
     owner: UserCreateNestedOneWithoutPropertiesInput
     buildings?: BuildingCreateNestedManyWithoutPropertyInput
     units?: UnitCreateNestedManyWithoutPropertyInput
@@ -22097,7 +22115,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressUncheckedCreateNestedOneWithoutPropertyInput
     buildings?: BuildingUncheckedCreateNestedManyWithoutPropertyInput
     units?: UnitUncheckedCreateNestedManyWithoutPropertyInput
   }
@@ -22111,7 +22128,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUpdateOneWithoutPropertyNestedInput
     owner?: UserUpdateOneRequiredWithoutPropertiesNestedInput
     buildings?: BuildingUpdateManyWithoutPropertyNestedInput
     units?: UnitUpdateManyWithoutPropertyNestedInput
@@ -22127,7 +22143,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUncheckedUpdateOneWithoutPropertyNestedInput
     buildings?: BuildingUncheckedUpdateManyWithoutPropertyNestedInput
     units?: UnitUncheckedUpdateManyWithoutPropertyNestedInput
   }
@@ -22170,47 +22185,56 @@ export namespace Prisma {
   export type BuildingCreateInput = {
     id?: string
     name?: string | null
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     property: PropertyCreateNestedOneWithoutBuildingsInput
+    address?: AddressCreateNestedOneWithoutBuildingInput
     units?: UnitCreateNestedManyWithoutBuildingInput
   }
 
   export type BuildingUncheckedCreateInput = {
     id?: string
-    propertyId: string
     name?: string | null
+    propertyId: string
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    address?: AddressUncheckedCreateNestedOneWithoutBuildingInput
     units?: UnitUncheckedCreateNestedManyWithoutBuildingInput
   }
 
   export type BuildingUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    property?: PropertyUpdateOneRequiredWithoutBuildingsNestedInput
+    property?: PropertyUpdateOneRequiredWithoutBuildingsNestedInput | undefined
+    address?: AddressUpdateOneWithoutBuildingNestedInput
     units?: UnitUpdateManyWithoutBuildingNestedInput
   }
 
   export type BuildingUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    propertyId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyId?: StringFieldUpdateOperationsInput | string | undefined
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    address?: AddressUncheckedUpdateOneWithoutBuildingNestedInput
     units?: UnitUncheckedUpdateManyWithoutBuildingNestedInput
   }
 
   export type BuildingCreateManyInput = {
     id?: string
-    propertyId: string
     name?: string | null
+    propertyId: string
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22219,6 +22243,7 @@ export namespace Prisma {
   export type BuildingUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22226,8 +22251,9 @@ export namespace Prisma {
 
   export type BuildingUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    propertyId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22242,7 +22268,7 @@ export namespace Prisma {
     country: string
     longitude?: number | null
     latitude?: number | null
-    property?: PropertyCreateNestedOneWithoutAddressInput
+    building?: BuildingCreateNestedOneWithoutAddressInput
   }
 
   export type AddressUncheckedCreateInput = {
@@ -22252,9 +22278,9 @@ export namespace Prisma {
     state: string
     postalCode: string
     country: string
-    propertyId?: string | null
     longitude?: number | null
     latitude?: number | null
+    buildingId?: string | null
   }
 
   export type AddressUpdateInput = {
@@ -22266,7 +22292,7 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    property?: PropertyUpdateOneWithoutAddressNestedInput
+    building?: BuildingUpdateOneWithoutAddressNestedInput | undefined
   }
 
   export type AddressUncheckedUpdateInput = {
@@ -22276,9 +22302,9 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
-    propertyId?: NullableStringFieldUpdateOperationsInput | string | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    buildingId?: NullableStringFieldUpdateOperationsInput | string | null | undefined
   }
 
   export type AddressCreateManyInput = {
@@ -22288,9 +22314,9 @@ export namespace Prisma {
     state: string
     postalCode: string
     country: string
-    propertyId?: string | null
     longitude?: number | null
     latitude?: number | null
+    buildingId?: string | null
   }
 
   export type AddressUpdateManyMutationInput = {
@@ -22311,9 +22337,9 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
-    propertyId?: NullableStringFieldUpdateOperationsInput | string | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    buildingId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UnitCreateInput = {
@@ -23455,11 +23481,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type AddressNullableScalarRelationFilter = {
-    is?: AddressWhereInput | null
-    isNot?: AddressWhereInput | null
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -23545,10 +23566,16 @@ export namespace Prisma {
     isNot?: PropertyWhereInput
   }
 
+  export type AddressNullableScalarRelationFilter = {
+    is?: AddressWhereInput | null
+    isNot?: AddressWhereInput | null
+  }
+
   export type BuildingCountOrderByAggregateInput = {
     id?: SortOrder
-    propertyId?: SortOrder
     name?: SortOrder
+    propertyId?: SortOrder
+    addressId?: SortOrder
     floors?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23560,8 +23587,9 @@ export namespace Prisma {
 
   export type BuildingMaxOrderByAggregateInput = {
     id?: SortOrder
-    propertyId?: SortOrder
     name?: SortOrder
+    propertyId?: SortOrder
+    addressId?: SortOrder
     floors?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23569,8 +23597,9 @@ export namespace Prisma {
 
   export type BuildingMinOrderByAggregateInput = {
     id?: SortOrder
-    propertyId?: SortOrder
     name?: SortOrder
+    propertyId?: SortOrder
+    addressId?: SortOrder
     floors?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23607,9 +23636,9 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type PropertyNullableScalarRelationFilter = {
-    is?: PropertyWhereInput | null
-    isNot?: PropertyWhereInput | null
+  export type BuildingNullableScalarRelationFilter = {
+    is?: BuildingWhereInput | null
+    isNot?: BuildingWhereInput | null
   }
 
   export type AddressCountOrderByAggregateInput = {
@@ -23619,9 +23648,9 @@ export namespace Prisma {
     state?: SortOrder
     postalCode?: SortOrder
     country?: SortOrder
-    propertyId?: SortOrder
     longitude?: SortOrder
     latitude?: SortOrder
+    buildingId?: SortOrder
   }
 
   export type AddressAvgOrderByAggregateInput = {
@@ -23636,9 +23665,9 @@ export namespace Prisma {
     state?: SortOrder
     postalCode?: SortOrder
     country?: SortOrder
-    propertyId?: SortOrder
     longitude?: SortOrder
     latitude?: SortOrder
+    buildingId?: SortOrder
   }
 
   export type AddressMinOrderByAggregateInput = {
@@ -23648,9 +23677,9 @@ export namespace Prisma {
     state?: SortOrder
     postalCode?: SortOrder
     country?: SortOrder
-    propertyId?: SortOrder
     longitude?: SortOrder
     latitude?: SortOrder
+    buildingId?: SortOrder
   }
 
   export type AddressSumOrderByAggregateInput = {
@@ -23690,11 +23719,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type BuildingNullableScalarRelationFilter = {
-    is?: BuildingWhereInput | null
-    isNot?: BuildingWhereInput | null
   }
 
   export type PhotoListRelationFilter = {
@@ -24798,12 +24822,6 @@ export namespace Prisma {
     deleteMany?: UnitScalarWhereInput | UnitScalarWhereInput[]
   }
 
-  export type AddressCreateNestedOneWithoutPropertyInput = {
-    create?: XOR<AddressCreateWithoutPropertyInput, AddressUncheckedCreateWithoutPropertyInput>
-    connectOrCreate?: AddressCreateOrConnectWithoutPropertyInput
-    connect?: AddressWhereUniqueInput
-  }
-
   export type UserCreateNestedOneWithoutPropertiesInput = {
     create?: XOR<UserCreateWithoutPropertiesInput, UserUncheckedCreateWithoutPropertiesInput>
     connectOrCreate?: UserCreateOrConnectWithoutPropertiesInput
@@ -24822,12 +24840,6 @@ export namespace Prisma {
     connectOrCreate?: UnitCreateOrConnectWithoutPropertyInput | UnitCreateOrConnectWithoutPropertyInput[]
     createMany?: UnitCreateManyPropertyInputEnvelope
     connect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
-  }
-
-  export type AddressUncheckedCreateNestedOneWithoutPropertyInput = {
-    create?: XOR<AddressCreateWithoutPropertyInput, AddressUncheckedCreateWithoutPropertyInput>
-    connectOrCreate?: AddressCreateOrConnectWithoutPropertyInput
-    connect?: AddressWhereUniqueInput
   }
 
   export type BuildingUncheckedCreateNestedManyWithoutPropertyInput = {
@@ -24850,16 +24862,6 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type AddressUpdateOneWithoutPropertyNestedInput = {
-    create?: XOR<AddressCreateWithoutPropertyInput, AddressUncheckedCreateWithoutPropertyInput>
-    connectOrCreate?: AddressCreateOrConnectWithoutPropertyInput
-    upsert?: AddressUpsertWithoutPropertyInput
-    disconnect?: AddressWhereInput | boolean
-    delete?: AddressWhereInput | boolean
-    connect?: AddressWhereUniqueInput
-    update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutPropertyInput, AddressUpdateWithoutPropertyInput>, AddressUncheckedUpdateWithoutPropertyInput>
   }
 
   export type UserUpdateOneRequiredWithoutPropertiesNestedInput = {
@@ -24898,16 +24900,6 @@ export namespace Prisma {
     deleteMany?: UnitScalarWhereInput | UnitScalarWhereInput[]
   }
 
-  export type AddressUncheckedUpdateOneWithoutPropertyNestedInput = {
-    create?: XOR<AddressCreateWithoutPropertyInput, AddressUncheckedCreateWithoutPropertyInput>
-    connectOrCreate?: AddressCreateOrConnectWithoutPropertyInput
-    upsert?: AddressUpsertWithoutPropertyInput
-    disconnect?: AddressWhereInput | boolean
-    delete?: AddressWhereInput | boolean
-    connect?: AddressWhereUniqueInput
-    update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutPropertyInput, AddressUpdateWithoutPropertyInput>, AddressUncheckedUpdateWithoutPropertyInput>
-  }
-
   export type BuildingUncheckedUpdateManyWithoutPropertyNestedInput = {
     create?: XOR<BuildingCreateWithoutPropertyInput, BuildingUncheckedCreateWithoutPropertyInput> | BuildingCreateWithoutPropertyInput[] | BuildingUncheckedCreateWithoutPropertyInput[]
     connectOrCreate?: BuildingCreateOrConnectWithoutPropertyInput | BuildingCreateOrConnectWithoutPropertyInput[]
@@ -24942,11 +24934,23 @@ export namespace Prisma {
     connect?: PropertyWhereUniqueInput
   }
 
+  export type AddressCreateNestedOneWithoutBuildingInput = {
+    create?: XOR<AddressCreateWithoutBuildingInput, AddressUncheckedCreateWithoutBuildingInput>
+    connectOrCreate?: AddressCreateOrConnectWithoutBuildingInput
+    connect?: AddressWhereUniqueInput
+  }
+
   export type UnitCreateNestedManyWithoutBuildingInput = {
     create?: XOR<UnitCreateWithoutBuildingInput, UnitUncheckedCreateWithoutBuildingInput> | UnitCreateWithoutBuildingInput[] | UnitUncheckedCreateWithoutBuildingInput[]
     connectOrCreate?: UnitCreateOrConnectWithoutBuildingInput | UnitCreateOrConnectWithoutBuildingInput[]
     createMany?: UnitCreateManyBuildingInputEnvelope
     connect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
+  }
+
+  export type AddressUncheckedCreateNestedOneWithoutBuildingInput = {
+    create?: XOR<AddressCreateWithoutBuildingInput, AddressUncheckedCreateWithoutBuildingInput>
+    connectOrCreate?: AddressCreateOrConnectWithoutBuildingInput
+    connect?: AddressWhereUniqueInput
   }
 
   export type UnitUncheckedCreateNestedManyWithoutBuildingInput = {
@@ -24972,6 +24976,16 @@ export namespace Prisma {
     update?: XOR<XOR<PropertyUpdateToOneWithWhereWithoutBuildingsInput, PropertyUpdateWithoutBuildingsInput>, PropertyUncheckedUpdateWithoutBuildingsInput>
   }
 
+  export type AddressUpdateOneWithoutBuildingNestedInput = {
+    create?: XOR<AddressCreateWithoutBuildingInput, AddressUncheckedCreateWithoutBuildingInput>
+    connectOrCreate?: AddressCreateOrConnectWithoutBuildingInput
+    upsert?: AddressUpsertWithoutBuildingInput
+    disconnect?: AddressWhereInput | boolean
+    delete?: AddressWhereInput | boolean
+    connect?: AddressWhereUniqueInput
+    update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutBuildingInput, AddressUpdateWithoutBuildingInput>, AddressUncheckedUpdateWithoutBuildingInput>
+  }
+
   export type UnitUpdateManyWithoutBuildingNestedInput = {
     create?: XOR<UnitCreateWithoutBuildingInput, UnitUncheckedCreateWithoutBuildingInput> | UnitCreateWithoutBuildingInput[] | UnitUncheckedCreateWithoutBuildingInput[]
     connectOrCreate?: UnitCreateOrConnectWithoutBuildingInput | UnitCreateOrConnectWithoutBuildingInput[]
@@ -24984,6 +24998,16 @@ export namespace Prisma {
     update?: UnitUpdateWithWhereUniqueWithoutBuildingInput | UnitUpdateWithWhereUniqueWithoutBuildingInput[]
     updateMany?: UnitUpdateManyWithWhereWithoutBuildingInput | UnitUpdateManyWithWhereWithoutBuildingInput[]
     deleteMany?: UnitScalarWhereInput | UnitScalarWhereInput[]
+  }
+
+  export type AddressUncheckedUpdateOneWithoutBuildingNestedInput = {
+    create?: XOR<AddressCreateWithoutBuildingInput, AddressUncheckedCreateWithoutBuildingInput>
+    connectOrCreate?: AddressCreateOrConnectWithoutBuildingInput
+    upsert?: AddressUpsertWithoutBuildingInput
+    disconnect?: AddressWhereInput | boolean
+    delete?: AddressWhereInput | boolean
+    connect?: AddressWhereUniqueInput
+    update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutBuildingInput, AddressUpdateWithoutBuildingInput>, AddressUncheckedUpdateWithoutBuildingInput>
   }
 
   export type UnitUncheckedUpdateManyWithoutBuildingNestedInput = {
@@ -25000,10 +25024,10 @@ export namespace Prisma {
     deleteMany?: UnitScalarWhereInput | UnitScalarWhereInput[]
   }
 
-  export type PropertyCreateNestedOneWithoutAddressInput = {
-    create?: XOR<PropertyCreateWithoutAddressInput, PropertyUncheckedCreateWithoutAddressInput>
-    connectOrCreate?: PropertyCreateOrConnectWithoutAddressInput
-    connect?: PropertyWhereUniqueInput
+  export type BuildingCreateNestedOneWithoutAddressInput = {
+    create?: XOR<BuildingCreateWithoutAddressInput, BuildingUncheckedCreateWithoutAddressInput>
+    connectOrCreate?: BuildingCreateOrConnectWithoutAddressInput
+    connect?: BuildingWhereUniqueInput
   }
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -25014,14 +25038,14 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type PropertyUpdateOneWithoutAddressNestedInput = {
-    create?: XOR<PropertyCreateWithoutAddressInput, PropertyUncheckedCreateWithoutAddressInput>
-    connectOrCreate?: PropertyCreateOrConnectWithoutAddressInput
-    upsert?: PropertyUpsertWithoutAddressInput
-    disconnect?: PropertyWhereInput | boolean
-    delete?: PropertyWhereInput | boolean
-    connect?: PropertyWhereUniqueInput
-    update?: XOR<XOR<PropertyUpdateToOneWithWhereWithoutAddressInput, PropertyUpdateWithoutAddressInput>, PropertyUncheckedUpdateWithoutAddressInput>
+  export type BuildingUpdateOneWithoutAddressNestedInput = {
+    create?: XOR<BuildingCreateWithoutAddressInput, BuildingUncheckedCreateWithoutAddressInput>
+    connectOrCreate?: BuildingCreateOrConnectWithoutAddressInput
+    upsert?: BuildingUpsertWithoutAddressInput
+    disconnect?: BuildingWhereInput | boolean
+    delete?: BuildingWhereInput | boolean
+    connect?: BuildingWhereUniqueInput
+    update?: XOR<XOR<BuildingUpdateToOneWithWhereWithoutAddressInput, BuildingUpdateWithoutAddressInput>, BuildingUncheckedUpdateWithoutAddressInput>
   }
 
   export type PropertyCreateNestedOneWithoutUnitsInput = {
@@ -26092,7 +26116,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressCreateNestedOneWithoutPropertyInput
     buildings?: BuildingCreateNestedManyWithoutPropertyInput
     units?: UnitCreateNestedManyWithoutPropertyInput
   }
@@ -26106,7 +26129,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressUncheckedCreateNestedOneWithoutPropertyInput
     buildings?: BuildingUncheckedCreateNestedManyWithoutPropertyInput
     units?: UnitUncheckedCreateNestedManyWithoutPropertyInput
   }
@@ -26717,33 +26739,6 @@ export namespace Prisma {
     userId?: StringNullableFilter<"Unit"> | string | null
   }
 
-  export type AddressCreateWithoutPropertyInput = {
-    id?: string
-    street: string
-    city: string
-    state: string
-    postalCode: string
-    country: string
-    longitude?: number | null
-    latitude?: number | null
-  }
-
-  export type AddressUncheckedCreateWithoutPropertyInput = {
-    id?: string
-    street: string
-    city: string
-    state: string
-    postalCode: string
-    country: string
-    longitude?: number | null
-    latitude?: number | null
-  }
-
-  export type AddressCreateOrConnectWithoutPropertyInput = {
-    where: AddressWhereUniqueInput
-    create: XOR<AddressCreateWithoutPropertyInput, AddressUncheckedCreateWithoutPropertyInput>
-  }
-
   export type UserCreateWithoutPropertiesInput = {
     id?: string
     email: string
@@ -26753,7 +26748,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26777,7 +26772,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26800,18 +26795,22 @@ export namespace Prisma {
   export type BuildingCreateWithoutPropertyInput = {
     id?: string
     name?: string | null
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    address?: AddressCreateNestedOneWithoutBuildingInput
     units?: UnitCreateNestedManyWithoutBuildingInput
   }
 
   export type BuildingUncheckedCreateWithoutPropertyInput = {
     id?: string
     name?: string | null
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    address?: AddressUncheckedCreateNestedOneWithoutBuildingInput
     units?: UnitUncheckedCreateNestedManyWithoutBuildingInput
   }
 
@@ -26873,39 +26872,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AddressUpsertWithoutPropertyInput = {
-    update: XOR<AddressUpdateWithoutPropertyInput, AddressUncheckedUpdateWithoutPropertyInput>
-    create: XOR<AddressCreateWithoutPropertyInput, AddressUncheckedCreateWithoutPropertyInput>
-    where?: AddressWhereInput
-  }
-
-  export type AddressUpdateToOneWithWhereWithoutPropertyInput = {
-    where?: AddressWhereInput
-    data: XOR<AddressUpdateWithoutPropertyInput, AddressUncheckedUpdateWithoutPropertyInput>
-  }
-
-  export type AddressUpdateWithoutPropertyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    street?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    postalCode?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-  }
-
-  export type AddressUncheckedUpdateWithoutPropertyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    street?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    postalCode?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-  }
-
   export type UserUpsertWithoutPropertiesInput = {
     update: XOR<UserUpdateWithoutPropertiesInput, UserUncheckedUpdateWithoutPropertiesInput>
     create: XOR<UserCreateWithoutPropertiesInput, UserUncheckedCreateWithoutPropertiesInput>
@@ -26926,7 +26892,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26950,7 +26916,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26986,8 +26952,9 @@ export namespace Prisma {
     OR?: BuildingScalarWhereInput[]
     NOT?: BuildingScalarWhereInput | BuildingScalarWhereInput[]
     id?: StringFilter<"Building"> | string
-    propertyId?: StringFilter<"Building"> | string
     name?: StringNullableFilter<"Building"> | string | null
+    propertyId?: StringFilter<"Building"> | string
+    addressId?: StringNullableFilter<"Building"> | string | null
     floors?: IntNullableFilter<"Building"> | number | null
     createdAt?: DateTimeFilter<"Building"> | Date | string
     updatedAt?: DateTimeFilter<"Building"> | Date | string
@@ -27018,7 +26985,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressCreateNestedOneWithoutPropertyInput
     owner: UserCreateNestedOneWithoutPropertiesInput
     units?: UnitCreateNestedManyWithoutPropertyInput
   }
@@ -27033,13 +26999,39 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressUncheckedCreateNestedOneWithoutPropertyInput
     units?: UnitUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyCreateOrConnectWithoutBuildingsInput = {
     where: PropertyWhereUniqueInput
     create: XOR<PropertyCreateWithoutBuildingsInput, PropertyUncheckedCreateWithoutBuildingsInput>
+  }
+
+  export type AddressCreateWithoutBuildingInput = {
+    id?: string
+    street: string
+    city: string
+    state: string
+    postalCode: string
+    country: string
+    longitude?: number | null
+    latitude?: number | null
+  }
+
+  export type AddressUncheckedCreateWithoutBuildingInput = {
+    id?: string
+    street: string
+    city: string
+    state: string
+    postalCode: string
+    country: string
+    longitude?: number | null
+    latitude?: number | null
+  }
+
+  export type AddressCreateOrConnectWithoutBuildingInput = {
+    where: AddressWhereUniqueInput
+    create: XOR<AddressCreateWithoutBuildingInput, AddressUncheckedCreateWithoutBuildingInput>
   }
 
   export type UnitCreateWithoutBuildingInput = {
@@ -27110,7 +27102,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUpdateOneWithoutPropertyNestedInput
     owner?: UserUpdateOneRequiredWithoutPropertiesNestedInput
     units?: UnitUpdateManyWithoutPropertyNestedInput
   }
@@ -27125,8 +27116,40 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUncheckedUpdateOneWithoutPropertyNestedInput
     units?: UnitUncheckedUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type AddressUpsertWithoutBuildingInput = {
+    update: XOR<AddressUpdateWithoutBuildingInput, AddressUncheckedUpdateWithoutBuildingInput>
+    create: XOR<AddressCreateWithoutBuildingInput, AddressUncheckedCreateWithoutBuildingInput>
+    where?: AddressWhereInput
+  }
+
+  export type AddressUpdateToOneWithWhereWithoutBuildingInput = {
+    where?: AddressWhereInput
+    data: XOR<AddressUpdateWithoutBuildingInput, AddressUncheckedUpdateWithoutBuildingInput>
+  }
+
+  export type AddressUpdateWithoutBuildingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    postalCode?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type AddressUncheckedUpdateWithoutBuildingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    postalCode?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type UnitUpsertWithWhereUniqueWithoutBuildingInput = {
@@ -27145,76 +27168,64 @@ export namespace Prisma {
     data: XOR<UnitUpdateManyMutationInput, UnitUncheckedUpdateManyWithoutBuildingInput>
   }
 
-  export type PropertyCreateWithoutAddressInput = {
+  export type BuildingCreateWithoutAddressInput = {
     id?: string
-    title: string
-    description?: string | null
-    type: $Enums.PropertyType
+    name?: string | null
+    addressId?: string | null
+    floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    isActive?: boolean
-    verified?: boolean
-    owner: UserCreateNestedOneWithoutPropertiesInput
-    buildings?: BuildingCreateNestedManyWithoutPropertyInput
-    units?: UnitCreateNestedManyWithoutPropertyInput
+    property: PropertyCreateNestedOneWithoutBuildingsInput
+    units?: UnitCreateNestedManyWithoutBuildingInput
   }
 
-  export type PropertyUncheckedCreateWithoutAddressInput = {
+  export type BuildingUncheckedCreateWithoutAddressInput = {
     id?: string
-    title: string
-    description?: string | null
-    type: $Enums.PropertyType
-    ownerId: string
+    name?: string | null
+    propertyId: string
+    addressId?: string | null
+    floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    isActive?: boolean
-    verified?: boolean
-    buildings?: BuildingUncheckedCreateNestedManyWithoutPropertyInput
-    units?: UnitUncheckedCreateNestedManyWithoutPropertyInput
+    units?: UnitUncheckedCreateNestedManyWithoutBuildingInput
   }
 
-  export type PropertyCreateOrConnectWithoutAddressInput = {
-    where: PropertyWhereUniqueInput
-    create: XOR<PropertyCreateWithoutAddressInput, PropertyUncheckedCreateWithoutAddressInput>
+  export type BuildingCreateOrConnectWithoutAddressInput = {
+    where: BuildingWhereUniqueInput
+    create: XOR<BuildingCreateWithoutAddressInput, BuildingUncheckedCreateWithoutAddressInput>
   }
 
-  export type PropertyUpsertWithoutAddressInput = {
-    update: XOR<PropertyUpdateWithoutAddressInput, PropertyUncheckedUpdateWithoutAddressInput>
-    create: XOR<PropertyCreateWithoutAddressInput, PropertyUncheckedCreateWithoutAddressInput>
-    where?: PropertyWhereInput
+  export type BuildingUpsertWithoutAddressInput = {
+    update: XOR<BuildingUpdateWithoutAddressInput, BuildingUncheckedUpdateWithoutAddressInput>
+    create: XOR<BuildingCreateWithoutAddressInput, BuildingUncheckedCreateWithoutAddressInput>
+    where?: BuildingWhereInput
   }
 
-  export type PropertyUpdateToOneWithWhereWithoutAddressInput = {
-    where?: PropertyWhereInput
-    data: XOR<PropertyUpdateWithoutAddressInput, PropertyUncheckedUpdateWithoutAddressInput>
+  export type BuildingUpdateToOneWithWhereWithoutAddressInput = {
+    where?: BuildingWhereInput
+    data: XOR<BuildingUpdateWithoutAddressInput, BuildingUncheckedUpdateWithoutAddressInput>
   }
 
-  export type PropertyUpdateWithoutAddressInput = {
+  export type BuildingUpdateWithoutAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    owner?: UserUpdateOneRequiredWithoutPropertiesNestedInput
-    buildings?: BuildingUpdateManyWithoutPropertyNestedInput
-    units?: UnitUpdateManyWithoutPropertyNestedInput
+    property?: PropertyUpdateOneRequiredWithoutBuildingsNestedInput
+    units?: UnitUpdateManyWithoutBuildingNestedInput
   }
 
-  export type PropertyUncheckedUpdateWithoutAddressInput = {
+  export type BuildingUncheckedUpdateWithoutAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
-    ownerId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    buildings?: BuildingUncheckedUpdateManyWithoutPropertyNestedInput
-    units?: UnitUncheckedUpdateManyWithoutPropertyNestedInput
+    units?: UnitUncheckedUpdateManyWithoutBuildingNestedInput
   }
 
   export type PropertyCreateWithoutUnitsInput = {
@@ -27226,7 +27237,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressCreateNestedOneWithoutPropertyInput
     owner: UserCreateNestedOneWithoutPropertiesInput
     buildings?: BuildingCreateNestedManyWithoutPropertyInput
   }
@@ -27241,7 +27251,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     isActive?: boolean
     verified?: boolean
-    address?: AddressUncheckedCreateNestedOneWithoutPropertyInput
     buildings?: BuildingUncheckedCreateNestedManyWithoutPropertyInput
   }
 
@@ -27253,19 +27262,23 @@ export namespace Prisma {
   export type BuildingCreateWithoutUnitsInput = {
     id?: string
     name?: string | null
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     property: PropertyCreateNestedOneWithoutBuildingsInput
+    address?: AddressCreateNestedOneWithoutBuildingInput
   }
 
   export type BuildingUncheckedCreateWithoutUnitsInput = {
     id?: string
-    propertyId: string
     name?: string | null
+    propertyId: string
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    address?: AddressUncheckedCreateNestedOneWithoutBuildingInput
   }
 
   export type BuildingCreateOrConnectWithoutUnitsInput = {
@@ -27384,7 +27397,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27408,7 +27421,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27448,7 +27461,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUpdateOneWithoutPropertyNestedInput
     owner?: UserUpdateOneRequiredWithoutPropertiesNestedInput
     buildings?: BuildingUpdateManyWithoutPropertyNestedInput
   }
@@ -27463,7 +27475,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUncheckedUpdateOneWithoutPropertyNestedInput
     buildings?: BuildingUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
@@ -27481,19 +27492,23 @@ export namespace Prisma {
   export type BuildingUpdateWithoutUnitsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     property?: PropertyUpdateOneRequiredWithoutBuildingsNestedInput
+    address?: AddressUpdateOneWithoutBuildingNestedInput
   }
 
   export type BuildingUncheckedUpdateWithoutUnitsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    propertyId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    address?: AddressUncheckedUpdateOneWithoutBuildingNestedInput
   }
 
   export type LeaseUpsertWithWhereUniqueWithoutUnitInput = {
@@ -27575,7 +27590,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27599,7 +27614,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27623,7 +27638,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27647,7 +27662,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27687,7 +27702,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27711,7 +27726,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27778,7 +27793,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27802,7 +27817,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27987,7 +28002,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28011,7 +28026,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28248,7 +28263,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28272,7 +28287,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28386,7 +28401,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28410,7 +28425,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28605,7 +28620,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28629,7 +28644,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28658,7 +28673,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28682,7 +28697,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28825,7 +28840,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28849,7 +28864,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28884,7 +28899,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28908,7 +28923,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28997,7 +29012,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29021,7 +29036,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29100,7 +29115,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29124,7 +29139,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29148,7 +29163,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29172,7 +29187,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29245,7 +29260,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29269,7 +29284,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29424,7 +29439,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29448,7 +29463,7 @@ export namespace Prisma {
     photo?: string | null
     role?: $Enums.UserRole
     passwordHash?: string | null
-    provider?: string | null
+    provider?: string
     providerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29488,7 +29503,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29512,7 +29527,7 @@ export namespace Prisma {
     photo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: StringFieldUpdateOperationsInput | string
     providerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29638,7 +29653,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUpdateOneWithoutPropertyNestedInput
     buildings?: BuildingUpdateManyWithoutPropertyNestedInput
     units?: UnitUpdateManyWithoutPropertyNestedInput
   }
@@ -29652,7 +29666,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     verified?: BoolFieldUpdateOperationsInput | boolean
-    address?: AddressUncheckedUpdateOneWithoutPropertyNestedInput
     buildings?: BuildingUncheckedUpdateManyWithoutPropertyNestedInput
     units?: UnitUncheckedUpdateManyWithoutPropertyNestedInput
   }
@@ -29964,6 +29977,7 @@ export namespace Prisma {
   export type BuildingCreateManyPropertyInput = {
     id?: string
     name?: string | null
+    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29988,24 +30002,29 @@ export namespace Prisma {
   export type BuildingUpdateWithoutPropertyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    address?: AddressUpdateOneWithoutBuildingNestedInput
     units?: UnitUpdateManyWithoutBuildingNestedInput
   }
 
   export type BuildingUncheckedUpdateWithoutPropertyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    address?: AddressUncheckedUpdateOneWithoutBuildingNestedInput
     units?: UnitUncheckedUpdateManyWithoutBuildingNestedInput
   }
 
   export type BuildingUncheckedUpdateManyWithoutPropertyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

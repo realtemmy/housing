@@ -1,3 +1,5 @@
 import { PrismaClient } from "../generated/schema";
 
-export const prisma = new PrismaClient();
+const prisma = new PrismaClient();
+
+export default prisma;

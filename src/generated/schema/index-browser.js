@@ -149,8 +149,9 @@ exports.Prisma.PropertyScalarFieldEnum = {
 
 exports.Prisma.BuildingScalarFieldEnum = {
   id: 'id',
-  propertyId: 'propertyId',
   name: 'name',
+  propertyId: 'propertyId',
+  addressId: 'addressId',
   floors: 'floors',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -163,9 +164,9 @@ exports.Prisma.AddressScalarFieldEnum = {
   state: 'state',
   postalCode: 'postalCode',
   country: 'country',
-  propertyId: 'propertyId',
   longitude: 'longitude',
-  latitude: 'latitude'
+  latitude: 'latitude',
+  buildingId: 'buildingId'
 };
 
 exports.Prisma.UnitScalarFieldEnum = {
