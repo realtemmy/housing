@@ -14,35 +14,10 @@ export const getAllUnits = async (req: Request, res: Response) => {
   const units = await prisma.unit.findMany({
     where: whereClause,
     include: {
-      property: {
-        select: {
-          id: true,
-          title: true,
-          type: true,
-        },
-      },
-      building: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
       photos: true,
       leases: {
         where: {
           status: "ACTIVE",
-        },
-        select: {
-          id: true,
-          startDate: true,
-          endDate: true,
-          tenant: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            },
-          },
         },
       },
     },
@@ -58,7 +33,7 @@ export const getUnit = async (
 ) => {
   const unitId = req.params.id as string;
 
-  const unit = await prisma.unit.findUnique({
+  const unit = await prisma.unit.findUniqueOrThrow({
     where: { id: unitId },
     include: {
       property: true,
@@ -313,7 +288,7 @@ export const getAvailableUnits = async (req: Request, res: Response) => {
           id: true,
           title: true,
           type: true,
-          address: true,
+
         },
       },
       building: {

@@ -183,7 +183,7 @@ exports.Prisma.UnitScalarFieldEnum = {
   buildingId: 'buildingId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  occupantId: 'occupantId'
 };
 
 exports.Prisma.TenantScalarFieldEnum = {

@@ -6,6 +6,8 @@ import {
 
 const router = Router();
 
+// property/:propertyId/units - Units
+
 router.route("/").get(getAllProperties).post(createProperty);
 
 export default router;

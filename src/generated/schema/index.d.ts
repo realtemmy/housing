@@ -7521,7 +7521,7 @@ export namespace Prisma {
     buildingId: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
+    occupantId: string | null
   }
 
   export type UnitMaxAggregateOutputType = {
@@ -7538,7 +7538,7 @@ export namespace Prisma {
     buildingId: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
+    occupantId: string | null
   }
 
   export type UnitCountAggregateOutputType = {
@@ -7555,7 +7555,7 @@ export namespace Prisma {
     buildingId: number
     createdAt: number
     updatedAt: number
-    userId: number
+    occupantId: number
     _all: number
   }
 
@@ -7592,7 +7592,7 @@ export namespace Prisma {
     buildingId?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
+    occupantId?: true
   }
 
   export type UnitMaxAggregateInputType = {
@@ -7609,7 +7609,7 @@ export namespace Prisma {
     buildingId?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
+    occupantId?: true
   }
 
   export type UnitCountAggregateInputType = {
@@ -7626,7 +7626,7 @@ export namespace Prisma {
     buildingId?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
+    occupantId?: true
     _all?: true
   }
 
@@ -7730,7 +7730,7 @@ export namespace Prisma {
     buildingId: string | null
     createdAt: Date
     updatedAt: Date
-    userId: string | null
+    occupantId: string | null
     _count: UnitCountAggregateOutputType | null
     _avg: UnitAvgAggregateOutputType | null
     _sum: UnitSumAggregateOutputType | null
@@ -7766,13 +7766,13 @@ export namespace Prisma {
     buildingId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
+    occupantId?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     building?: boolean | Unit$buildingArgs<ExtArgs>
     leases?: boolean | Unit$leasesArgs<ExtArgs>
     maintenance?: boolean | Unit$maintenanceArgs<ExtArgs>
     photos?: boolean | Unit$photosArgs<ExtArgs>
-    user?: boolean | Unit$userArgs<ExtArgs>
+    occupant?: boolean | Unit$occupantArgs<ExtArgs>
     _count?: boolean | UnitCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["unit"]>
 
@@ -7790,10 +7790,10 @@ export namespace Prisma {
     buildingId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
+    occupantId?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     building?: boolean | Unit$buildingArgs<ExtArgs>
-    user?: boolean | Unit$userArgs<ExtArgs>
+    occupant?: boolean | Unit$occupantArgs<ExtArgs>
   }, ExtArgs["result"]["unit"]>
 
   export type UnitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7810,10 +7810,10 @@ export namespace Prisma {
     buildingId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
+    occupantId?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     building?: boolean | Unit$buildingArgs<ExtArgs>
-    user?: boolean | Unit$userArgs<ExtArgs>
+    occupant?: boolean | Unit$occupantArgs<ExtArgs>
   }, ExtArgs["result"]["unit"]>
 
   export type UnitSelectScalar = {
@@ -7830,28 +7830,28 @@ export namespace Prisma {
     buildingId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
+    occupantId?: boolean
   }
 
-  export type UnitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "unitNumber" | "floor" | "bedrooms" | "bathrooms" | "sqft" | "status" | "rentAmount" | "depositAmount" | "propertyId" | "buildingId" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["unit"]>
+  export type UnitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "unitNumber" | "floor" | "bedrooms" | "bathrooms" | "sqft" | "status" | "rentAmount" | "depositAmount" | "propertyId" | "buildingId" | "createdAt" | "updatedAt" | "occupantId", ExtArgs["result"]["unit"]>
   export type UnitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     building?: boolean | Unit$buildingArgs<ExtArgs>
     leases?: boolean | Unit$leasesArgs<ExtArgs>
     maintenance?: boolean | Unit$maintenanceArgs<ExtArgs>
     photos?: boolean | Unit$photosArgs<ExtArgs>
-    user?: boolean | Unit$userArgs<ExtArgs>
+    occupant?: boolean | Unit$occupantArgs<ExtArgs>
     _count?: boolean | UnitCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UnitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     building?: boolean | Unit$buildingArgs<ExtArgs>
-    user?: boolean | Unit$userArgs<ExtArgs>
+    occupant?: boolean | Unit$occupantArgs<ExtArgs>
   }
   export type UnitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     building?: boolean | Unit$buildingArgs<ExtArgs>
-    user?: boolean | Unit$userArgs<ExtArgs>
+    occupant?: boolean | Unit$occupantArgs<ExtArgs>
   }
 
   export type $UnitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7862,7 +7862,7 @@ export namespace Prisma {
       leases: Prisma.$LeasePayload<ExtArgs>[]
       maintenance: Prisma.$MaintenanceRequestPayload<ExtArgs>[]
       photos: Prisma.$PhotoPayload<ExtArgs>[]
-      user: Prisma.$UserPayload<ExtArgs> | null
+      occupant: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7878,7 +7878,7 @@ export namespace Prisma {
       buildingId: string | null
       createdAt: Date
       updatedAt: Date
-      userId: string | null
+      occupantId: string | null
     }, ExtArgs["result"]["unit"]>
     composites: {}
   }
@@ -8278,7 +8278,7 @@ export namespace Prisma {
     leases<T extends Unit$leasesArgs<ExtArgs> = {}>(args?: Subset<T, Unit$leasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     maintenance<T extends Unit$maintenanceArgs<ExtArgs> = {}>(args?: Subset<T, Unit$maintenanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaintenanceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     photos<T extends Unit$photosArgs<ExtArgs> = {}>(args?: Subset<T, Unit$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    user<T extends Unit$userArgs<ExtArgs> = {}>(args?: Subset<T, Unit$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    occupant<T extends Unit$occupantArgs<ExtArgs> = {}>(args?: Subset<T, Unit$occupantArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8321,7 +8321,7 @@ export namespace Prisma {
     readonly buildingId: FieldRef<"Unit", 'String'>
     readonly createdAt: FieldRef<"Unit", 'DateTime'>
     readonly updatedAt: FieldRef<"Unit", 'DateTime'>
-    readonly userId: FieldRef<"Unit", 'String'>
+    readonly occupantId: FieldRef<"Unit", 'String'>
   }
     
 
@@ -8809,9 +8809,9 @@ export namespace Prisma {
   }
 
   /**
-   * Unit.user
+   * Unit.occupant
    */
-  export type Unit$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Unit$occupantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -20391,7 +20391,7 @@ export namespace Prisma {
     buildingId: 'buildingId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    userId: 'userId'
+    occupantId: 'occupantId'
   };
 
   export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
@@ -21109,13 +21109,13 @@ export namespace Prisma {
     buildingId?: StringNullableFilter<"Unit"> | string | null
     createdAt?: DateTimeFilter<"Unit"> | Date | string
     updatedAt?: DateTimeFilter<"Unit"> | Date | string
-    userId?: StringNullableFilter<"Unit"> | string | null
+    occupantId?: StringNullableFilter<"Unit"> | string | null
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
     building?: XOR<BuildingNullableScalarRelationFilter, BuildingWhereInput> | null
     leases?: LeaseListRelationFilter
     maintenance?: MaintenanceRequestListRelationFilter
     photos?: PhotoListRelationFilter
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    occupant?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type UnitOrderByWithRelationInput = {
@@ -21132,13 +21132,13 @@ export namespace Prisma {
     buildingId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrderInput | SortOrder
+    occupantId?: SortOrderInput | SortOrder
     property?: PropertyOrderByWithRelationInput
     building?: BuildingOrderByWithRelationInput
     leases?: LeaseOrderByRelationAggregateInput
     maintenance?: MaintenanceRequestOrderByRelationAggregateInput
     photos?: PhotoOrderByRelationAggregateInput
-    user?: UserOrderByWithRelationInput
+    occupant?: UserOrderByWithRelationInput
   }
 
   export type UnitWhereUniqueInput = Prisma.AtLeast<{
@@ -21159,13 +21159,13 @@ export namespace Prisma {
     buildingId?: StringNullableFilter<"Unit"> | string | null
     createdAt?: DateTimeFilter<"Unit"> | Date | string
     updatedAt?: DateTimeFilter<"Unit"> | Date | string
-    userId?: StringNullableFilter<"Unit"> | string | null
+    occupantId?: StringNullableFilter<"Unit"> | string | null
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
     building?: XOR<BuildingNullableScalarRelationFilter, BuildingWhereInput> | null
     leases?: LeaseListRelationFilter
     maintenance?: MaintenanceRequestListRelationFilter
     photos?: PhotoListRelationFilter
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    occupant?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "propertyId_unitNumber">
 
   export type UnitOrderByWithAggregationInput = {
@@ -21182,7 +21182,7 @@ export namespace Prisma {
     buildingId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrderInput | SortOrder
+    occupantId?: SortOrderInput | SortOrder
     _count?: UnitCountOrderByAggregateInput
     _avg?: UnitAvgOrderByAggregateInput
     _max?: UnitMaxOrderByAggregateInput
@@ -21207,7 +21207,7 @@ export namespace Prisma {
     buildingId?: StringNullableWithAggregatesFilter<"Unit"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Unit"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Unit"> | Date | string
-    userId?: StringNullableWithAggregatesFilter<"Unit"> | string | null
+    occupantId?: StringNullableWithAggregatesFilter<"Unit"> | string | null
   }
 
   export type TenantWhereInput = {
@@ -21968,7 +21968,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -21993,7 +21993,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUpdateInput = {
@@ -22018,7 +22018,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -22043,7 +22043,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -22213,7 +22213,7 @@ export namespace Prisma {
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    property?: PropertyUpdateOneRequiredWithoutBuildingsNestedInput | undefined
+    property?: PropertyUpdateOneRequiredWithoutBuildingsNestedInput
     address?: AddressUpdateOneWithoutBuildingNestedInput
     units?: UnitUpdateManyWithoutBuildingNestedInput
   }
@@ -22221,7 +22221,7 @@ export namespace Prisma {
   export type BuildingUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    propertyId?: StringFieldUpdateOperationsInput | string | undefined
+    propertyId?: StringFieldUpdateOperationsInput | string
     addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22292,7 +22292,7 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    building?: BuildingUpdateOneWithoutAddressNestedInput | undefined
+    building?: BuildingUpdateOneWithoutAddressNestedInput
   }
 
   export type AddressUncheckedUpdateInput = {
@@ -22304,7 +22304,7 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    buildingId?: NullableStringFieldUpdateOperationsInput | string | null | undefined
+    buildingId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AddressCreateManyInput = {
@@ -22359,7 +22359,7 @@ export namespace Prisma {
     leases?: LeaseCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestCreateNestedManyWithoutUnitInput
     photos?: PhotoCreateNestedManyWithoutUnitInput
-    user?: UserCreateNestedOneWithoutUnitInput
+    occupant?: UserCreateNestedOneWithoutUnitInput
   }
 
   export type UnitUncheckedCreateInput = {
@@ -22376,7 +22376,7 @@ export namespace Prisma {
     buildingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
     leases?: LeaseUncheckedCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestUncheckedCreateNestedManyWithoutUnitInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUnitInput
@@ -22399,7 +22399,7 @@ export namespace Prisma {
     leases?: LeaseUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUpdateManyWithoutUnitNestedInput
     photos?: PhotoUpdateManyWithoutUnitNestedInput
-    user?: UserUpdateOneWithoutUnitNestedInput
+    occupant?: UserUpdateOneWithoutUnitNestedInput
   }
 
   export type UnitUncheckedUpdateInput = {
@@ -22416,7 +22416,7 @@ export namespace Prisma {
     buildingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
     leases?: LeaseUncheckedUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUncheckedUpdateManyWithoutUnitNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUnitNestedInput
@@ -22436,7 +22436,7 @@ export namespace Prisma {
     buildingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
   }
 
   export type UnitUpdateManyMutationInput = {
@@ -22467,7 +22467,7 @@ export namespace Prisma {
     buildingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TenantCreateInput = {
@@ -23755,7 +23755,7 @@ export namespace Prisma {
     buildingId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
+    occupantId?: SortOrder
   }
 
   export type UnitAvgOrderByAggregateInput = {
@@ -23781,7 +23781,7 @@ export namespace Prisma {
     buildingId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
+    occupantId?: SortOrder
   }
 
   export type UnitMinOrderByAggregateInput = {
@@ -23798,7 +23798,7 @@ export namespace Prisma {
     buildingId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
+    occupantId?: SortOrder
   }
 
   export type UnitSumOrderByAggregateInput = {
@@ -24458,10 +24458,10 @@ export namespace Prisma {
     connect?: AttachmentWhereUniqueInput | AttachmentWhereUniqueInput[]
   }
 
-  export type UnitCreateNestedManyWithoutUserInput = {
-    create?: XOR<UnitCreateWithoutUserInput, UnitUncheckedCreateWithoutUserInput> | UnitCreateWithoutUserInput[] | UnitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: UnitCreateOrConnectWithoutUserInput | UnitCreateOrConnectWithoutUserInput[]
-    createMany?: UnitCreateManyUserInputEnvelope
+  export type UnitCreateNestedManyWithoutOccupantInput = {
+    create?: XOR<UnitCreateWithoutOccupantInput, UnitUncheckedCreateWithoutOccupantInput> | UnitCreateWithoutOccupantInput[] | UnitUncheckedCreateWithoutOccupantInput[]
+    connectOrCreate?: UnitCreateOrConnectWithoutOccupantInput | UnitCreateOrConnectWithoutOccupantInput[]
+    createMany?: UnitCreateManyOccupantInputEnvelope
     connect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
   }
 
@@ -24527,10 +24527,10 @@ export namespace Prisma {
     connect?: AttachmentWhereUniqueInput | AttachmentWhereUniqueInput[]
   }
 
-  export type UnitUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<UnitCreateWithoutUserInput, UnitUncheckedCreateWithoutUserInput> | UnitCreateWithoutUserInput[] | UnitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: UnitCreateOrConnectWithoutUserInput | UnitCreateOrConnectWithoutUserInput[]
-    createMany?: UnitCreateManyUserInputEnvelope
+  export type UnitUncheckedCreateNestedManyWithoutOccupantInput = {
+    create?: XOR<UnitCreateWithoutOccupantInput, UnitUncheckedCreateWithoutOccupantInput> | UnitCreateWithoutOccupantInput[] | UnitUncheckedCreateWithoutOccupantInput[]
+    connectOrCreate?: UnitCreateOrConnectWithoutOccupantInput | UnitCreateOrConnectWithoutOccupantInput[]
+    createMany?: UnitCreateManyOccupantInputEnvelope
     connect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
   }
 
@@ -24672,17 +24672,17 @@ export namespace Prisma {
     deleteMany?: AttachmentScalarWhereInput | AttachmentScalarWhereInput[]
   }
 
-  export type UnitUpdateManyWithoutUserNestedInput = {
-    create?: XOR<UnitCreateWithoutUserInput, UnitUncheckedCreateWithoutUserInput> | UnitCreateWithoutUserInput[] | UnitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: UnitCreateOrConnectWithoutUserInput | UnitCreateOrConnectWithoutUserInput[]
-    upsert?: UnitUpsertWithWhereUniqueWithoutUserInput | UnitUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: UnitCreateManyUserInputEnvelope
+  export type UnitUpdateManyWithoutOccupantNestedInput = {
+    create?: XOR<UnitCreateWithoutOccupantInput, UnitUncheckedCreateWithoutOccupantInput> | UnitCreateWithoutOccupantInput[] | UnitUncheckedCreateWithoutOccupantInput[]
+    connectOrCreate?: UnitCreateOrConnectWithoutOccupantInput | UnitCreateOrConnectWithoutOccupantInput[]
+    upsert?: UnitUpsertWithWhereUniqueWithoutOccupantInput | UnitUpsertWithWhereUniqueWithoutOccupantInput[]
+    createMany?: UnitCreateManyOccupantInputEnvelope
     set?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
     disconnect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
     delete?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
     connect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
-    update?: UnitUpdateWithWhereUniqueWithoutUserInput | UnitUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: UnitUpdateManyWithWhereWithoutUserInput | UnitUpdateManyWithWhereWithoutUserInput[]
+    update?: UnitUpdateWithWhereUniqueWithoutOccupantInput | UnitUpdateWithWhereUniqueWithoutOccupantInput[]
+    updateMany?: UnitUpdateManyWithWhereWithoutOccupantInput | UnitUpdateManyWithWhereWithoutOccupantInput[]
     deleteMany?: UnitScalarWhereInput | UnitScalarWhereInput[]
   }
 
@@ -24808,17 +24808,17 @@ export namespace Prisma {
     deleteMany?: AttachmentScalarWhereInput | AttachmentScalarWhereInput[]
   }
 
-  export type UnitUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<UnitCreateWithoutUserInput, UnitUncheckedCreateWithoutUserInput> | UnitCreateWithoutUserInput[] | UnitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: UnitCreateOrConnectWithoutUserInput | UnitCreateOrConnectWithoutUserInput[]
-    upsert?: UnitUpsertWithWhereUniqueWithoutUserInput | UnitUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: UnitCreateManyUserInputEnvelope
+  export type UnitUncheckedUpdateManyWithoutOccupantNestedInput = {
+    create?: XOR<UnitCreateWithoutOccupantInput, UnitUncheckedCreateWithoutOccupantInput> | UnitCreateWithoutOccupantInput[] | UnitUncheckedCreateWithoutOccupantInput[]
+    connectOrCreate?: UnitCreateOrConnectWithoutOccupantInput | UnitCreateOrConnectWithoutOccupantInput[]
+    upsert?: UnitUpsertWithWhereUniqueWithoutOccupantInput | UnitUpsertWithWhereUniqueWithoutOccupantInput[]
+    createMany?: UnitCreateManyOccupantInputEnvelope
     set?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
     disconnect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
     delete?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
     connect?: UnitWhereUniqueInput | UnitWhereUniqueInput[]
-    update?: UnitUpdateWithWhereUniqueWithoutUserInput | UnitUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: UnitUpdateManyWithWhereWithoutUserInput | UnitUpdateManyWithWhereWithoutUserInput[]
+    update?: UnitUpdateWithWhereUniqueWithoutOccupantInput | UnitUpdateWithWhereUniqueWithoutOccupantInput[]
+    updateMany?: UnitUpdateManyWithWhereWithoutOccupantInput | UnitUpdateManyWithWhereWithoutOccupantInput[]
     deleteMany?: UnitScalarWhereInput | UnitScalarWhereInput[]
   }
 
@@ -26398,7 +26398,7 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UnitCreateWithoutUserInput = {
+  export type UnitCreateWithoutOccupantInput = {
     id?: string
     unitNumber: string
     floor?: number | null
@@ -26417,7 +26417,7 @@ export namespace Prisma {
     photos?: PhotoCreateNestedManyWithoutUnitInput
   }
 
-  export type UnitUncheckedCreateWithoutUserInput = {
+  export type UnitUncheckedCreateWithoutOccupantInput = {
     id?: string
     unitNumber: string
     floor?: number | null
@@ -26436,13 +26436,13 @@ export namespace Prisma {
     photos?: PhotoUncheckedCreateNestedManyWithoutUnitInput
   }
 
-  export type UnitCreateOrConnectWithoutUserInput = {
+  export type UnitCreateOrConnectWithoutOccupantInput = {
     where: UnitWhereUniqueInput
-    create: XOR<UnitCreateWithoutUserInput, UnitUncheckedCreateWithoutUserInput>
+    create: XOR<UnitCreateWithoutOccupantInput, UnitUncheckedCreateWithoutOccupantInput>
   }
 
-  export type UnitCreateManyUserInputEnvelope = {
-    data: UnitCreateManyUserInput | UnitCreateManyUserInput[]
+  export type UnitCreateManyOccupantInputEnvelope = {
+    data: UnitCreateManyOccupantInput | UnitCreateManyOccupantInput[]
     skipDuplicates?: boolean
   }
 
@@ -26703,20 +26703,20 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Attachment"> | Date | string
   }
 
-  export type UnitUpsertWithWhereUniqueWithoutUserInput = {
+  export type UnitUpsertWithWhereUniqueWithoutOccupantInput = {
     where: UnitWhereUniqueInput
-    update: XOR<UnitUpdateWithoutUserInput, UnitUncheckedUpdateWithoutUserInput>
-    create: XOR<UnitCreateWithoutUserInput, UnitUncheckedCreateWithoutUserInput>
+    update: XOR<UnitUpdateWithoutOccupantInput, UnitUncheckedUpdateWithoutOccupantInput>
+    create: XOR<UnitCreateWithoutOccupantInput, UnitUncheckedCreateWithoutOccupantInput>
   }
 
-  export type UnitUpdateWithWhereUniqueWithoutUserInput = {
+  export type UnitUpdateWithWhereUniqueWithoutOccupantInput = {
     where: UnitWhereUniqueInput
-    data: XOR<UnitUpdateWithoutUserInput, UnitUncheckedUpdateWithoutUserInput>
+    data: XOR<UnitUpdateWithoutOccupantInput, UnitUncheckedUpdateWithoutOccupantInput>
   }
 
-  export type UnitUpdateManyWithWhereWithoutUserInput = {
+  export type UnitUpdateManyWithWhereWithoutOccupantInput = {
     where: UnitScalarWhereInput
-    data: XOR<UnitUpdateManyMutationInput, UnitUncheckedUpdateManyWithoutUserInput>
+    data: XOR<UnitUpdateManyMutationInput, UnitUncheckedUpdateManyWithoutOccupantInput>
   }
 
   export type UnitScalarWhereInput = {
@@ -26736,7 +26736,7 @@ export namespace Prisma {
     buildingId?: StringNullableFilter<"Unit"> | string | null
     createdAt?: DateTimeFilter<"Unit"> | Date | string
     updatedAt?: DateTimeFilter<"Unit"> | Date | string
-    userId?: StringNullableFilter<"Unit"> | string | null
+    occupantId?: StringNullableFilter<"Unit"> | string | null
   }
 
   export type UserCreateWithoutPropertiesInput = {
@@ -26760,7 +26760,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutPropertiesInput = {
@@ -26784,7 +26784,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutPropertiesInput = {
@@ -26840,7 +26840,7 @@ export namespace Prisma {
     leases?: LeaseCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestCreateNestedManyWithoutUnitInput
     photos?: PhotoCreateNestedManyWithoutUnitInput
-    user?: UserCreateNestedOneWithoutUnitInput
+    occupant?: UserCreateNestedOneWithoutUnitInput
   }
 
   export type UnitUncheckedCreateWithoutPropertyInput = {
@@ -26856,7 +26856,7 @@ export namespace Prisma {
     buildingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
     leases?: LeaseUncheckedCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestUncheckedCreateNestedManyWithoutUnitInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUnitInput
@@ -26904,7 +26904,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPropertiesInput = {
@@ -26928,7 +26928,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type BuildingUpsertWithWhereUniqueWithoutPropertyInput = {
@@ -27050,7 +27050,7 @@ export namespace Prisma {
     leases?: LeaseCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestCreateNestedManyWithoutUnitInput
     photos?: PhotoCreateNestedManyWithoutUnitInput
-    user?: UserCreateNestedOneWithoutUnitInput
+    occupant?: UserCreateNestedOneWithoutUnitInput
   }
 
   export type UnitUncheckedCreateWithoutBuildingInput = {
@@ -27066,7 +27066,7 @@ export namespace Prisma {
     propertyId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
     leases?: LeaseUncheckedCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestUncheckedCreateNestedManyWithoutUnitInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUnitInput
@@ -27650,7 +27650,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutTenantInput = {
@@ -27674,7 +27674,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutTenantInput = {
@@ -27714,7 +27714,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTenantInput = {
@@ -27738,7 +27738,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type UnitCreateWithoutLeasesInput = {
@@ -27757,7 +27757,7 @@ export namespace Prisma {
     building?: BuildingCreateNestedOneWithoutUnitsInput
     maintenance?: MaintenanceRequestCreateNestedManyWithoutUnitInput
     photos?: PhotoCreateNestedManyWithoutUnitInput
-    user?: UserCreateNestedOneWithoutUnitInput
+    occupant?: UserCreateNestedOneWithoutUnitInput
   }
 
   export type UnitUncheckedCreateWithoutLeasesInput = {
@@ -27774,7 +27774,7 @@ export namespace Prisma {
     buildingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
     maintenance?: MaintenanceRequestUncheckedCreateNestedManyWithoutUnitInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUnitInput
   }
@@ -27805,7 +27805,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutLeasesInput = {
@@ -27829,7 +27829,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutLeasesInput = {
@@ -27960,7 +27960,7 @@ export namespace Prisma {
     building?: BuildingUpdateOneWithoutUnitsNestedInput
     maintenance?: MaintenanceRequestUpdateManyWithoutUnitNestedInput
     photos?: PhotoUpdateManyWithoutUnitNestedInput
-    user?: UserUpdateOneWithoutUnitNestedInput
+    occupant?: UserUpdateOneWithoutUnitNestedInput
   }
 
   export type UnitUncheckedUpdateWithoutLeasesInput = {
@@ -27977,7 +27977,7 @@ export namespace Prisma {
     buildingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
     maintenance?: MaintenanceRequestUncheckedUpdateManyWithoutUnitNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUnitNestedInput
   }
@@ -28014,7 +28014,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLeasesInput = {
@@ -28038,7 +28038,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type PaymentUpsertWithWhereUniqueWithoutLeaseInput = {
@@ -28275,7 +28275,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -28299,7 +28299,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -28413,7 +28413,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -28437,7 +28437,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type LeaseCreateWithoutInvoicesInput = {
@@ -28584,7 +28584,7 @@ export namespace Prisma {
     building?: BuildingCreateNestedOneWithoutUnitsInput
     leases?: LeaseCreateNestedManyWithoutUnitInput
     photos?: PhotoCreateNestedManyWithoutUnitInput
-    user?: UserCreateNestedOneWithoutUnitInput
+    occupant?: UserCreateNestedOneWithoutUnitInput
   }
 
   export type UnitUncheckedCreateWithoutMaintenanceInput = {
@@ -28601,7 +28601,7 @@ export namespace Prisma {
     buildingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
     leases?: LeaseUncheckedCreateNestedManyWithoutUnitInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUnitInput
   }
@@ -28632,7 +28632,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutMaintenanceReqInput = {
@@ -28656,7 +28656,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutMaintenanceReqInput = {
@@ -28685,7 +28685,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRequestsInput = {
@@ -28709,7 +28709,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRequestsInput = {
@@ -28798,7 +28798,7 @@ export namespace Prisma {
     building?: BuildingUpdateOneWithoutUnitsNestedInput
     leases?: LeaseUpdateManyWithoutUnitNestedInput
     photos?: PhotoUpdateManyWithoutUnitNestedInput
-    user?: UserUpdateOneWithoutUnitNestedInput
+    occupant?: UserUpdateOneWithoutUnitNestedInput
   }
 
   export type UnitUncheckedUpdateWithoutMaintenanceInput = {
@@ -28815,7 +28815,7 @@ export namespace Prisma {
     buildingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
     leases?: LeaseUncheckedUpdateManyWithoutUnitNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUnitNestedInput
   }
@@ -28852,7 +28852,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMaintenanceReqInput = {
@@ -28876,7 +28876,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUpsertWithoutAssignedRequestsInput = {
@@ -28911,7 +28911,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRequestsInput = {
@@ -28935,7 +28935,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type AttachmentUpsertWithWhereUniqueWithoutMaintenanceInput = {
@@ -29024,7 +29024,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUserInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutMaintenanceNoteInput = {
@@ -29048,7 +29048,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutMaintenanceNoteInput = {
@@ -29127,7 +29127,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUserNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMaintenanceNoteInput = {
@@ -29151,7 +29151,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserCreateWithoutAttachmentInput = {
@@ -29175,7 +29175,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutAttachmentInput = {
@@ -29199,7 +29199,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutAttachmentInput = {
@@ -29272,7 +29272,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttachmentInput = {
@@ -29296,7 +29296,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type MaintenanceRequestUpsertWithoutAttachmentsInput = {
@@ -29354,7 +29354,7 @@ export namespace Prisma {
     building?: BuildingCreateNestedOneWithoutUnitsInput
     leases?: LeaseCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestCreateNestedManyWithoutUnitInput
-    user?: UserCreateNestedOneWithoutUnitInput
+    occupant?: UserCreateNestedOneWithoutUnitInput
   }
 
   export type UnitUncheckedCreateWithoutPhotosInput = {
@@ -29371,7 +29371,7 @@ export namespace Prisma {
     buildingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
     leases?: LeaseUncheckedCreateNestedManyWithoutUnitInput
     maintenance?: MaintenanceRequestUncheckedCreateNestedManyWithoutUnitInput
   }
@@ -29408,7 +29408,7 @@ export namespace Prisma {
     building?: BuildingUpdateOneWithoutUnitsNestedInput
     leases?: LeaseUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUpdateManyWithoutUnitNestedInput
-    user?: UserUpdateOneWithoutUnitNestedInput
+    occupant?: UserUpdateOneWithoutUnitNestedInput
   }
 
   export type UnitUncheckedUpdateWithoutPhotosInput = {
@@ -29425,7 +29425,7 @@ export namespace Prisma {
     buildingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
     leases?: LeaseUncheckedUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUncheckedUpdateManyWithoutUnitNestedInput
   }
@@ -29451,7 +29451,7 @@ export namespace Prisma {
     tenant?: TenantCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentCreateNestedManyWithoutUploadedByInput
-    unit?: UnitCreateNestedManyWithoutUserInput
+    unit?: UnitCreateNestedManyWithoutOccupantInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -29475,7 +29475,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedCreateNestedOneWithoutUserInput
     maintenanceNote?: MaintenanceNoteUncheckedCreateNestedManyWithoutAuthorInput
     attachment?: AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
-    unit?: UnitUncheckedCreateNestedManyWithoutUserInput
+    unit?: UnitUncheckedCreateNestedManyWithoutOccupantInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -29515,7 +29515,7 @@ export namespace Prisma {
     tenant?: TenantUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUpdateManyWithoutUserNestedInput
+    unit?: UnitUpdateManyWithoutOccupantNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -29539,7 +29539,7 @@ export namespace Prisma {
     tenant?: TenantUncheckedUpdateOneWithoutUserNestedInput
     maintenanceNote?: MaintenanceNoteUncheckedUpdateManyWithoutAuthorNestedInput
     attachment?: AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
-    unit?: UnitUncheckedUpdateManyWithoutUserNestedInput
+    unit?: UnitUncheckedUpdateManyWithoutOccupantNestedInput
   }
 
   export type PropertyCreateManyOwnerInput = {
@@ -29628,7 +29628,7 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type UnitCreateManyUserInput = {
+  export type UnitCreateManyOccupantInput = {
     id?: string
     unitNumber: string
     floor?: number | null
@@ -29920,7 +29920,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UnitUpdateWithoutUserInput = {
+  export type UnitUpdateWithoutOccupantInput = {
     id?: StringFieldUpdateOperationsInput | string
     unitNumber?: StringFieldUpdateOperationsInput | string
     floor?: NullableIntFieldUpdateOperationsInput | number | null
@@ -29939,7 +29939,7 @@ export namespace Prisma {
     photos?: PhotoUpdateManyWithoutUnitNestedInput
   }
 
-  export type UnitUncheckedUpdateWithoutUserInput = {
+  export type UnitUncheckedUpdateWithoutOccupantInput = {
     id?: StringFieldUpdateOperationsInput | string
     unitNumber?: StringFieldUpdateOperationsInput | string
     floor?: NullableIntFieldUpdateOperationsInput | number | null
@@ -29958,7 +29958,7 @@ export namespace Prisma {
     photos?: PhotoUncheckedUpdateManyWithoutUnitNestedInput
   }
 
-  export type UnitUncheckedUpdateManyWithoutUserInput = {
+  export type UnitUncheckedUpdateManyWithoutOccupantInput = {
     id?: StringFieldUpdateOperationsInput | string
     unitNumber?: StringFieldUpdateOperationsInput | string
     floor?: NullableIntFieldUpdateOperationsInput | number | null
@@ -29996,7 +29996,7 @@ export namespace Prisma {
     buildingId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
   }
 
   export type BuildingUpdateWithoutPropertyInput = {
@@ -30046,7 +30046,7 @@ export namespace Prisma {
     leases?: LeaseUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUpdateManyWithoutUnitNestedInput
     photos?: PhotoUpdateManyWithoutUnitNestedInput
-    user?: UserUpdateOneWithoutUnitNestedInput
+    occupant?: UserUpdateOneWithoutUnitNestedInput
   }
 
   export type UnitUncheckedUpdateWithoutPropertyInput = {
@@ -30062,7 +30062,7 @@ export namespace Prisma {
     buildingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
     leases?: LeaseUncheckedUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUncheckedUpdateManyWithoutUnitNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUnitNestedInput
@@ -30081,7 +30081,7 @@ export namespace Prisma {
     buildingId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UnitCreateManyBuildingInput = {
@@ -30097,7 +30097,7 @@ export namespace Prisma {
     propertyId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId?: string | null
+    occupantId?: string | null
   }
 
   export type UnitUpdateWithoutBuildingInput = {
@@ -30116,7 +30116,7 @@ export namespace Prisma {
     leases?: LeaseUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUpdateManyWithoutUnitNestedInput
     photos?: PhotoUpdateManyWithoutUnitNestedInput
-    user?: UserUpdateOneWithoutUnitNestedInput
+    occupant?: UserUpdateOneWithoutUnitNestedInput
   }
 
   export type UnitUncheckedUpdateWithoutBuildingInput = {
@@ -30132,7 +30132,7 @@ export namespace Prisma {
     propertyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
     leases?: LeaseUncheckedUpdateManyWithoutUnitNestedInput
     maintenance?: MaintenanceRequestUncheckedUpdateManyWithoutUnitNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUnitNestedInput
@@ -30151,7 +30151,7 @@ export namespace Prisma {
     propertyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    occupantId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type LeaseCreateManyUnitInput = {

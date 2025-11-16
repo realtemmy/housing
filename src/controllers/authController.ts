@@ -24,23 +24,33 @@ const verifyGoogleToken = async (token: string) => {
   return { email, name: given_name, photo: picture, sub };
 };
 
-export const signUp = async (req: Request, res: Response) => {
-  const validatedUser = userValidator.parse(req.body);
-  const { email, password, role, name } = validatedUser;
-  const hashedPassword = bcrypt.hashSync(password, 10);
-  const createdUser = await prisma.user.create({
-    data: {
-      email,
-      passwordHash: hashedPassword,
-      role,
-      name,
-      provider: "local",
-    },
-  });
-  res.status(201).json({
-    status: "success",
-    data: createdUser,
-  });
+export const signUp = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const validatedUser = userValidator.parse(req.body);
+    const { email, password, role, name, phone } = validatedUser;
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const createdUser = await prisma.user.create({
+      data: {
+        email,
+        passwordHash: hashedPassword,
+        role,
+        name,
+        provider: "local",
+        phone: phone ?? null,
+      },
+    });
+    res.status(201).json({
+      status: "success",
+      data: createdUser,
+    });
+  } catch (error) {
+    next(error);
+    console.error("Error: ", error);
+  }
 };
 
 export const login = async (
@@ -176,7 +186,7 @@ export const authGoogle = async (
       new AppError("Authentication with Google failed. No email provided.", 400)
     );
 
-  let user = await prisma.user.findFirst({ 
+  let user = await prisma.user.findFirst({
     where: {
       OR: [{ provider: "google", providerId: sub }, { email }],
     },
@@ -196,7 +206,13 @@ export const authGoogle = async (
   } else {
     await prisma.user.update({
       where: { id: user.id },
-      data: { provider: "google", providerId: sub, name, photo: photo ?? null },
+      data: {
+        provider: "google",
+        providerId: sub,
+        name,
+        photo: photo ?? null,
+        email,
+      },
     });
   }
 

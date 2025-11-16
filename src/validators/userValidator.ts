@@ -12,6 +12,6 @@ export const userValidator = z.object({
     .string()
     .min(10, "Phone number should not be less than 10 digits")
     .optional(),
-  bio: z.string().max(1500, "Maximum length of 1500 exceeded"),
+  bio: z.string().max(1500, "Maximum length of 1500 exceeded").optional(),
   photo: z.url().optional(),
 });

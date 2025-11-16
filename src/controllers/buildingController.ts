@@ -61,18 +61,6 @@ export const getAllBuildings = async (req: Request, res: Response) => {
 
     buildings = await prisma.building.findMany({
       where: { id: { in: ids } },
-      include: {
-        property: {
-          select: { id: true, title: true, type: true },
-        },
-        units: {
-          select: {
-            id: true,
-            unitNumber: true,
-            status: true,
-          },
-        },
-      },
     });
 
     // Re-attach distance values to Prisma results
@@ -121,17 +109,13 @@ export const getBuilding = async (
 ) => {
   const buildingId = req.params.id as string;
 
-  const building = await prisma.building.findUnique({
+  const building = await prisma.building.findUniqueOrThrow({
     where: { id: buildingId },
     include: {
       property: true,
       units: true,
     },
   });
-
-  if (!building) {
-    return next(new AppError("No Building with ID found", 404));
-  }
 
   res.status(200).json({
     status: "success",

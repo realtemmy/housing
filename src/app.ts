@@ -6,6 +6,7 @@ import globalErrorHandler from "./controllers/errorController";
 
 const app: Application = express();
 
+app.use(express.json())
 app.use(cors({ origin: "*" }));
 
 const limiter = rateLimit({
@@ -17,8 +18,10 @@ const limiter = rateLimit({
 app.use(limiter);
 
 import propertyRoutes from "./routes/propertyRoutes";
+import userRoutes from "./routes/userRoutes";
 
-app.use("/api/v1/property", propertyRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/property", propertyRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {

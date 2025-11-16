@@ -9,6 +9,8 @@ import {
 
 const router = Router();
 
+// building/:buildingId/units - Units
+
 router.route("/").get(getAllBuildings).post(createBuilding);
 
 router
