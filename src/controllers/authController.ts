@@ -43,9 +43,27 @@ export const signUp = async (
         phone: phone ?? null,
       },
     });
+    const accessToken = jwt.sign(
+      { id: createdUser.id },
+      process.env.ACCESS_TOKEN_SECRET!,
+      { expiresIn: "10m" }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: createdUser.id },
+      process.env.REFRESH_TOKEN_SECRET!,
+      { expiresIn: "1d" }
+    );
+
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none", // or "lax"
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     res.status(201).json({
       status: "success",
-      data: createdUser,
+      data: { createdUser, accessToken },
     });
   } catch (error) {
     next(error);
@@ -88,7 +106,8 @@ export const login = async (
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    sameSite: "none",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "none", // or "lax"
     maxAge: 24 * 60 * 60 * 1000,
   });
 
@@ -132,19 +151,23 @@ export const protect = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("Headers: ", req.headers);
   const authHeader = req.headers.authorization;
   if (!authHeader) return next(new AppError("Unauthorized", 401));
 
   const token = authHeader.split(" ")[1];
   if (!token) return next(new AppError("No token provided", 401));
 
+  console.log("token: ", token);
+
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as {
       id: string;
     };
-  } catch {
+  } catch (error) {
     return next(new AppError("Invalid or expired token. Login again.", 401));
+    // return res.status(401).json({ message: "Invalid or exxpired token" });
   }
 
   const user = await prisma.user.findUnique({ where: { id: decoded.id } });
@@ -155,21 +178,27 @@ export const protect = async (
 };
 
 export const restrictTo =
-  (...roles: string[]) =>
+  (...roles: ["ADMIN" | "USER"]) =>
   async (req: Request & { user?: User }, res: Response, next: NextFunction) => {
-    const user = req.user as User | undefined;
-    if (!user) return next(new AppError("Unauthorized", 401));
+    console.log("Getting here");
+    try {
+      const user = req.user as User | undefined;
+      if (!user) return next(new AppError("Unauthorized", 401));
 
-    if (!roles.includes(user.role)) {
-      return next(
-        new AppError(
-          "Forbidden: you do not have permission to perform this action",
-          403
-        )
-      );
+      if (!roles.includes(user.role)) {
+        return next(
+          new AppError(
+            "Forbidden: you do not have permission to perform this action",
+            403
+          )
+        );
+      }
+
+      next();
+    } catch (error) {
+      console.error("Error: ", error);
+      next(error);
     }
-
-    next();
   };
 
 export const authGoogle = async (

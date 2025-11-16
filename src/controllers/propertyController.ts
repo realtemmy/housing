@@ -3,6 +3,7 @@ import { propertyValidator } from "../validators/propertyValidators";
 
 import prisma from "../client/prisma";
 import AppError from "../utils/appError";
+import { User } from "../generated/schema";
 
 export const getAllProperties = async (req: Request, res: Response) => {
   const properties = await prisma.property.findMany();
@@ -28,18 +29,26 @@ export const getProperty = async (
 };
 
 export const createProperty = async (
-  req: Request,
+  req: Request & { user?: User },
   res: Response,
   next: NextFunction
 ) => {
-  const validatedProperty = propertyValidator.parse(req.body);
-  const { title, ownerId, type, description } = validatedProperty;
-  const property = await prisma.property.create({
-    data: { title, ownerId, type, description: description ?? null },
-  });
+  const user: User = req.user as User;
+  console.log("Getting here")
+  try {
+    const validatedProperty = propertyValidator.parse(req.body);
+    const { title, type, description } = validatedProperty;
 
-  res.status(200).json({
-    status: "success",
-    data: property,
-  });
+    const property = await prisma.property.create({
+      data: { title, ownerId: user.id, type, description: description ?? null },
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: property,
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    next(error);
+  }
 };
