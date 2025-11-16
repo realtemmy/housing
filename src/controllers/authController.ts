@@ -104,7 +104,7 @@ export const login = async (
     { expiresIn: "1d" }
   );
 
-  res.cookie("jwt", refreshToken, {
+  res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "none", // or "lax"
@@ -122,7 +122,7 @@ export const refresh = async (
   res: Response,
   next: NextFunction
 ) => {
-  const refreshToken = req.cookies?.jwt;
+  const refreshToken = req.cookies?.refreshToken;
   if (!refreshToken) return next(new AppError("Unauthorized", 406));
 
   let decoded;
@@ -151,14 +151,11 @@ export const protect = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("Headers: ", req.headers);
   const authHeader = req.headers.authorization;
   if (!authHeader) return next(new AppError("Unauthorized", 401));
 
   const token = authHeader.split(" ")[1];
   if (!token) return next(new AppError("No token provided", 401));
-
-  console.log("token: ", token);
 
   let decoded;
   try {
@@ -167,7 +164,6 @@ export const protect = async (
     };
   } catch (error) {
     return next(new AppError("Invalid or expired token. Login again.", 401));
-    // return res.status(401).json({ message: "Invalid or exxpired token" });
   }
 
   const user = await prisma.user.findUnique({ where: { id: decoded.id } });
@@ -180,7 +176,6 @@ export const protect = async (
 export const restrictTo =
   (...roles: ["ADMIN" | "USER"]) =>
   async (req: Request & { user?: User }, res: Response, next: NextFunction) => {
-    console.log("Getting here");
     try {
       const user = req.user as User | undefined;
       if (!user) return next(new AppError("Unauthorized", 401));

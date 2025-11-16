@@ -7,5 +7,4 @@ export const propertyValidator = z.object({
     .max(150, "Description should not ne more than 150 words.")
     .optional(),
   type: z.enum(["APARTMENT", "HOUSE", "HOSTEL"]),
-  ownerId: z.uuid(),
 });
