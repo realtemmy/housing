@@ -5163,7 +5163,6 @@ export namespace Prisma {
     id: string | null
     name: string | null
     propertyId: string | null
-    addressId: string | null
     floors: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5173,7 +5172,6 @@ export namespace Prisma {
     id: string | null
     name: string | null
     propertyId: string | null
-    addressId: string | null
     floors: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5183,7 +5181,6 @@ export namespace Prisma {
     id: number
     name: number
     propertyId: number
-    addressId: number
     floors: number
     createdAt: number
     updatedAt: number
@@ -5203,7 +5200,6 @@ export namespace Prisma {
     id?: true
     name?: true
     propertyId?: true
-    addressId?: true
     floors?: true
     createdAt?: true
     updatedAt?: true
@@ -5213,7 +5209,6 @@ export namespace Prisma {
     id?: true
     name?: true
     propertyId?: true
-    addressId?: true
     floors?: true
     createdAt?: true
     updatedAt?: true
@@ -5223,7 +5218,6 @@ export namespace Prisma {
     id?: true
     name?: true
     propertyId?: true
-    addressId?: true
     floors?: true
     createdAt?: true
     updatedAt?: true
@@ -5318,9 +5312,8 @@ export namespace Prisma {
 
   export type BuildingGroupByOutputType = {
     id: string
-    name: string | null
+    name: string
     propertyId: string
-    addressId: string | null
     floors: number | null
     createdAt: Date
     updatedAt: Date
@@ -5349,7 +5342,6 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     propertyId?: boolean
-    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5363,7 +5355,6 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     propertyId?: boolean
-    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5374,7 +5365,6 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     propertyId?: boolean
-    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5385,13 +5375,12 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     propertyId?: boolean
-    addressId?: boolean
     floors?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BuildingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "propertyId" | "addressId" | "floors" | "createdAt" | "updatedAt", ExtArgs["result"]["building"]>
+  export type BuildingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "propertyId" | "floors" | "createdAt" | "updatedAt", ExtArgs["result"]["building"]>
   export type BuildingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     address?: boolean | Building$addressArgs<ExtArgs>
@@ -5414,9 +5403,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string | null
+      name: string
       propertyId: string
-      addressId: string | null
       floors: number | null
       createdAt: Date
       updatedAt: Date
@@ -5849,7 +5837,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Building", 'String'>
     readonly name: FieldRef<"Building", 'String'>
     readonly propertyId: FieldRef<"Building", 'String'>
-    readonly addressId: FieldRef<"Building", 'String'>
     readonly floors: FieldRef<"Building", 'Int'>
     readonly createdAt: FieldRef<"Building", 'DateTime'>
     readonly updatedAt: FieldRef<"Building", 'DateTime'>
@@ -6512,7 +6499,7 @@ export namespace Prisma {
     country: string
     longitude: number | null
     latitude: number | null
-    buildingId: string | null
+    buildingId: string
     _count: AddressCountAggregateOutputType | null
     _avg: AddressAvgAggregateOutputType | null
     _sum: AddressSumAggregateOutputType | null
@@ -6544,7 +6531,7 @@ export namespace Prisma {
     longitude?: boolean
     latitude?: boolean
     buildingId?: boolean
-    building?: boolean | Address$buildingArgs<ExtArgs>
+    building?: boolean | BuildingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["address"]>
 
   export type AddressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6557,7 +6544,7 @@ export namespace Prisma {
     longitude?: boolean
     latitude?: boolean
     buildingId?: boolean
-    building?: boolean | Address$buildingArgs<ExtArgs>
+    building?: boolean | BuildingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["address"]>
 
   export type AddressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6570,7 +6557,7 @@ export namespace Prisma {
     longitude?: boolean
     latitude?: boolean
     buildingId?: boolean
-    building?: boolean | Address$buildingArgs<ExtArgs>
+    building?: boolean | BuildingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["address"]>
 
   export type AddressSelectScalar = {
@@ -6587,19 +6574,19 @@ export namespace Prisma {
 
   export type AddressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "street" | "city" | "state" | "postalCode" | "country" | "longitude" | "latitude" | "buildingId", ExtArgs["result"]["address"]>
   export type AddressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    building?: boolean | Address$buildingArgs<ExtArgs>
+    building?: boolean | BuildingDefaultArgs<ExtArgs>
   }
   export type AddressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    building?: boolean | Address$buildingArgs<ExtArgs>
+    building?: boolean | BuildingDefaultArgs<ExtArgs>
   }
   export type AddressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    building?: boolean | Address$buildingArgs<ExtArgs>
+    building?: boolean | BuildingDefaultArgs<ExtArgs>
   }
 
   export type $AddressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Address"
     objects: {
-      building: Prisma.$BuildingPayload<ExtArgs> | null
+      building: Prisma.$BuildingPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6610,7 +6597,7 @@ export namespace Prisma {
       country: string
       longitude: number | null
       latitude: number | null
-      buildingId: string | null
+      buildingId: string
     }, ExtArgs["result"]["address"]>
     composites: {}
   }
@@ -7005,7 +6992,7 @@ export namespace Prisma {
    */
   export interface Prisma__AddressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    building<T extends Address$buildingArgs<ExtArgs> = {}>(args?: Subset<T, Address$buildingArgs<ExtArgs>>): Prisma__BuildingClient<$Result.GetResult<Prisma.$BuildingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    building<T extends BuildingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BuildingDefaultArgs<ExtArgs>>): Prisma__BuildingClient<$Result.GetResult<Prisma.$BuildingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7437,25 +7424,6 @@ export namespace Prisma {
      * Limit how many Addresses to delete.
      */
     limit?: number
-  }
-
-  /**
-   * Address.building
-   */
-  export type Address$buildingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Building
-     */
-    select?: BuildingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Building
-     */
-    omit?: BuildingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BuildingInclude<ExtArgs> | null
-    where?: BuildingWhereInput
   }
 
   /**
@@ -20353,7 +20321,6 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     propertyId: 'propertyId',
-    addressId: 'addressId',
     floors: 'floors',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -20947,9 +20914,8 @@ export namespace Prisma {
     OR?: BuildingWhereInput[]
     NOT?: BuildingWhereInput | BuildingWhereInput[]
     id?: StringFilter<"Building"> | string
-    name?: StringNullableFilter<"Building"> | string | null
+    name?: StringFilter<"Building"> | string
     propertyId?: StringFilter<"Building"> | string
-    addressId?: StringNullableFilter<"Building"> | string | null
     floors?: IntNullableFilter<"Building"> | number | null
     createdAt?: DateTimeFilter<"Building"> | Date | string
     updatedAt?: DateTimeFilter<"Building"> | Date | string
@@ -20960,9 +20926,8 @@ export namespace Prisma {
 
   export type BuildingOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     propertyId?: SortOrder
-    addressId?: SortOrderInput | SortOrder
     floors?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20976,9 +20941,8 @@ export namespace Prisma {
     AND?: BuildingWhereInput | BuildingWhereInput[]
     OR?: BuildingWhereInput[]
     NOT?: BuildingWhereInput | BuildingWhereInput[]
-    name?: StringNullableFilter<"Building"> | string | null
+    name?: StringFilter<"Building"> | string
     propertyId?: StringFilter<"Building"> | string
-    addressId?: StringNullableFilter<"Building"> | string | null
     floors?: IntNullableFilter<"Building"> | number | null
     createdAt?: DateTimeFilter<"Building"> | Date | string
     updatedAt?: DateTimeFilter<"Building"> | Date | string
@@ -20989,9 +20953,8 @@ export namespace Prisma {
 
   export type BuildingOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     propertyId?: SortOrder
-    addressId?: SortOrderInput | SortOrder
     floors?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -21007,9 +20970,8 @@ export namespace Prisma {
     OR?: BuildingScalarWhereWithAggregatesInput[]
     NOT?: BuildingScalarWhereWithAggregatesInput | BuildingScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Building"> | string
-    name?: StringNullableWithAggregatesFilter<"Building"> | string | null
+    name?: StringWithAggregatesFilter<"Building"> | string
     propertyId?: StringWithAggregatesFilter<"Building"> | string
-    addressId?: StringNullableWithAggregatesFilter<"Building"> | string | null
     floors?: IntNullableWithAggregatesFilter<"Building"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Building"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Building"> | Date | string
@@ -21027,8 +20989,8 @@ export namespace Prisma {
     country?: StringFilter<"Address"> | string
     longitude?: FloatNullableFilter<"Address"> | number | null
     latitude?: FloatNullableFilter<"Address"> | number | null
-    buildingId?: StringNullableFilter<"Address"> | string | null
-    building?: XOR<BuildingNullableScalarRelationFilter, BuildingWhereInput> | null
+    buildingId?: StringFilter<"Address"> | string
+    building?: XOR<BuildingScalarRelationFilter, BuildingWhereInput>
   }
 
   export type AddressOrderByWithRelationInput = {
@@ -21040,7 +21002,7 @@ export namespace Prisma {
     country?: SortOrder
     longitude?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
-    buildingId?: SortOrderInput | SortOrder
+    buildingId?: SortOrder
     building?: BuildingOrderByWithRelationInput
   }
 
@@ -21057,7 +21019,7 @@ export namespace Prisma {
     country?: StringFilter<"Address"> | string
     longitude?: FloatNullableFilter<"Address"> | number | null
     latitude?: FloatNullableFilter<"Address"> | number | null
-    building?: XOR<BuildingNullableScalarRelationFilter, BuildingWhereInput> | null
+    building?: XOR<BuildingScalarRelationFilter, BuildingWhereInput>
   }, "id" | "buildingId">
 
   export type AddressOrderByWithAggregationInput = {
@@ -21069,7 +21031,7 @@ export namespace Prisma {
     country?: SortOrder
     longitude?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
-    buildingId?: SortOrderInput | SortOrder
+    buildingId?: SortOrder
     _count?: AddressCountOrderByAggregateInput
     _avg?: AddressAvgOrderByAggregateInput
     _max?: AddressMaxOrderByAggregateInput
@@ -21089,7 +21051,7 @@ export namespace Prisma {
     country?: StringWithAggregatesFilter<"Address"> | string
     longitude?: FloatNullableWithAggregatesFilter<"Address"> | number | null
     latitude?: FloatNullableWithAggregatesFilter<"Address"> | number | null
-    buildingId?: StringNullableWithAggregatesFilter<"Address"> | string | null
+    buildingId?: StringWithAggregatesFilter<"Address"> | string
   }
 
   export type UnitWhereInput = {
@@ -22184,8 +22146,7 @@ export namespace Prisma {
 
   export type BuildingCreateInput = {
     id?: string
-    name?: string | null
-    addressId?: string | null
+    name: string
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22196,9 +22157,8 @@ export namespace Prisma {
 
   export type BuildingUncheckedCreateInput = {
     id?: string
-    name?: string | null
+    name: string
     propertyId: string
-    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22208,8 +22168,7 @@ export namespace Prisma {
 
   export type BuildingUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22220,9 +22179,8 @@ export namespace Prisma {
 
   export type BuildingUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     propertyId?: StringFieldUpdateOperationsInput | string
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22232,9 +22190,8 @@ export namespace Prisma {
 
   export type BuildingCreateManyInput = {
     id?: string
-    name?: string | null
+    name: string
     propertyId: string
-    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22242,8 +22199,7 @@ export namespace Prisma {
 
   export type BuildingUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22251,9 +22207,8 @@ export namespace Prisma {
 
   export type BuildingUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     propertyId?: StringFieldUpdateOperationsInput | string
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22268,7 +22223,7 @@ export namespace Prisma {
     country: string
     longitude?: number | null
     latitude?: number | null
-    building?: BuildingCreateNestedOneWithoutAddressInput
+    building: BuildingCreateNestedOneWithoutAddressInput
   }
 
   export type AddressUncheckedCreateInput = {
@@ -22280,7 +22235,7 @@ export namespace Prisma {
     country: string
     longitude?: number | null
     latitude?: number | null
-    buildingId?: string | null
+    buildingId: string
   }
 
   export type AddressUpdateInput = {
@@ -22292,7 +22247,7 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    building?: BuildingUpdateOneWithoutAddressNestedInput
+    building?: BuildingUpdateOneRequiredWithoutAddressNestedInput
   }
 
   export type AddressUncheckedUpdateInput = {
@@ -22304,7 +22259,7 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    buildingId?: NullableStringFieldUpdateOperationsInput | string | null
+    buildingId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AddressCreateManyInput = {
@@ -22316,7 +22271,7 @@ export namespace Prisma {
     country: string
     longitude?: number | null
     latitude?: number | null
-    buildingId?: string | null
+    buildingId: string
   }
 
   export type AddressUpdateManyMutationInput = {
@@ -22339,7 +22294,7 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    buildingId?: NullableStringFieldUpdateOperationsInput | string | null
+    buildingId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UnitCreateInput = {
@@ -23575,7 +23530,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     propertyId?: SortOrder
-    addressId?: SortOrder
     floors?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23589,7 +23543,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     propertyId?: SortOrder
-    addressId?: SortOrder
     floors?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23599,7 +23552,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     propertyId?: SortOrder
-    addressId?: SortOrder
     floors?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23636,9 +23588,9 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type BuildingNullableScalarRelationFilter = {
-    is?: BuildingWhereInput | null
-    isNot?: BuildingWhereInput | null
+  export type BuildingScalarRelationFilter = {
+    is?: BuildingWhereInput
+    isNot?: BuildingWhereInput
   }
 
   export type AddressCountOrderByAggregateInput = {
@@ -23719,6 +23671,11 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type BuildingNullableScalarRelationFilter = {
+    is?: BuildingWhereInput | null
+    isNot?: BuildingWhereInput | null
   }
 
   export type PhotoListRelationFilter = {
@@ -25038,12 +24995,10 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type BuildingUpdateOneWithoutAddressNestedInput = {
+  export type BuildingUpdateOneRequiredWithoutAddressNestedInput = {
     create?: XOR<BuildingCreateWithoutAddressInput, BuildingUncheckedCreateWithoutAddressInput>
     connectOrCreate?: BuildingCreateOrConnectWithoutAddressInput
     upsert?: BuildingUpsertWithoutAddressInput
-    disconnect?: BuildingWhereInput | boolean
-    delete?: BuildingWhereInput | boolean
     connect?: BuildingWhereUniqueInput
     update?: XOR<XOR<BuildingUpdateToOneWithWhereWithoutAddressInput, BuildingUpdateWithoutAddressInput>, BuildingUncheckedUpdateWithoutAddressInput>
   }
@@ -26794,8 +26749,7 @@ export namespace Prisma {
 
   export type BuildingCreateWithoutPropertyInput = {
     id?: string
-    name?: string | null
-    addressId?: string | null
+    name: string
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26805,8 +26759,7 @@ export namespace Prisma {
 
   export type BuildingUncheckedCreateWithoutPropertyInput = {
     id?: string
-    name?: string | null
-    addressId?: string | null
+    name: string
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26952,9 +26905,8 @@ export namespace Prisma {
     OR?: BuildingScalarWhereInput[]
     NOT?: BuildingScalarWhereInput | BuildingScalarWhereInput[]
     id?: StringFilter<"Building"> | string
-    name?: StringNullableFilter<"Building"> | string | null
+    name?: StringFilter<"Building"> | string
     propertyId?: StringFilter<"Building"> | string
-    addressId?: StringNullableFilter<"Building"> | string | null
     floors?: IntNullableFilter<"Building"> | number | null
     createdAt?: DateTimeFilter<"Building"> | Date | string
     updatedAt?: DateTimeFilter<"Building"> | Date | string
@@ -27170,8 +27122,7 @@ export namespace Prisma {
 
   export type BuildingCreateWithoutAddressInput = {
     id?: string
-    name?: string | null
-    addressId?: string | null
+    name: string
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27181,9 +27132,8 @@ export namespace Prisma {
 
   export type BuildingUncheckedCreateWithoutAddressInput = {
     id?: string
-    name?: string | null
+    name: string
     propertyId: string
-    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27208,8 +27158,7 @@ export namespace Prisma {
 
   export type BuildingUpdateWithoutAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27219,9 +27168,8 @@ export namespace Prisma {
 
   export type BuildingUncheckedUpdateWithoutAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     propertyId?: StringFieldUpdateOperationsInput | string
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27261,8 +27209,7 @@ export namespace Prisma {
 
   export type BuildingCreateWithoutUnitsInput = {
     id?: string
-    name?: string | null
-    addressId?: string | null
+    name: string
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27272,9 +27219,8 @@ export namespace Prisma {
 
   export type BuildingUncheckedCreateWithoutUnitsInput = {
     id?: string
-    name?: string | null
+    name: string
     propertyId: string
-    addressId?: string | null
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27491,8 +27437,7 @@ export namespace Prisma {
 
   export type BuildingUpdateWithoutUnitsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27502,9 +27447,8 @@ export namespace Prisma {
 
   export type BuildingUncheckedUpdateWithoutUnitsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     propertyId?: StringFieldUpdateOperationsInput | string
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29976,8 +29920,7 @@ export namespace Prisma {
 
   export type BuildingCreateManyPropertyInput = {
     id?: string
-    name?: string | null
-    addressId?: string | null
+    name: string
     floors?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30001,8 +29944,7 @@ export namespace Prisma {
 
   export type BuildingUpdateWithoutPropertyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30012,8 +29954,7 @@ export namespace Prisma {
 
   export type BuildingUncheckedUpdateWithoutPropertyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30023,8 +29964,7 @@ export namespace Prisma {
 
   export type BuildingUncheckedUpdateManyWithoutPropertyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    addressId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     floors?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

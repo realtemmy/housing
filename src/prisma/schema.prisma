@@ -92,13 +92,12 @@ model Property {
 }
 
 model Building {
-  id   String  @id @default(uuid())
-  name String?
+  id   String @id @default(uuid())
+  name String
 
   property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
   address    Address?
-  addressId  String?
 
   floors    Int?
   units     Unit[]
@@ -107,7 +106,7 @@ model Building {
 }
 
 model Address {
-  id         String    @id @default(uuid())
+  id         String   @id @default(uuid())
   street     String
   city       String
   state      String
@@ -115,8 +114,8 @@ model Address {
   country    String
   longitude  Float?
   latitude   Float?
-  buildingId String?   @unique
-  building   Building? @relation(fields: [buildingId], references: [id])
+  buildingId String   @unique
+  building   Building @relation(fields: [buildingId], references: [id])
 }
 
 model Unit {

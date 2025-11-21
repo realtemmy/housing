@@ -151,7 +151,6 @@ exports.Prisma.BuildingScalarFieldEnum = {
   id: 'id',
   name: 'name',
   propertyId: 'propertyId',
-  addressId: 'addressId',
   floors: 'floors',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

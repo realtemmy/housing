@@ -9,6 +9,7 @@ import { protect, restrictTo } from "../controllers/authController";
 
 const router = Router();
 
+// property/:propertyId/buildings - Buildings
 // property/:propertyId/units - Units
 
 router

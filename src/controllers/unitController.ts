@@ -1,29 +1,52 @@
 import { Request, Response, NextFunction } from "express";
-import { unitValidator, updateUnitValidator } from "../validators/unitValidators";
+import {
+  unitValidator,
+  updateUnitValidator,
+} from "../validators/unitValidators";
 import prisma from "../client/prisma";
 import AppError from "../utils/appError";
 
 export const getAllUnits = async (req: Request, res: Response) => {
   const { propertyId, buildingId, status } = req.query;
 
+  const page = req.query.page ? parseInt(req.query.page as string) : 1;
+  const limit = req.query.limit ? parseInt(req.query.limit as string) : 20;
+
+  const skip = (page - 1) * limit;
+
   const whereClause: any = {};
   if (propertyId) whereClause.propertyId = propertyId as string;
   if (buildingId) whereClause.buildingId = buildingId as string;
   if (status) whereClause.status = status as string;
 
-  const units = await prisma.unit.findMany({
-    where: whereClause,
-    include: {
-      photos: true,
-      leases: {
-        where: {
-          status: "ACTIVE",
-        },
+  const [totalItems, units] = await prisma.$transaction([
+    prisma.unit.count({
+      where: whereClause,
+    }),
+    prisma.unit.findMany({
+      skip,
+      take: limit,
+      where: whereClause,
+      include: {
+        photos: true,
+        building: { select: { id: true, name: true } },
+        property: { select: { id: true, title: true } },
       },
+    }),
+  ]);
+
+  const totalPages = Math.ceil(totalItems / limit);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      items: units,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage: limit,
     },
   });
-
-  res.status(200).json({ status: "success", data: units });
 };
 
 export const getUnit = async (
@@ -64,10 +87,6 @@ export const getUnit = async (
       },
     },
   });
-
-  if (!unit) {
-    return next(new AppError("No Unit with ID found", 404));
-  }
 
   res.status(200).json({
     status: "success",
@@ -196,7 +215,10 @@ export const updateUnit = async (
   }
 
   // If unit number is being updated, check for duplicates
-  if (validatedData.unitNumber && validatedData.unitNumber !== unit.unitNumber) {
+  if (
+    validatedData.unitNumber &&
+    validatedData.unitNumber !== unit.unitNumber
+  ) {
     const existingUnit = await prisma.unit.findUnique({
       where: {
         propertyId_unitNumber: {
@@ -216,7 +238,15 @@ export const updateUnit = async (
   const updatedUnit = await prisma.unit.update({
     where: { id: unitId },
     data: {
-      ...validatedData,
+      unitNumber: validatedData.unitNumber ?? unit.unitNumber,
+      floor: validatedData.floor ?? unit.floor,
+      bedrooms: validatedData.bedrooms ?? unit.bedrooms,
+      bathrooms: validatedData.bathrooms ?? unit.bathrooms,
+      sqft: validatedData.sqft ?? unit.sqft,
+      status: validatedData.status ?? unit.status,
+      rentAmount: validatedData.rentAmount ?? unit.rentAmount,
+      depositAmount: validatedData.depositAmount ?? unit.depositAmount,
+      buildingId: validatedData.buildingId ?? unit.buildingId,
     },
     include: {
       property: true,
@@ -288,7 +318,6 @@ export const getAvailableUnits = async (req: Request, res: Response) => {
           id: true,
           title: true,
           type: true,
-
         },
       },
       building: {

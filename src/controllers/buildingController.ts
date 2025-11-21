@@ -6,99 +6,57 @@ import {
 import prisma from "../client/prisma";
 import AppError from "../utils/appError";
 
-interface Ifilter {
-  propertyId?: string;
-  lng?: number;
-  lat?: number;
-}
-
 export const getAllBuildings = async (req: Request, res: Response) => {
-  const filter: Ifilter = {};
+  const page = req.query.page ? parseInt(req.query.page as string) : 1;
+  const limit = req.query.limit ? parseInt(req.query.limit as string) : 20;
+  const search = (req.query.search as string) || "";
+  const orderBy = (req.query.orderBy as string) === "asc" ? "asc" : "desc";
+  const propertyId =
+    (req.query.propertyId as string) || (req.params.propertyId as string);
 
-  if (req.query.propertyId) {
-    filter.propertyId = req.query.propertyId as string;
-  }
+  const skip = (page - 1) * limit;
 
-  const useGeo = req.query.lng && req.query.lat;
-
-  let buildings;
-
-  // ---------------------------------------------------
-  // 1️⃣ If geolocation query is included → raw query first
-  // ---------------------------------------------------
-  if (useGeo) {
-    const lat = parseFloat(req.query.lat as string);
-    const lng = parseFloat(req.query.lng as string);
-    const radius = req.query.radius
-      ? parseFloat(req.query.radius as string)
-      : 10; // default 10 km
-
-    const rawBuildings = await prisma.$queryRawUnsafe<any[]>(`
-      SELECT 
-        b.id,
-        b.name,
-        b."propertyId",
-        b."addressId",
-        a.latitude,
-        a.longitude,
-        (6371 * acos(
-          cos(radians(${lat})) 
-          * cos(radians(a.latitude)) 
-          * cos(radians(a.longitude) - radians(${lng}))
-          + sin(radians(${lat})) * sin(radians(a.latitude))
-        )) AS distance
-      FROM "Building" b
-      LEFT JOIN "Address" a ON a.id = b."addressId"
-      ${
-        filter.propertyId ? `WHERE b."propertyId" = '${filter.propertyId}'` : ""
-      }
-      HAVING distance <= ${radius}
-      ORDER BY distance ASC;
-    `);
-
-    // Now fetch the full Prisma-typed buildings with relations
-    const ids = rawBuildings.map((b) => b.id);
-
-    buildings = await prisma.building.findMany({
-      where: { id: { in: ids } },
-    });
-
-    // Re-attach distance values to Prisma results
-    buildings = buildings.map((b) => {
-      const match = rawBuildings.find((rb) => rb.id === b.id);
-      return { ...b, distance: match?.distance ?? null };
-    });
-  }
-
-  // --------------------------------------------------
-  // 2️⃣ If normal filter only → run basic Prisma query
-  // --------------------------------------------------
-  else {
-    buildings = await prisma.building.findMany({
-      where: filter,
-      include: {
-        property: {
-          select: {
-            id: true,
-            title: true,
-            type: true,
-          },
+  const [totalItems, buildings] = await prisma.$transaction([
+    prisma.building.count({
+      where: {
+        name: {
+          contains: search,
+          mode: "insensitive",
         },
-        units: {
-          select: {
-            id: true,
-            unitNumber: true,
-            status: true,
-          },
-        },
+        propertyId,
       },
-    });
-  }
+    }),
+    prisma.building.findMany({
+      skip,
+      take: limit,
+      where: {
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+        propertyId,
+      },
+      orderBy: {
+        createdAt: orderBy,
+      },
+      include: {
+        _count: { select: { units: true } },
+        property: { select: { id: true, title: true } },
+        address: { select: { id: true, city: true, state: true } },
+      },
+    }),
+  ]);
+  const totalPages = Math.ceil(totalItems / limit);
 
-  return res.status(200).json({
+  res.status(200).json({
     status: "success",
-    results: buildings.length,
-    data: buildings,
+    data: {
+      items: buildings,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage: limit,
+    },
   });
 };
 
@@ -112,7 +70,8 @@ export const getBuilding = async (
   const building = await prisma.building.findUniqueOrThrow({
     where: { id: buildingId },
     include: {
-      property: true,
+      _count: { select: { units: true }, },
+      address: true,
       units: true,
     },
   });
@@ -129,7 +88,7 @@ export const createBuilding = async (
   next: NextFunction
 ) => {
   const validatedBuilding = buildingValidator.parse(req.body);
-  const { propertyId, name, floors } = validatedBuilding;
+  const { propertyId, name, floors, address } = validatedBuilding;
 
   // Verify property exists
   const property = await prisma.property.findUnique({
@@ -143,8 +102,19 @@ export const createBuilding = async (
   const building = await prisma.building.create({
     data: {
       propertyId,
-      name: name ?? null,
+      name,
       floors: floors ?? null,
+      address: {
+        create: {
+          city: address.city,
+          country: address.country,
+          state: address.state,
+          postalCode: address.postalCode,
+          street: address.street,
+          latitude: address.latitude ?? null,
+          longitude: address.longitude ?? null
+        },
+      },
     },
     include: {
       property: true,
@@ -172,7 +142,8 @@ export const updateBuilding = async (
   // Build an update payload that omits undefined values so Prisma doesn't receive `undefined`
   const dataToUpdate: any = {};
   if (validatedData.name !== undefined) dataToUpdate.name = validatedData.name;
-  if (validatedData.floors !== undefined) dataToUpdate.floors = validatedData.floors;
+  if (validatedData.floors !== undefined)
+    dataToUpdate.floors = validatedData.floors;
 
   const updatedBuilding = await prisma.building.update({
     where: { id: buildingId },

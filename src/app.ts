@@ -19,9 +19,13 @@ app.use(limiter);
 
 import propertyRoutes from "./routes/propertyRoutes";
 import userRoutes from "./routes/userRoutes";
+import buildingRoutes from "./routes/buildingRoutes";
+import unitRoutes from "./routes/unitRoutes";
 
 app.use("/api/user", userRoutes);
-app.use("/api/property", propertyRoutes);
+app.use("/api/properties", propertyRoutes);
+app.use("/api/buildings", buildingRoutes);
+app.use("/api/units", unitRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {

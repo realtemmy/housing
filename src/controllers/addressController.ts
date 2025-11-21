@@ -7,7 +7,6 @@ import prisma from "../client/prisma";
 import AppError from "../utils/appError";
 
 export const getAllAddresses = async (req: Request, res: Response) => {
-
   const addresses = await prisma.address.findMany({
     include: {
       building: {
@@ -84,14 +83,10 @@ export const createAddress = async (
     buildingId,
   } = validatedAddress;
 
-  // Verify property exists
-  const building = await prisma.building.findUniqueOrThrow({
+  // Verify building exists
+  await prisma.building.findUniqueOrThrow({
     where: { id: buildingId },
   });
-
-  if (!building) {
-    return next(new AppError("Building not found", 404));
-  }
 
   const address = await prisma.address.create({
     data: {
@@ -102,6 +97,7 @@ export const createAddress = async (
       country,
       longitude: longitude ?? null,
       latitude: latitude ?? null,
+      buildingId,
     },
     include: {},
   });
