@@ -5,7 +5,7 @@ import {
 } from "../validators/propertyValidators";
 
 import prisma from "../client/prisma";
-import AppError from "../utils/appError";
+import AppError from "../../shared/utils/appError";
 import { User } from "../generated/schema";
 
 // For pagination, {totalItems, totalPages, currentPage, itemsPerPage, items}

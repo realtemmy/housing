@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # ---------------------------
+  # THE GATEWAY (Entry Point)
+  # ---------------------------
+  kong:
+    image: kong:3.4
+    container_name: api-gateway
+    restart: always
+    ports:
+      - "8000:8000" # The port you hit from Postman/Frontend
+      - "8001:8001" # The Admin API (Optional)
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_LOG_LEVEL: debug
+    volumes:
+      - ./gateway:/usr/local/kong/declarative # Mount your folder!
+
+  # ---------------------------
+  # AUTH SERVICE
+  # ---------------------------
+  auth-service:
+    build: ./services/auth-service
+    container_name: auth-service
+    environment:
+      PORT: 4001
+      JWT_SECRET: "YOUR_SUPER_SECRET_JWT_KEY" # Must match kong.yml secret
+    # No ports exposed! Only Kong can talk to it.
+
+  # ---------------------------
+  # BUILDING SERVICE
+  # ---------------------------
+  building-service:
+    build: ./services/building-service
+    container_name: building-service
+    environment:
+      PORT: 4002
+    # No ports exposed!

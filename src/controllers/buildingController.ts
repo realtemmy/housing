@@ -4,7 +4,7 @@ import {
   updateBuildingValidator,
 } from "../validators/buildingValidators";
 import prisma from "../client/prisma";
-import AppError from "../utils/appError";
+import AppError from "../../shared/utils/appError";
 
 export const getAllBuildings = async (req: Request, res: Response) => {
   const page = req.query.page ? parseInt(req.query.page as string) : 1;

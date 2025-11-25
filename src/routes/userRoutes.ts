@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getAllUsers, getLoggedInUser } from "../controllers/userController";
-import { login, signUp, authGoogle, refresh } from "../controllers/authController";
-import { protect } from "../controllers/authController";
+import { login, signUp, authGoogle, refresh } from "../../services/auth-service/src/controllers/authController";
+import { protect } from "../../services/auth-service/src/controllers/authController";
 
 const router = Router();
 

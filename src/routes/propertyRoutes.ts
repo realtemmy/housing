@@ -5,7 +5,7 @@ import {
   getAllProperties,
   getProperty,
 } from "../controllers/propertyController";
-import { protect, restrictTo } from "../controllers/authController";
+import { protect, restrictTo } from "../../services/auth-service/src/controllers/authController";
 
 const router = Router();
 

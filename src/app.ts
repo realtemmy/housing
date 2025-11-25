@@ -1,8 +1,8 @@
 import express, { Application, Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
-import AppError from "./utils/appError";
-import globalErrorHandler from "./controllers/errorController";
+import AppError from "../shared/utils/appError";
+import globalErrorHandler from "../shared/utils/errorHandler";
 
 const app: Application = express();
 

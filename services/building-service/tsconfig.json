@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* ==== File Layout ==== */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* ==== Environment Settings ==== */
+    "module": "commonjs", // Compatible with Node/Express
+    "target": "ES2020", // Modern JS features for Node
+    "lib": ["ES2020"], // Use modern JS built-ins
+    "types": ["node"], // Enable Node.js global types
+
+    /* ==== Output Options ==== */
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* ==== Strict Type Checking ==== */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* ==== Module Resolution ==== */
+    "esModuleInterop": true, // Allows import express from "express"
+    "resolveJsonModule": true, // Allows importing .json files
+    "isolatedModules": true,
+    "skipLibCheck": true,
+
+    /* ==== Additional Options ==== */
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
