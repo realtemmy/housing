@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import prisma from "../client/prisma";
 import { User } from "../generated/schema";
-import AppError from "../utils/appError";
+import AppError from "../../shared/utils/appError";
 
 export const getAllUsers = async (
   req: Request,

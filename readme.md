@@ -1,16 +1,53 @@
-# Scalable Housing Project (Server)
+# Housing Management System - Microservices Architecture
 
-A comprehensive property management system API built with Node.js, Express, TypeScript, and Prisma with PostgreSQL.
+A comprehensive property management system built with microservices architecture, featuring Kong API Gateway, Node.js, Express, TypeScript, and Prisma with PostgreSQL.
 
-## Features
+## Architecture Overview
 
-- JWT-based authentication with access and refresh tokens
-- Google OAuth 2.0 integration
-- Role-based access control (ADMIN, USER)
-- Property, Building, Address, and Unit management
-- Lease and payment tracking
-- Maintenance request system
-- Rate limiting and CORS support
+This project is structured as a microservices-based system with the following components:
+
+- **API Gateway (Kong)**: Entry point for all client requests, handles routing and JWT authentication
+- **Auth Service**: User authentication and authorization
+- **Building Service**: Property, building, unit, and address management
+- **Lease Service**: Lease management and tracking
+- **Payment Service**: Payment processing (planned)
+- **Notification Service**: User notifications (planned)
+- **Analytics Service**: Analytics and reporting (planned)
+
+## Project Structure
+
+```
+housing-server/
+├── gateway/
+│   └── kong.yml                    # Kong API Gateway configuration
+├── services/
+│   ├── auth-service/               # User authentication & authorization
+│   │   ├── src/
+│   │   │   ├── controllers/        # Auth & user controllers
+│   │   │   ├── routes/             # API routes
+│   │   │   ├── validators/         # Zod validation schemas
+│   │   │   ├── utils/              # Utility functions
+│   │   │   ├── prisma/             # Prisma schema
+│   │   │   └── server.ts           # Service entry point
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   ├── building-service/           # Property & building management
+│   │   ├── src/
+│   │   │   ├── controllers/        # Property, building, unit controllers
+│   │   │   ├── routes/             # API routes
+│   │   │   ├── validators/         # Zod validation schemas
+│   │   │   ├── prisma/             # Prisma schema
+│   │   │   └── server.ts           # Service entry point
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   ├── lease-service/              # Lease management
+│   ├── payment-service/            # Payment processing (planned)
+│   ├── notification-service/       # Notifications (planned)
+│   └── analytics-services/         # Analytics (planned)
+├── shared/                         # Shared utilities across services
+├── docker-compose.yml              # Docker services orchestration
+└── README.md
+```
 
 ## Tech Stack
 
@@ -19,60 +56,128 @@ A comprehensive property management system API built with Node.js, Express, Type
 - **Language**: TypeScript
 - **Database**: PostgreSQL
 - **ORM**: Prisma
-- **Authentication**: JWT, Google OAuth 2.0
+- **API Gateway**: Kong 3.4
+- **Authentication**: JWT
 - **Validation**: Zod
+- **Containerization**: Docker
 
-## Environment Variables
+## Features
 
-Create a `.env` file in the root directory:
+### Auth Service (Port 4001)
+- JWT-based authentication with access and refresh tokens
+- Google OAuth 2.0 integration
+- Role-based access control (ADMIN, USER)
+- User management
 
+### Building Service (Port 4002)
+- Property management (CRUD)
+- Building management with address support
+- Unit management with status tracking
+- Pagination and search functionality
+- Address management with geocoding support
+
+### Lease Service (Port 4003)
+- Lease management (in development)
+
+## Getting Started
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Node.js 18+ (for local development)
+- PostgreSQL (handled by Docker)
+
+### Environment Variables
+
+Each service requires its own environment configuration:
+
+#### Auth Service
+Create `.env` in `services/auth-service/`:
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/housing_db"
-ACCESS_TOKEN_SECRET="your-access-token-secret"
-REFRESH_TOKEN_SECRET="your-refresh-token-secret"
+DATABASE_URL="postgresql://user:password@localhost:5432/auth_db"
+JWT_SECRET="YOUR_SUPER_SECRET_JWT_KEY"
 GOOGLE_CLIENT_ID="your-google-client-id"
-PORT=3000
+PORT=4001
 ```
 
-## Installation
+#### Building Service
+Create `.env` in `services/building-service/`:
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/building_db"
+PORT=4002
+```
 
+**Important**: Update JWT_SECRET in `docker-compose.yml` to match your auth service secret.
+
+### Installation & Setup
+
+#### Using Docker (Recommended)
+
+1. **Clone the repository**
 ```bash
+git clone <repository-url>
+cd housing-server
+```
+
+2. **Configure environment variables**
+   - Update `docker-compose.yml` with your JWT secret
+   - Ensure Kong configuration in `gateway/kong.yml` matches your JWT secret
+
+3. **Start all services**
+```bash
+docker-compose up --build
+```
+
+4. **Services will be available at:**
+   - API Gateway: `http://localhost:8000`
+   - Kong Admin API: `http://localhost:8001`
+   - Auth Service: Internal only (http://auth-service:4001)
+   - Building Service: Internal only (http://building-service:4002)
+
+#### Local Development (Without Docker)
+
+1. **Install dependencies for each service**
+```bash
+# Auth service
+cd services/auth-service
+npm install
+
+# Building service
+cd ../building-service
 npm install
 ```
 
-## Database Setup
-
+2. **Setup databases**
 ```bash
-# Generate Prisma Client
+# In each service directory
 npx prisma generate
-
-# Run migrations
 npx prisma migrate dev
-
-# Seed database (if seed file exists)
-npx prisma db seed
 ```
 
-## Running the Server
-
+3. **Run services**
 ```bash
-# Development
+# Terminal 1 - Auth Service
+cd services/auth-service
 npm run dev
 
-# Production
-npm run build
-npm start
+# Terminal 2 - Building Service
+cd services/building-service
+npm run dev
 ```
 
 ## API Documentation
 
-Base URL: `http://localhost:3000/api/v1`
+**Base URL**: `http://localhost:8000` (Kong Gateway)
 
-### Rate Limiting
+All API requests go through the Kong API Gateway. Kong handles routing to the appropriate microservice and JWT authentication for protected routes.
 
-- **Limit**: 100 requests per IP
-- **Window**: 3 minutes
-- **Response**: 429 Too Many Requests
+### Authentication Flow
+
+1. **Public routes**: No authentication required
+2. **Protected routes**: Require JWT token in Authorization header
+   ```
+   Authorization: Bearer <access-token>
+   ```
 
 ---
 
@@ -984,55 +1089,120 @@ Authorization: Bearer <access-token>
 
 ---
 
+## Kong API Gateway Configuration
+
+The `gateway/kong.yml` file configures:
+
+1. **Service Routes**: Maps external paths to internal microservices
+2. **JWT Authentication**: Protected routes require valid JWT tokens
+3. **Consumers**: JWT secrets for token verification
+
+### Route Mapping
+
+- `/api/auth/*` → Auth Service (4001)
+- `/api/users/*` → Auth Service (4001) - Protected
+- `/api/properties/*` → Building Service (4002)
+  - GET: Public
+  - POST/PATCH/DELETE: Protected
+- `/api/buildings/*` → Building Service (4002)
+- `/api/units/*` → Building Service (4002)
+- `/api/addresses/*` → Building Service (4002)
+
 ## Development
 
-### Project Structure
+### Adding a New Microservice
 
+1. Create service directory in `services/`
+2. Setup Express app with TypeScript
+3. Create Dockerfile for the service
+4. Add service to `docker-compose.yml`
+5. Configure routes in `gateway/kong.yml`
+6. Setup Prisma schema (if needed)
+
+### Database Migrations
+
+Each service manages its own database:
+
+```bash
+cd services/<service-name>
+npx prisma migrate dev --name <migration-name>
+npx prisma generate
 ```
-housing-server/
-├── src/
-│   ├── controllers/     # Request handlers
-│   ├── routes/          # Route definitions
-│   ├── validators/      # Zod validation schemas
-│   ├── middlewares/     # Custom middleware
-│   ├── utils/           # Utility functions
-│   ├── client/          # Prisma client
-│   ├── prisma/          # Prisma schema
-│   └── app.ts           # Express app setup
-├── .env                 # Environment variables
-└── package.json
+
+### Testing
+
+```bash
+# Run tests for a specific service
+cd services/<service-name>
+npm test
 ```
 
-### Adding New Routes
+## Deployment
 
-1. Create controller in `src/controllers/`
-2. Create validator in `src/validators/`
-3. Create routes in `src/routes/`
-4. Register routes in `src/app.ts`
+### Production Considerations
+
+1. **Environment Variables**: Use secure secrets management
+2. **Database**: Use managed PostgreSQL instances per service
+3. **Kong Gateway**: Configure SSL/TLS certificates
+4. **Monitoring**: Implement logging and monitoring solutions
+5. **Service Discovery**: Consider Kubernetes or Docker Swarm for orchestration
+
+### Docker Production Build
+
+```bash
+docker-compose -f docker-compose.prod.yml up --build -d
+```
+
+## Roadmap
+
+### Completed
+- [x] Microservices architecture setup
+- [x] Kong API Gateway integration
+- [x] Auth service with JWT and Google OAuth
+- [x] Building service with properties, buildings, and units
+- [x] Pagination and search support
+- [x] Docker containerization
+- [x] Address management with nested building creation
+
+### In Progress
+- [ ] Lease service implementation
+- [ ] Payment service integration
+- [ ] Notification service
+
+### Planned
+- [ ] Analytics service
+- [ ] WebSocket support for real-time updates
+- [ ] Email notifications
+- [ ] File upload for property photos
+- [ ] Advanced search and filtering
+- [ ] API rate limiting per user
+- [ ] Unit tests for all services
+- [ ] Integration tests
+- [ ] CI/CD pipeline
+- [ ] Kubernetes deployment
+- [ ] Monitoring and logging (ELK stack)
+- [ ] API documentation (Swagger/OpenAPI)
+- [ ] Message queue integration (RabbitMQ/Kafka)
+- [ ] Caching layer (Redis)
+- [ ] Service mesh (Istio)
 
 ---
 
-## To Do
+## Contributing
 
-- [ ] Add authentication routes to app.ts
-- [ ] Implement lease management endpoints
-- [ ] Implement payment processing endpoints
-- [ ] Implement maintenance request endpoints
-- [ ] Add file upload for photos
-- [ ] Add email notifications
-- [ ] Implement search and filtering
-- [ ] Add pagination support
-- [ ] Add unit tests
-- [ ] Add API versioning
-- [ ] Deploy to production
-
----
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Write/update tests
+5. Submit a pull request
 
 ## License
 
 MIT
 
----
+## Author
+
+Oguntimehin Temiloluwa
 
 ## Support
 

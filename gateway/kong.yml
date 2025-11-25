@@ -1,0 +1,74 @@
+_format_version: "3.0"
+
+services:
+  # ---------------------------------------------------
+  # BUILDING SERVICE (Internal: http://building-service:4002)
+  # ---------------------------------------------------
+  - name: building-service
+    url: http://building-service:4002/api
+    routes:
+      # PUBLIC: View all or View one (GET /properties, GET /properties/123)
+      - name: public-properties-read
+        paths:
+          - /properties
+        methods:
+          - GET
+        strip_path: false
+
+      # PROTECTED: Create (POST /properties)
+      - name: protected-properties-create
+        paths:
+          - /properties
+        methods:
+          - POST
+        strip_path: false
+        plugins:
+          - name: jwt
+
+      # PROTECTED: Update/Delete (PATCH/DELETE /properties/123)
+      # Note: We use the same prefix "/properties". Kong matches the method.
+      - name: protected-properties-write
+        paths:
+          - /properties
+        methods:
+          - PATCH
+          - DELETE
+        strip_path: false
+        plugins:
+          - name: jwt
+
+  # ---------------------------------------------------
+  # AUTH SERVICE (Internal: http://auth-service:4001)
+  # ---------------------------------------------------
+  - name: auth-service
+    url: http://auth-service:4001/api
+    routes:
+      # PUBLIC: Login/Signup
+      - name: auth-public
+        paths:
+          - /auth
+        methods:
+          - POST
+        strip_path: false
+
+      # PROTECTED: Get Me / Delete User
+      - name: auth-protected
+        paths:
+          - /users
+        methods:
+          - GET
+          - DELETE
+        strip_path: false
+        plugins:
+          - name: jwt
+
+# ---------------------------------------------------
+# JWT CONSUMERS (The "Users" Kong knows about)
+# ---------------------------------------------------
+# You typically need at least one "shared" secret here that
+# matches the secret your Auth Service uses to sign tokens.
+consumers:
+  - username: global-user
+    jwt_secrets:
+      - key: my-site-issuer-key  # This must match "iss" or just be the key lookup
+        secret: "YOUR_SUPER_SECRET_JWT_KEY" # <--- IMPORTANT: Match your Env Var!

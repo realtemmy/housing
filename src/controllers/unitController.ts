@@ -4,7 +4,7 @@ import {
   updateUnitValidator,
 } from "../validators/unitValidators";
 import prisma from "../client/prisma";
-import AppError from "../utils/appError";
+import AppError from "../../shared/utils/appError";
 
 export const getAllUnits = async (req: Request, res: Response) => {
   const { propertyId, buildingId, status } = req.query;

@@ -4,7 +4,7 @@ import {
   updateAddressValidator,
 } from "../validators/addressValidators";
 import prisma from "../client/prisma";
-import AppError from "../utils/appError";
+import AppError from "../../shared/utils/appError";
 
 export const getAllAddresses = async (req: Request, res: Response) => {
   const addresses = await prisma.address.findMany({
