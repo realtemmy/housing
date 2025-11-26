@@ -11,13 +11,22 @@ import AppError from "./utils/appError";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 
+import { Request, Response } from "express";
+
+app.get("/", (_req: Request, res: Response) => {
+  res.status(200).json({
+    status: "success",
+    message: "Welcome to the Auth Service",
+  });
+});
+
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
 // Catch all unknown routes
-app.use((req, res, next) => {
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-
+app.use((req, _res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 // Server
