@@ -8,6 +8,8 @@ const app: Application = express();
 app.use(express.json());
 
 import propertyRoutes from "./routes/propertyRoutes";
+import buildingRoutes from "./routes/buildingRoutes";
+import unitRoutes from "./routes/unitRoutes";
 // import 
 
 app.use("/", (req: Request, res: Response) => {
@@ -18,6 +20,8 @@ app.use("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/properties", propertyRoutes);
+app.use("/api/buildings", buildingRoutes);
+app.use("/api/units", unitRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {

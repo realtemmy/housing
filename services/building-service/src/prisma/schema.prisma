@@ -34,41 +34,41 @@ enum MaintenanceStatus {
 }
 
 model Property {
-  id          String    @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String?
   ownerId     String
 
-  buildings   Building[]
+  buildings Building[] // @relation(onDelete: Cascade)
 
-  verified    Boolean   @default(false)
-  isActive    Boolean   @default(true)
+  verified Boolean @default(false)
+  isActive Boolean @default(true)
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Building {
-  id         String    @id @default(uuid())
-  name       String
+  id   String @id @default(uuid())
+  name String
 
-  property   Property  @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
 
   // One-to-one optional relation to Address
-  address     Address?
+  address Address?
 
-  type        BuildingType
+  type BuildingType
 
-  floors      Int?
-  units       Unit[]
+  floors Int?
+  units  Unit[] // cascade on delete
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Address {
-  id         String   @id @default(uuid())
+  id         String @id @default(uuid())
   street     String
   city       String
   state      String
@@ -83,59 +83,59 @@ model Address {
 }
 
 model Unit {
-  id            String         @id @default(uuid())
+  id            String     @id @default(uuid())
   unitNumber    String
   floor         Int?
   bedrooms      Int?
   bathrooms     Float?
   sqft          Int?
-  status        UnitStatus     @default(AVAILABLE)
+  status        UnitStatus @default(AVAILABLE)
   rentAmount    Float
   depositAmount Float?
 
-  type          String         // e.g. "studio", "1-bedroom", etc.
+  type String // e.g. "studio", "1-bedroom", etc.
 
   // Relations
-  building      Building       @relation(fields: [buildingId], references: [id])
-  buildingId    String
+  building   Building @relation(fields: [buildingId], references: [id])
+  buildingId String
 
-  maintenance   MaintenanceRequest[]
-  photos        Photo[]
+  maintenance MaintenanceRequest[]
+  photos      Photo[]
 
-  occupantId    String?         // optional user id of occupant
+  occupantId String? // optional user id of occupant
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([buildingId, unitNumber])
 }
 
 model Photo {
-  id        String  @id @default(uuid())
-  url       String
-  caption   String?
+  id      String  @id @default(uuid())
+  url     String
+  caption String?
 
-  unit      Unit?   @relation(fields: [unitId], references: [id])
-  unitId    String?
+  unit   Unit?   @relation(fields: [unitId], references: [id])
+  unitId String?
 
   createdAt DateTime @default(now())
 }
 
 model MaintenanceRequest {
-  id          String            @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String?
 
-  unit        Unit              @relation(fields: [unitId], references: [id])
-  unitId      String
+  unit   Unit   @relation(fields: [unitId], references: [id])
+  unitId String
 
   requesterId String
   assigneeId  String
 
-  status      MaintenanceStatus @default(OPEN)
-  priority    Int?
+  status   MaintenanceStatus @default(OPEN)
+  priority Int?
 
-  requestedAt DateTime          @default(now())
+  requestedAt DateTime  @default(now())
   resolvedAt  DateTime?
 
   attachments Attachment[]
@@ -150,22 +150,22 @@ model MaintenanceNote {
   request   MaintenanceRequest @relation(fields: [requestId], references: [id])
   requestId String
 
-  authorId  String
-  body      String
+  authorId String
+  body     String
 
-  createdAt DateTime           @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Attachment {
-  id            String              @id @default(uuid())
-  url           String
-  filename      String?
-  mimeType      String?
-  size          Int?
+  id       String  @id @default(uuid())
+  url      String
+  filename String?
+  mimeType String?
+  size     Int?
 
   uploadedById  String
   maintenance   MaintenanceRequest? @relation(fields: [maintenanceId], references: [id])
   maintenanceId String?
 
-  createdAt     DateTime            @default(now())
+  createdAt DateTime @default(now())
 }

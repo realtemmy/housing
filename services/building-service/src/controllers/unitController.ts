@@ -70,6 +70,30 @@ export const getUnit = async (
   });
 };
 
+export const unitAvailable = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const unitId = req.params.id as string;
+  const unitAvailable = await prisma.unit.findUnique({
+    where: { id: unitId, status: "AVAILABLE" },
+  });
+  if (!unitAvailable) {
+    res.status(200).json({
+      status: "success",
+      available: false,
+      message: "Unit is not available",
+    });
+    return;
+  }
+  res.status(200).json({
+    status: "success",
+    available: true,
+    message: "Unit is available",
+  });
+};
+
 export const createUnit = async (
   req: Request,
   res: Response,
@@ -86,7 +110,6 @@ export const createUnit = async (
     rentAmount,
     depositAmount,
     buildingId,
-    occupantId,
     type,
   } = validatedUnit;
 
@@ -150,10 +173,7 @@ export const updateUnit = async (
       rentAmount: validatedData.rentAmount ?? unit.rentAmount,
       depositAmount: validatedData.depositAmount ?? unit.depositAmount,
       buildingId: validatedData.buildingId ?? unit.buildingId,
-    },
-    include: {
-      building: true,
-      photos: true,
+      occupantId: validatedData.occupantId ?? unit.occupantId,
     },
   });
 

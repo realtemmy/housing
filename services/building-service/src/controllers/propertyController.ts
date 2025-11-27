@@ -88,10 +88,10 @@ export const createProperty = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = "";
+  const userId = req.userId as string;
   try {
     const validatedProperty = propertyValidator.parse(req.body);
-    const { title, type, description } = validatedProperty;
+    const { title, description } = validatedProperty;
 
     const property = await prisma.property.create({
       data: { title, ownerId: userId, description: description ?? null },
@@ -133,7 +133,7 @@ export const deleteProperty = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.userId;
+  const userId = req.userId as string;
   const propertyId = req.params.id as string;
   // Check if user attempting to delete is the one who created the property
   const creator = await prisma.property.findUniqueOrThrow({
