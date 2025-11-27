@@ -1,10 +1,11 @@
 import { z } from "zod";
 import { addressFieldsValidator } from "./addressValidators";
+import { BuildingType } from "../generated/prisma/enums";
 
 export const buildingValidator = z.object({
   propertyId: z.string().uuid("Invalid property ID"),
   name: z.string(),
-  type: z.string().min(2, "Type must be at least 2 characters."),
+  type: z.enum(BuildingType),
   floors: z
     .number()
     .int()

@@ -6,7 +6,6 @@ export const propertyValidator = z.object({
     .string()
     .max(150, "Description should not ne more than 150 words.")
     .optional(),
-  type: z.enum(["APARTMENT", "HOUSE", "HOSTEL"]),
 });
 
 export const updatePropertyValidator = z.object({
@@ -15,5 +14,4 @@ export const updatePropertyValidator = z.object({
     .string()
     .max(150, "Description should not ne more than 150 words.")
     .optional(),
-  type: z.enum(["APARTMENT", "HOUSE", "HOSTEL"]),
 });

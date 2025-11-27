@@ -1,27 +1,22 @@
 import express, { Application, Request, Response } from "express";
 import AppError from "./utils/appError";
 
-import globalErrorHandler from "./controllers/errorController";
+import globalErrorHandler from "./controllers/errorController"
 
 const app: Application = express();
 
 app.use(express.json());
 
-import propertyRoutes from "./routes/propertyRoutes";
-import buildingRoutes from "./routes/buildingRoutes";
-import unitRoutes from "./routes/unitRoutes";
-// import 
+// import propertyRoutes from "./routes/propertyRoutes";
 
 app.use("/", (req: Request, res: Response) => {
   res.status(200).json({
     status: "success",
-    message: "Welcome to Properties routes!",
+    message: "Welcome to Lease routes!",
   });
 });
 
-app.use("/api/properties", propertyRoutes);
-app.use("/api/buildings", buildingRoutes);
-app.use("/api/units", unitRoutes);
+// app.use("/api/properties", propertyRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {
