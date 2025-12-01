@@ -1,8 +1,17 @@
 // users, authentication, login jwt etc
 import express, { Application } from "express";
+import cors from "cors";
 
 // App
 const app: Application = express();
+
+// CORS configuration
+app.use(cors({
+  origin: "*", // Allow all origins for development
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(express.json());
 

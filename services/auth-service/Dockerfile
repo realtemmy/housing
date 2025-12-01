@@ -1,5 +1,4 @@
-# CHANGE THIS LINE:
-FROM node:22-alpine      
+FROM node:22-alpine   
 
 # The rest remains the same...
 RUN apk add --no-cache openssl

@@ -28,7 +28,12 @@ services:
     container_name: auth-service
     environment:
       PORT: 4001
-      # JWT_SECRET: "YOUR_SUPER_SECRET_JWT_KEY" # Must match kong.yml secret
+      DATABASE_URL: ${DATABASE_URL}
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
+      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      NODE_ENV: "development"
     # No ports exposed! Only Kong can talk to it.
 
   # ---------------------------
@@ -39,4 +44,13 @@ services:
     container_name: building-service
     environment:
       PORT: 4002
+      DATABASE_URL: "postgresql://postgres:password@postgres:5433/hm-buildings?schema=public"
+      NODE_ENV: "development"
     # No ports exposed!
+  lease-service:
+    build: ./services/lease-service
+    container_name: lease-service
+    environment:
+      PORT: 4003
+      DATABASE_URL: "postgresql://postgres:password@postgres:5434/hm-leases?schema=public"
+      NODE_ENV: "development"

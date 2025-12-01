@@ -61,4 +61,5 @@ export const updateUnitValidator = z.object({
     .nonnegative("Deposit amount must be a non-negative number")
     .optional(),
   buildingId: z.string().uuid("Invalid building ID").optional(),
+  occupantId: z.uuid("Invalid Occupant ID").optional(),
 });

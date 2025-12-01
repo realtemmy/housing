@@ -15,35 +15,33 @@ export const getAllProperties = async (req: Request, res: Response) => {
 
   const skip = (page - 1) * limit;
 
-  const [totalItems, properties] = await prisma.$transaction([
-    prisma.property.count({
-      where: {
-        title: {
-          contains: search,
-          mode: "insensitive",
-        },
+  const totalItems = await prisma.property.count({
+    where: {
+      title: {
+        contains: search,
+        mode: "insensitive",
       },
-    }),
+    },
+  });
 
-    prisma.property.findMany({
-      skip,
-      take: limit,
-      where: {
-        title: {
-          contains: search,
-          mode: "insensitive",
-        },
+  const properties = await prisma.property.findMany({
+    skip,
+    take: limit,
+    where: {
+      title: {
+        contains: search,
+        mode: "insensitive",
       },
-      orderBy: {
-        createdAt: orderBy,
+    },
+    orderBy: {
+      createdAt: orderBy,
+    },
+    include: {
+      _count: {
+        select: { buildings: true },
       },
-      include: {
-        _count: {
-          select: { buildings: true },
-        },
-      },
-    }),
-  ]);
+    },
+  });
 
   const totalPages = Math.ceil(totalItems / limit);
 
@@ -88,10 +86,10 @@ export const createProperty = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = "";
+  const userId = req.userId as string;
   try {
     const validatedProperty = propertyValidator.parse(req.body);
-    const { title, type, description } = validatedProperty;
+    const { title, description } = validatedProperty;
 
     const property = await prisma.property.create({
       data: { title, ownerId: userId, description: description ?? null },
@@ -133,7 +131,7 @@ export const deleteProperty = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.userId;
+  const userId = req.userId as string;
   const propertyId = req.params.id as string;
   // Check if user attempting to delete is the one who created the property
   const creator = await prisma.property.findUniqueOrThrow({

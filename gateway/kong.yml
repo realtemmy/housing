@@ -1,44 +1,27 @@
 _format_version: "3.0"
 
+plugins:
+  - name: cors
+    enabled: true
+    config:
+      origins: ["*"]
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+      headers:
+        [
+          Accept,
+          Content-Type,
+          Authorization,
+          Accept-Version,
+          Content-Length,
+          Content-MD5,
+          Date,
+        ]
+      credentials: true
+      max_age: 3600
+
 services:
   # ---------------------------------------------------
-  # BUILDING SERVICE (Internal: http://building-service:4002)
-  # ---------------------------------------------------
-  - name: building-service
-    url: http://building-service:4002/api
-    routes:
-      # PUBLIC: View all or View one (GET /properties, GET /properties/123)
-      - name: public-properties-read
-        paths:
-          - /properties
-        methods:
-          - GET
-        strip_path: false
-
-      # PROTECTED: Create (POST /properties)
-      - name: protected-properties-create
-        paths:
-          - /properties
-        methods:
-          - POST
-        strip_path: false
-        plugins:
-          - name: jwt
-
-      # PROTECTED: Update/Delete (PATCH/DELETE /properties/123)
-      # Note: We use the same prefix "/properties". Kong matches the method.
-      - name: protected-properties-write
-        paths:
-          - /properties
-        methods:
-          - PATCH
-          - DELETE
-        strip_path: false
-        plugins:
-          - name: jwt
-
-  # ---------------------------------------------------
-  # AUTH SERVICE (Internal: http://auth-service:4001)
+  # AUTH SERVICE
   # ---------------------------------------------------
   - name: auth-service
     url: http://auth-service:4001/api
@@ -51,24 +34,159 @@ services:
           - POST
         strip_path: false
 
-      # PROTECTED: Get Me / Delete User
-      - name: auth-protected
+      # User Profile
+      - name: user-protected
         paths:
-          - /users
+          - /users/:id
         methods:
           - GET
           - DELETE
         strip_path: false
         plugins:
-          - name: jwt
+          - *jwt_policy
+      
+      - name: user-loggedIn
+        paths:
+          - /users/me
+        strip_path: false
+        plugins:
+          - &jwt_policy
+            name: jwt
+            enabled: true
+            config:
+              claims_to_verify:
+                - exp
+              header_names:
+                - authorization
+    # ---------------------------------------------------
+  # BUILDING SERVICE
+  # ---------------------------------------------------
+  - name: building-service
+    url: http://building-service:4002/api
+    routes:
+      # PROPERTY SERVICE
+      # ---------------------------------------------------
+      # PUBLIC: Read-only
+      - name: get-property # Get Property By ID
+        paths:
+          - /properties/:id
+        methods:
+          - GET
+          - PATCH
+          - DELETE
+        strip_path: false
 
-# ---------------------------------------------------
-# JWT CONSUMERS (The "Users" Kong knows about)
-# ---------------------------------------------------
-# You typically need at least one "shared" secret here that
-# matches the secret your Auth Service uses to sign tokens.
+
+      # PROTECTED: Update/Delete
+      - name: protected-properties-write
+        paths:
+          - /properties/:id
+        methods:
+          - PATCH
+          - DELETE
+        strip_path: false
+        plugins:
+          - *jwt_policy
+
+      # PROTECTED: Create
+      - name: protected-properties-create # Create Property
+        paths:
+          - /properties
+        methods:
+          - POST
+        strip_path: false
+        plugins:
+          - *jwt_policy
+      
+      - name: public-properties-read # Get All Properties
+        paths:
+          - /properties
+        methods:
+          - GET
+        strip_path: false
+      # ---------------------------------------------------
+      # BUILDING SERVICE
+      # ---------------------------------------------------
+      - name: get-building # Get Building By ID
+        paths: 
+          - /buildings/:id
+        methods:
+          - GET
+        strip_path: false
+
+      - name: protected-buildings-write # Update/Delete Building
+        paths: 
+          - /buildings/:id
+        methods: 
+          - PATCH
+          - DELETE
+        strip_path: false
+        plugins: 
+          - *jwt_policy
+      
+      - name: protected-buildings-create # Create Building
+        paths: 
+          - /buildings
+        methods:
+          - POST
+        strip_path: false
+        plugins:
+          - *jwt_policy
+
+      - name: public-buildings-read # Get All Buildings
+        paths: 
+          - /buildings
+        methods:
+          - POST
+        strip_path: false
+      
+      # ---------------------------------------------------
+      # UNIT SERVICE
+      # ---------------------------------------------------
+      - name: get-unit # Get Unit By ID
+        paths: 
+          - /units/:id
+        methods:
+          - GET
+        strip_path: false
+
+      - name: get-unit # Get Unit
+        paths:
+          - /units/:id
+        methods: 
+          - GET
+        strip_path: false
+
+      - name: protected-units-write # Update/Delete Unit
+        paths: 
+          - /units/:id
+        methods: 
+          - PATCH
+          - DELETE
+        strip_path: false
+        plugins: 
+          - *jwt_policy
+
+      - name: public-units-read # Get Available Units
+        paths:
+          - /units/available
+        methods:
+          - GET
+        strip_path: false
+        
+      - name: protected-units-create # Create Unit
+        paths:
+          - /units
+        methods: 
+          - POST
+        strip_path: false
+        plugins:
+          - *jwt_policy
+      
+
 consumers:
   - username: global-user
     jwt_secrets:
-      - key: my-site-issuer-key  # This must match "iss" or just be the key lookup
-        secret: "YOUR_SUPER_SECRET_JWT_KEY" # <--- IMPORTANT: Match your Env Var!
+      - key: auth-service-issuer
+        algorithm: HS256
+        secret: "a201a4e773401d9c72d9938d23ef70d85951a49445cee3bbcdc9a4e36dc71c329f4b58f3ace81e2012b027e82526d95c25a1e74aac987eece3c1359a0698d8c7"

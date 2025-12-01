@@ -52,7 +52,7 @@ export const signUp = async (
       },
     });
     const accessToken = jwt.sign(
-      { id: createdUser.id },
+      { id: createdUser.id, iss: "auth-service-issuer" },
       process.env.ACCESS_TOKEN_SECRET!,
       { expiresIn: "10m" }
     );
@@ -63,7 +63,7 @@ export const signUp = async (
       { expiresIn: "1d" }
     );
 
-    res.cookie("jwt", refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none", // or "lax"
@@ -109,7 +109,7 @@ export const login = async (
   if (!matches) return next(new AppError("Incorrect password", 401));
 
   const accessToken = jwt.sign(
-    { id: user.id },
+    { id: user.id, iss: "auth-service-issuer" },
     process.env.ACCESS_TOKEN_SECRET!,
     { expiresIn: "10m" }
   );
@@ -151,7 +151,7 @@ export const refresh = async (
   }
 
   const accessToken = jwt.sign(
-    { id: decoded.id },
+    { id: decoded.id, iss: "auth-service-issuer" },
     process.env.ACCESS_TOKEN_SECRET!,
     { expiresIn: "10m" }
   );
@@ -167,26 +167,44 @@ export const protect = async (
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) return next(new AppError("Unauthorized", 401));
-
-  const token = authHeader.split(" ")[1];
-  if (!token) return next(new AppError("No token provided", 401));
-
-  let decoded;
   try {
-    decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as {
-      id: string;
-    };
+    // Extract token from Authorization header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return next(new AppError("No token provided", 401));
+    }
+
+    const token = authHeader.split(" ")[1];
+    if (!token) {
+      return next(new AppError("No token provided", 401));
+    }
+
+    // Decode and verify token (Kong already validated, but verify for defense-in-depth)
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as {
+        id: string;
+      };
+    } catch (error) {
+      return next(new AppError("Invalid or expired token", 401));
+    }
+
+    // Fetch user from database
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+    });
+
+    if (!user) {
+      return next(new AppError("User no longer exists", 401));
+    }
+
+    // Attach user to request
+    req.user = user;
+    next();
   } catch (error) {
-    return next(new AppError("Invalid or expired token. Login again.", 401));
+    console.error("Error in protect middleware:", error);
+    next(error);
   }
-
-  const user = await prisma.user.findUnique({ where: { id: decoded.id } });
-  if (!user) return next(new AppError("User no longer exists", 401));
-
-  req.user = user;
-  next();
 };
 
 export const restrictTo =
@@ -259,7 +277,7 @@ export const authGoogle = async (
 
   // Create tokens and response
   const accessToken = jwt.sign(
-    { id: user.id },
+    { id: user.id, iss: "auth-service-issuer" },
     process.env.ACCESS_TOKEN_SECRET!,
     { expiresIn: "10m" }
   );
@@ -270,8 +288,9 @@ export const authGoogle = async (
     { expiresIn: "1d" }
   );
 
-  res.cookie("jwt", refreshToken, {
+  res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "none",
     maxAge: 24 * 60 * 60 * 1000,
   });
