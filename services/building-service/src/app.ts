@@ -1,9 +1,18 @@
 import express, { Application, Request, Response } from "express";
+import cors from "cors";
 import AppError from "./utils/appError";
 
 import globalErrorHandler from "./controllers/errorController";
 
 const app: Application = express();
+
+// CORS configuration
+app.use(cors({
+  origin: "*",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(express.json());
 

@@ -15,35 +15,33 @@ export const getAllProperties = async (req: Request, res: Response) => {
 
   const skip = (page - 1) * limit;
 
-  const [totalItems, properties] = await prisma.$transaction([
-    prisma.property.count({
-      where: {
-        title: {
-          contains: search,
-          mode: "insensitive",
-        },
+  const totalItems = await prisma.property.count({
+    where: {
+      title: {
+        contains: search,
+        mode: "insensitive",
       },
-    }),
+    },
+  });
 
-    prisma.property.findMany({
-      skip,
-      take: limit,
-      where: {
-        title: {
-          contains: search,
-          mode: "insensitive",
-        },
+  const properties = await prisma.property.findMany({
+    skip,
+    take: limit,
+    where: {
+      title: {
+        contains: search,
+        mode: "insensitive",
       },
-      orderBy: {
-        createdAt: orderBy,
+    },
+    orderBy: {
+      createdAt: orderBy,
+    },
+    include: {
+      _count: {
+        select: { buildings: true },
       },
-      include: {
-        _count: {
-          select: { buildings: true },
-        },
-      },
-    }),
-  ]);
+    },
+  });
 
   const totalPages = Math.ceil(totalItems / limit);
 
