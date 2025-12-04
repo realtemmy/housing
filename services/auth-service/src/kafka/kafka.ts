@@ -24,8 +24,8 @@ class KafkaService {
   constructor() {
     this.kafka = new Kafka({
       clientId: "auth-service",
-      brokers: [process.env.KAFKA_BROKER || "localhost:9092"],
-      logLevel: logLevel.ERROR,
+      brokers: ["broker:9092"],
+      logLevel: logLevel.INFO,
     });
 
     this.producer = this.kafka.producer();
@@ -73,7 +73,7 @@ class KafkaService {
 
   async publishUpdatedUser(user: IUserUpdatedEvent): Promise<void> {
     if (!this.isConnected) {
-      this.connect();
+      await this.connect();
     }
 
     try {
