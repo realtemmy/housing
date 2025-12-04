@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
 import AppError from "../utils/appError";
-import kafkaService from "../kafka/kafka";
 
 export const getAllUsers = async (
   req: Request,

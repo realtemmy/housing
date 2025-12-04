@@ -39,7 +39,7 @@ export const signUp = async (
   try {
     const validatedUser = userValidator.parse(req.body);
     const { email, password, role, firstName, lastName, phone } = validatedUser;
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const createdUser = await prisma.user.create({
       data: {
         email,
@@ -264,6 +264,14 @@ export const authGoogle = async (
         providerId: sub,
       },
     });
+    // Publish created user to kafka
+    await kafkaService.publishUserCreated({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+    });
   } else {
     await prisma.user.update({
       where: { id: user.id },
@@ -300,3 +308,7 @@ export const authGoogle = async (
     data: { user, accessToken },
   });
 };
+
+export const forgotPassword = async(req:Request, res:Response, next:NextFunction) => {}
+
+export const resetPassword = async(req:Request, res:Response, next: NextFunction) => {}

@@ -21,12 +21,12 @@ import buildingRoutes from "./routes/buildingRoutes";
 import unitRoutes from "./routes/unitRoutes";
 // import 
 
-app.use("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    status: "success",
-    message: "Welcome to Properties routes!",
-  });
-});
+// app.use("/", (req: Request, res: Response) => {
+//   res.status(200).json({
+//     status: "success",
+//     message: "Welcome to Properties routes!",
+//   });
+// });
 
 app.use("/api/properties", propertyRoutes);
 app.use("/api/buildings", buildingRoutes);

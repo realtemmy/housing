@@ -1,21 +1,13 @@
 _format_version: "3.0"
 
 plugins:
+  # GLOBAL PLUGINS
   - name: cors
     enabled: true
     config:
       origins: ["*"]
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-      headers:
-        [
-          Accept,
-          Content-Type,
-          Authorization,
-          Accept-Version,
-          Content-Length,
-          Content-MD5,
-          Date,
-        ]
+      headers: ["Accept", "Content-Type", "Authorization", "Accept-Version", "Content-Length", "Content-MD5", "Date"]
       credentials: true
       max_age: 3600
 
@@ -34,20 +26,14 @@ services:
           - POST
         strip_path: false
 
-      # User Profile
+      # PROTECTED: User Profile
+      # DEFINITION of &jwt_policy happens here on the first protected route
       - name: user-protected
         paths:
-          - /users/:id
+          - /users
         methods:
           - GET
           - DELETE
-        strip_path: false
-        plugins:
-          - *jwt_policy
-      
-      - name: user-loggedIn
-        paths:
-          - /users/me
         strip_path: false
         plugins:
           - &jwt_policy
@@ -58,29 +44,39 @@ services:
                 - exp
               header_names:
                 - authorization
-    # ---------------------------------------------------
+
+  # ---------------------------------------------------
   # BUILDING SERVICE
   # ---------------------------------------------------
   - name: building-service
     url: http://building-service:4002/api
     routes:
-      # PROPERTY SERVICE
-      # ---------------------------------------------------
-      # PUBLIC: Read-only
-      - name: get-property # Get Property By ID
+      # ==================
+      # PROPERTIES
+      # ==================
+      
+      # PUBLIC: READ (Covers /properties AND /properties/123)
+      - name: public-properties-read
         paths:
-          - /properties/:id
+          - /properties
         methods:
           - GET
-          - PATCH
-          - DELETE
         strip_path: false
 
+      # PROTECTED: WRITE (Create)
+      - name: protected-properties-create
+        paths:
+          - /properties
+        methods:
+          - POST
+        strip_path: false
+        plugins:
+          - *jwt_policy
 
-      # PROTECTED: Update/Delete
+      # PROTECTED: WRITE (Update/Delete)
       - name: protected-properties-write
         paths:
-          - /properties/:id
+          - /properties
         methods:
           - PATCH
           - DELETE
@@ -88,44 +84,21 @@ services:
         plugins:
           - *jwt_policy
 
-      # PROTECTED: Create
-      - name: protected-properties-create # Create Property
+      # ==================
+      # BUILDINGS
+      # ==================
+
+      # PUBLIC: READ
+      - name: public-buildings-read
         paths:
-          - /properties
+          - /buildings
         methods:
-          - POST
-        strip_path: false
-        plugins:
-          - *jwt_policy
-      
-      - name: public-properties-read # Get All Properties
-        paths:
-          - /properties
-        methods:
-          - GET
-        strip_path: false
-      # ---------------------------------------------------
-      # BUILDING SERVICE
-      # ---------------------------------------------------
-      - name: get-building # Get Building By ID
-        paths: 
-          - /buildings/:id
-        methods:
-          - GET
+          - GET   # <--- FIXED: Was POST
         strip_path: false
 
-      - name: protected-buildings-write # Update/Delete Building
-        paths: 
-          - /buildings/:id
-        methods: 
-          - PATCH
-          - DELETE
-        strip_path: false
-        plugins: 
-          - *jwt_policy
-      
-      - name: protected-buildings-create # Create Building
-        paths: 
+      # PROTECTED: CREATE
+      - name: protected-buildings-create
+        paths:
           - /buildings
         methods:
           - POST
@@ -133,56 +106,49 @@ services:
         plugins:
           - *jwt_policy
 
-      - name: public-buildings-read # Get All Buildings
-        paths: 
+      # PROTECTED: UPDATE/DELETE
+      - name: protected-buildings-write
+        paths:
           - /buildings
         methods:
-          - POST
-        strip_path: false
-      
-      # ---------------------------------------------------
-      # UNIT SERVICE
-      # ---------------------------------------------------
-      - name: get-unit # Get Unit By ID
-        paths: 
-          - /units/:id
-        methods:
-          - GET
-        strip_path: false
-
-      - name: get-unit # Get Unit
-        paths:
-          - /units/:id
-        methods: 
-          - GET
-        strip_path: false
-
-      - name: protected-units-write # Update/Delete Unit
-        paths: 
-          - /units/:id
-        methods: 
           - PATCH
           - DELETE
         strip_path: false
-        plugins: 
+        plugins:
           - *jwt_policy
 
-      - name: public-units-read # Get Available Units
-        paths:
-          - /units/available
-        methods:
-          - GET
-        strip_path: false
-        
-      - name: protected-units-create # Create Unit
+      # ==================
+      # UNITS
+      # ==================
+
+      # PUBLIC: READ (Covers /units, /units/123, /units/available)
+      - name: public-units-read
         paths:
           - /units
-        methods: 
+        methods:
+          - GET
+        strip_path: false
+
+      # PROTECTED: CREATE
+      - name: protected-units-create
+        paths:
+          - /units
+        methods:
           - POST
         strip_path: false
         plugins:
           - *jwt_policy
-      
+
+      # PROTECTED: UPDATE/DELETE
+      - name: protected-units-write
+        paths:
+          - /units
+        methods:
+          - PATCH
+          - DELETE
+        strip_path: false
+        plugins:
+          - *jwt_policy
 
 consumers:
   - username: global-user
