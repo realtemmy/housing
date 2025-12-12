@@ -2,6 +2,49 @@
 
 Modern, responsive email templates for authentication and user management flows.
 
+## Email Class
+
+The `Email` class is located in `../email.ts` and provides a simple interface for sending templated emails.
+
+### Constructor
+
+```typescript
+new Email(to: string | string[], from?: IUser)
+```
+
+- `to`: Single email address or array of email addresses
+- `from`: Optional sender information. If not provided, defaults to `"System <notification@hm-leases.com>"`
+
+### Example
+
+```typescript
+import Email from '../email';
+
+// Single recipient
+const email = new Email('user@example.com');
+
+// Multiple recipients
+const email = new Email(['user1@example.com', 'user2@example.com']);
+
+// Custom sender
+const email = new Email('user@example.com', {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'john@example.com'
+});
+```
+
+### Configuration
+
+The Email class uses Nodemailer and requires the following environment variables:
+
+```env
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password
+```
+
 ## Available Templates
 
 ### 1. Welcome Email (`welcome.ts`)
@@ -24,6 +67,8 @@ await email.sendWelcomeEmail({
   verificationLink: 'https://yourdomain.com/verify?token=abc123' // optional
 });
 ```
+
+**Note:** The `verificationLink` parameter is optional. If not provided, the template will omit the verification section.
 
 ---
 

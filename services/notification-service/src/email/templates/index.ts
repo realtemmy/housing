@@ -23,7 +23,6 @@ export interface VerifyEmailData {
 export interface ForgotPasswordData {
   firstName: string;
   resetLink: string;
-  resetCode?: string;
 }
 
 export interface ResetPasswordSuccessData {

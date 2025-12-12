@@ -95,8 +95,60 @@ class KafkaService {
       throw error;
     }
   }
+
+  async publishResetPassword(
+    email: string,
+    firstName: string,
+    resetLink: string
+  ): Promise<void> {
+    if (!this.isConnected) {
+      await this.connect();
+    }
+    try {
+      this.producer.send({
+        topic: "auth.user.events",
+        messages: [
+          {
+            value: JSON.stringify({
+              type: "RESET_PASSWORD",
+              payload: { email, firstName, resetLink },
+            }),
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("❌ Error publishing reset password event:", error);
+      throw error;
+    }
+  }
+
+  async publishPasswordResetSuccess(
+    email: string,
+    firstName: string
+  ): Promise<void> {
+    if (!this.isConnected) {
+      await this.connect();
+    }
+    try {
+      this.producer.send({
+        topic: "auth.user.events",
+        messages: [
+          {
+            value: JSON.stringify({
+              type: "PASSWORD_RESET_SUCCESS",
+              payload: { email, firstName },
+            }),
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("❌ Error publishing password reset success event:", error);
+      throw error;
+    }
+  }
 }
 
-
-const kafkaService  = new KafkaService();
+const kafkaService = new KafkaService();
 export default kafkaService;
