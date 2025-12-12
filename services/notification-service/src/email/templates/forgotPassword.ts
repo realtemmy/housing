@@ -1,7 +1,6 @@
 export const forgotPasswordTemplate = (data: {
   firstName: string;
   resetLink: string;
-  resetCode?: string;
 }) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -39,33 +38,9 @@ export const forgotPasswordTemplate = (data: {
                 We received a request to reset your password for your HM Leases account. Don't worry, we're here to help!
               </p>
 
-              ${
-                data.resetCode
-                  ? `
-              <div style="text-align: center; margin: 30px 0;">
-                <p style="margin: 0 0 15px 0; color: #555555; font-size: 16px;">
-                  Your password reset code is:
-                </p>
-                <div style="background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%); border: 2px dashed #f5576c; border-radius: 12px; padding: 25px; display: inline-block;">
-                  <span style="font-size: 36px; font-weight: 700; letter-spacing: 8px; color: #f5576c; font-family: 'Courier New', monospace;">
-                    ${data.resetCode}
-                  </span>
-                </div>
-                <p style="margin: 15px 0 0 0; color: #888888; font-size: 14px;">
-                  This code expires in 15 minutes
-                </p>
-              </div>
-
-              <p style="margin: 30px 0 20px 0; color: #555555; font-size: 16px; line-height: 1.6; text-align: center;">
-                Or click the button below to reset your password:
-              </p>
-              `
-                  : `
               <p style="margin: 0 0 30px 0; color: #555555; font-size: 16px; line-height: 1.6;">
                 Click the button below to reset your password:
               </p>
-              `
-              }
 
               <table role="presentation" style="width: 100%; border-collapse: collapse;">
                 <tr>
@@ -83,7 +58,7 @@ export const forgotPasswordTemplate = (data: {
                 </p>
                 <ul style="margin: 5px 0; padding-left: 20px; color: #856404; font-size: 14px; line-height: 1.6;">
                   <li>If you didn't request this password reset, please ignore this email</li>
-                  <li>Never share this link or code with anyone</li>
+                  <li>Never share this link with anyone</li>
                   <li>Our team will never ask for your password</li>
                 </ul>
               </div>

@@ -47,29 +47,65 @@ class KafkaService {
 
     await this.consumer.run({
       eachMessage: async (payload: EachMessagePayload) => {
-        const { topic, partition, message } = payload;
+        const { topic, message } = payload;
         const value = message.value?.toString();
         switch (topic) {
           case "auth.user.events":
             const event = JSON.parse(value || "{}");
-            if(event.type === "USER_CREATED") {
+            if (event.type === "USER_CREATED") {
               console.log("📦 Received user created event: ", event.payload);
-              await this.handleUserCreated(event.payload as IUserCreatedEvent)
+              await this.handleUserCreated(event.payload as IUserCreatedEvent);
+            } else if (event.type === "RESET_PASSWORD") {
+              await this.handleResetPassword(
+                event.payload.email,
+                event.payload.firstName,
+                event.payload.resetLink
+              );
+            } else if (event.type === "PASSWORD_RESET_SUCCESS") {
+              await this.handlePasswordResetSuccess(
+                event.payload.email,
+                event.payload.firstName,
+                message.timestamp || new Date().toISOString()
+              );
             }
-            // await this.handleUserCreated(value);
             break;
           default:
             console.warn(`⚠️ Unhandled topic: ${topic}`);
         }
       },
     });
-
   }
+
   private async handleUserCreated(user: IUserCreatedEvent): Promise<void> {
     const email = new Email(user.email);
     await email.sendWelcomeEmail({
       firstName: user.firstName,
       email: user.email,
+    });
+  }
+
+  private async handleResetPassword(
+    email: string,
+    firstName: string,
+    resetLink: string
+  ): Promise<void> {
+    const sendMail = new Email(email);
+    await sendMail.sendForgotPasswordEmail({
+      firstName,
+      resetLink,
+    });
+  }
+
+  private async handlePasswordResetSuccess(
+    email: string,
+    firstName: string,
+    timestamp: string
+  ): Promise<void> {
+    const sendMail = new Email(email);
+    await sendMail.sendResetPasswordSuccessEmail({
+      firstName,
+      email,
+      timestamp,
     });
   }
 }

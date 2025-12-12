@@ -38,6 +38,8 @@ model User {
   role       UserRole @default(USER)
   provider   String   @default("local")
   providerId String?
+  resetToken String?
+  resetTokenExpiresAt DateTime?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
