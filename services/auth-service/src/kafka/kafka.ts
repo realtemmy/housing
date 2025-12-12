@@ -24,7 +24,7 @@ class KafkaService {
   constructor() {
     this.kafka = new Kafka({
       clientId: "auth-service",
-      brokers: ["broker:9092"],
+      brokers: ["localhost:9092"],
       logLevel: logLevel.INFO,
     });
 
