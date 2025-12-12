@@ -10,8 +10,8 @@ This project is structured as a microservices-based system with the following co
 - **Auth Service**: User authentication and authorization
 - **Building Service**: Property, building, unit, and address management
 - **Lease Service**: Lease management and tracking
+- **Notification Service**: Email notifications and user notifications via Kafka
 - **Payment Service**: Payment processing (planned)
-- **Notification Service**: User notifications (planned)
 - **Analytics Service**: Analytics and reporting (planned)
 
 ## Project Structure
@@ -41,9 +41,25 @@ housing-server/
 │   │   ├── Dockerfile
 │   │   └── package.json
 │   ├── lease-service/              # Lease management
+│   │   ├── src/
+│   │   │   ├── controllers/        # Lease controllers
+│   │   │   ├── routes/             # API routes
+│   │   │   ├── validators/         # Zod validation schemas
+│   │   │   ├── prisma/             # Prisma schema
+│   │   │   └── server.ts           # Service entry point
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   ├── notification-service/       # Email notifications & messaging
+│   │   ├── src/
+│   │   │   ├── email/              # Email templates and sending
+│   │   │   │   └── templates/      # Email template components
+│   │   │   ├── kafka/              # Kafka consumer/producer
+│   │   │   ├── schema/             # Notification schemas
+│   │   │   └── server.ts           # Service entry point
+│   │   ├── Dockerfile
+│   │   └── package.json
 │   ├── payment-service/            # Payment processing (planned)
-│   ├── notification-service/       # Notifications (planned)
-│   └── analytics-services/         # Analytics (planned)
+│   └── analytics-service/          # Analytics (planned)
 ├── shared/                         # Shared utilities across services
 ├── docker-compose.yml              # Docker services orchestration
 └── README.md
@@ -55,10 +71,12 @@ housing-server/
 - **Framework**: Express.js
 - **Language**: TypeScript
 - **Database**: PostgreSQL
-- **ORM**: Prisma
+- **ORM**: Prisma (PostgreSQL), Mongoose (MongoDB)
 - **API Gateway**: Kong 3.4
 - **Authentication**: JWT
 - **Validation**: Zod
+- **Message Queue**: Apache Kafka
+- **Email**: Nodemailer
 - **Containerization**: Docker
 
 ## Features
@@ -77,7 +95,22 @@ housing-server/
 - Address management with geocoding support
 
 ### Lease Service (Port 4003)
-- Lease management (in development)
+- Lease management (CRUD operations)
+- Tenant management
+- Lease payment tracking
+- Lease renewal handling
+
+### Notification Service (Port 4004)
+- Email notifications via Nodemailer
+- Kafka-based event-driven notifications
+- Email templates for:
+  - Welcome emails
+  - Email verification
+  - Password reset
+  - Two-factor authentication
+  - Account locked notifications
+  - Email change notifications
+- MongoDB for notification history
 
 ## Getting Started
 
@@ -105,6 +138,27 @@ Create `.env` in `services/building-service/`:
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/building_db"
 PORT=4002
+KAFKA_BROKER="localhost:9092"
+```
+
+#### Lease Service
+Create `.env` in `services/lease-service/`:
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/lease_db"
+PORT=4003
+KAFKA_BROKER="localhost:9092"
+```
+
+#### Notification Service
+Create `.env` in `services/notification-service/`:
+```env
+DATABASE_URL="mongodb://localhost:27017/notification"
+PORT=4004
+KAFKA_BROKER="localhost:9092"
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT=587
+EMAIL_USER="your-email@gmail.com"
+EMAIL_PASSWORD="your-app-password"
 ```
 
 **Important**: Update JWT_SECRET in `docker-compose.yml` to match your auth service secret.
@@ -145,6 +199,14 @@ npm install
 # Building service
 cd ../building-service
 npm install
+
+# Lease service
+cd ../lease-service
+npm install
+
+# Notification service
+cd ../notification-service
+npm install
 ```
 
 2. **Setup databases**
@@ -162,6 +224,14 @@ npm run dev
 
 # Terminal 2 - Building Service
 cd services/building-service
+npm run dev
+
+# Terminal 3 - Lease Service
+cd services/lease-service
+npm run dev
+
+# Terminal 4 - Notification Service
+cd services/notification-service
 npm run dev
 ```
 
@@ -1089,6 +1159,40 @@ Authorization: Bearer <access-token>
 
 ---
 
+## Event-Driven Architecture (Kafka)
+
+The system uses Apache Kafka for asynchronous communication between microservices.
+
+### Kafka Setup
+
+Kafka is configured in `docker-compose.yml` with:
+- **Zookeeper**: Manages Kafka cluster coordination
+- **Broker**: Kafka message broker (port 9092)
+
+### Event Flow
+
+1. **Services publish events** to Kafka topics when actions occur
+2. **Notification Service** consumes events and sends appropriate notifications
+3. **Other services** can subscribe to relevant events for their operations
+
+### Notification Service Integration
+
+The Notification Service listens to Kafka topics and automatically sends emails for:
+- User registration events
+- Email verification requests
+- Password reset requests
+- Account security events
+- Lease-related notifications
+
+### Kafka Topics
+
+Topics are auto-created when first used. Common topics include:
+- `user-events` - User-related events (signup, login, etc.)
+- `lease-events` - Lease creation, updates, renewals
+- `notification-requests` - Direct notification requests
+
+---
+
 ## Kong API Gateway Configuration
 
 The `gateway/kong.yml` file configures:
@@ -1107,6 +1211,8 @@ The `gateway/kong.yml` file configures:
 - `/api/buildings/*` → Building Service (4002)
 - `/api/units/*` → Building Service (4002)
 - `/api/addresses/*` → Building Service (4002)
+- `/api/leases/*` → Lease Service (4003) - Protected
+- Notification Service (4004) - Internal only, receives events via Kafka
 
 ## Development
 
@@ -1163,16 +1269,19 @@ docker-compose -f docker-compose.prod.yml up --build -d
 - [x] Pagination and search support
 - [x] Docker containerization
 - [x] Address management with nested building creation
+- [x] Lease service implementation
+- [x] Notification service with email templates
+- [x] Kafka integration for event-driven architecture
+- [x] MongoDB integration for notification service
+- [x] Email notification system with Nodemailer
 
 ### In Progress
-- [ ] Lease service implementation
 - [ ] Payment service integration
-- [ ] Notification service
+- [ ] Enhanced Kafka event handling across services
 
 ### Planned
 - [ ] Analytics service
 - [ ] WebSocket support for real-time updates
-- [ ] Email notifications
 - [ ] File upload for property photos
 - [ ] Advanced search and filtering
 - [ ] API rate limiting per user
@@ -1182,7 +1291,7 @@ docker-compose -f docker-compose.prod.yml up --build -d
 - [ ] Kubernetes deployment
 - [ ] Monitoring and logging (ELK stack)
 - [ ] API documentation (Swagger/OpenAPI)
-- [ ] Message queue integration (RabbitMQ/Kafka)
+- [x] Message queue integration (Kafka)
 - [ ] Caching layer (Redis)
 - [ ] Service mesh (Istio)
 
