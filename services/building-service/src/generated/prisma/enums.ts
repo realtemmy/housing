@@ -12,20 +12,21 @@
 export const BuildingType = {
   APARTMENT: 'APARTMENT',
   HOUSE: 'HOUSE',
-  HOSTEL: 'HOSTEL'
+  HOSTEL: 'HOSTEL',
+  HOTEL: 'HOTEL'
 } as const
 
 export type BuildingType = (typeof BuildingType)[keyof typeof BuildingType]
 
 
-export const UnitStatus = {
+export const AvailableStatus = {
   AVAILABLE: 'AVAILABLE',
   OCCUPIED: 'OCCUPIED',
   MAINTENANCE: 'MAINTENANCE',
   RESERVED: 'RESERVED'
 } as const
 
-export type UnitStatus = (typeof UnitStatus)[keyof typeof UnitStatus]
+export type AvailableStatus = (typeof AvailableStatus)[keyof typeof AvailableStatus]
 
 
 export const MaintenanceStatus = {

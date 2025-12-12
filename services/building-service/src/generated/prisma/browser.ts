@@ -38,6 +38,16 @@ export type Address = Prisma.AddressModel
  */
 export type Unit = Prisma.UnitModel
 /**
+ * Model Room
+ * 
+ */
+export type Room = Prisma.RoomModel
+/**
+ * Model Bed
+ * 
+ */
+export type Bed = Prisma.BedModel
+/**
  * Model Photo
  * 
  */

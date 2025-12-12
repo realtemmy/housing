@@ -1,9 +1,7 @@
-import express from "express";
+require("dotenv").config({ path: "./config.env" });
 
 // App
 import app from "./app";
-
-
 
 // Server
 process.on("uncaughtException", (err: Error) => {
@@ -12,8 +10,8 @@ process.on("uncaughtException", (err: Error) => {
   process.exit(1);
 });
 
-const server = app.listen(process.env.PORT || 4002, () => {
-  console.log(`App running on port ${process.env.PORT || 4002}...`);
+const server = app.listen(process.env.PORT , async () => {
+  console.log(`App running on port ${process.env.PORT}...`);
 });
 
 process.on("unhandledRejection", (err: Error) => {
