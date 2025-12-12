@@ -17,14 +17,16 @@ enum BuildingType {
   APARTMENT
   HOUSE
   HOSTEL
+  HOTEL
 }
 
-enum UnitStatus {
+enum AvailableStatus {
   AVAILABLE
   OCCUPIED
   MAINTENANCE
   RESERVED
 }
+
 
 enum MaintenanceStatus {
   OPEN
@@ -51,6 +53,8 @@ model Property {
 model Building {
   id   String @id @default(uuid())
   name String
+  description String?
+  summary String?
 
   property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
@@ -58,7 +62,7 @@ model Building {
   // One-to-one optional relation to Address
   address Address?
 
-  type BuildingType
+  type BuildingType @default(APARTMENT)
 
   floors Int?
   units  Unit[] // cascade on delete
@@ -85,12 +89,16 @@ model Address {
 model Unit {
   id            String     @id @default(uuid())
   unitNumber    String
+  summary       String?
+
   floor         Int?
   bedrooms      Int?
-  bathrooms     Float?
+  bathrooms     Int?
   sqft          Int?
-  status        UnitStatus @default(AVAILABLE)
-  rentAmount    Float
+
+  status        AvailableStatus @default(AVAILABLE)
+  rentAmount    Float?
+  occupantId    String?
   depositAmount Float?
 
   type String // e.g. "studio", "1-bedroom", etc.
@@ -102,12 +110,50 @@ model Unit {
   maintenance MaintenanceRequest[]
   photos      Photo[]
 
-  occupantId String? // optional user id of occupant
+  rooms      Room[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([buildingId, unitNumber])
+}
+
+model Room {
+  id            String     @id @default(uuid())
+  name          String
+  description   String?
+  summary       String?
+  size          Int?
+
+  rentAmount    Float?
+  depositAmount Float?
+  status        AvailableStatus @default(AVAILABLE)
+  occupantId String?
+
+  unitId     String
+  unit       Unit    @relation(fields: [unitId], references: [id])
+
+  beds      Bed[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bed {
+  id    String @id @default(uuid())
+  label String // e.g., "Bed 1", "Top Bunk", "Window Side"
+
+  rentAmount Float
+  status     AvailableStatus   @default(AVAILABLE)
+  occupantId String?
+  depositAmount Float?
+
+  roomId String
+  room   Room   @relation(fields: [roomId], references: [id])
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Photo {
