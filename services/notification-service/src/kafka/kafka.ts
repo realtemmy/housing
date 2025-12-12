@@ -1,57 +1,76 @@
-import { Kafka, Producer, Consumer, logLevel } from "kafkajs";
+import {
+  Kafka,
+  Producer,
+  Consumer,
+  logLevel,
+  EachMessagePayload,
+} from "kafkajs";
+
+import Email from "../email/email";
+
+interface IUserCreatedEvent {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+}
 
 class KafkaService {
   private kafka: Kafka;
   private consumer: Consumer;
   private producer: Producer;
-  private isConsumerConnected: boolean = false;
 
   constructor() {
     this.kafka = new Kafka({
       clientId: "notifiation-service",
-      brokers: [process.env.KAFKA_BROKER || "broker:9092"],
-      logLevel: logLevel.ERROR,
+      brokers: ["localhost:9092"],
+      logLevel: logLevel.INFO,
     });
     this.consumer = this.kafka.consumer({
-      groupId: "notification-service-consumer",
+      groupId: "notification-group",
     });
     this.producer = this.kafka.producer();
   }
 
-  async connectConsumer(): Promise<void> {
-    try {
-      await this.consumer.connect();
-      this.isConsumerConnected = true;
-      console.log("✅ Kafka Consumer connected");
-    } catch (error) {
-      console.error("❌ Error connecting to Kafka Consumer:", error);
-      throw error;
-    }
+  async connect(): Promise<void> {
+    await this.consumer.connect();
+    await this.producer.connect();
+    console.log("✅ Kafka connected");
   }
 
-  async subscribeToUserCreatedTopic(): Promise<void> {
-    if (!this.isConsumerConnected) {
-      await this.connectConsumer();
-    }
-    try {
-      await this.consumer.subscribe({
-        topic: "auth.user.events",
-        fromBeginning: true,
-      });
-      await this.consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
-          const value = message.value?.toString();
-          console.log("📦 Received user created event: ", {
-            value,
-            topic,
-            partition,
-          });
-        },
-      });
-    } catch (error) {
-      console.error("❌ Error subscribing to user created topic:", error);
-      throw error;
-    }
+  async startConsumer(): Promise<void> {
+    await this.consumer.subscribe({
+      topics: ["auth.user.events"],
+      fromBeginning: true,
+    });
+
+    await this.consumer.run({
+      eachMessage: async (payload: EachMessagePayload) => {
+        const { topic, partition, message } = payload;
+        const value = message.value?.toString();
+        switch (topic) {
+          case "auth.user.events":
+            const event = JSON.parse(value || "{}");
+            if(event.type === "USER_CREATED") {
+              console.log("📦 Received user created event: ", event.payload);
+              await this.handleUserCreated(event.payload as IUserCreatedEvent)
+            }
+            // await this.handleUserCreated(value);
+            break;
+          default:
+            console.warn(`⚠️ Unhandled topic: ${topic}`);
+        }
+      },
+    });
+
+  }
+  private async handleUserCreated(user: IUserCreatedEvent): Promise<void> {
+    const email = new Email(user.email);
+    await email.sendWelcomeEmail({
+      firstName: user.firstName,
+      email: user.email,
+    });
   }
 }
 

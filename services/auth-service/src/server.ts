@@ -3,8 +3,6 @@ import express, { Application } from "express";
 import cors from "cors";
 import kafkaService from "./kafka/kafka";
 
-import { Kafka } from "kafkajs";
-
 // App
 const app: Application = express();
 
@@ -27,13 +25,6 @@ import userRoutes from "./routes/userRoutes";
 
 import { Request, Response } from "express";
 import { Server } from "http";
-
-// const kafka = new Kafka({
-//   clientId: "auth-service",
-//   brokers: ["localhost:9092"],
-// });
-
-  // const producer = kafka.producer();
 
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({

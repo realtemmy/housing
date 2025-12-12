@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
+require("dotenv").config({ path: "./config.env" });
+
+import kafkaService from "./kafka/kafka";
+
 import app from "./app";
 
-dotenv.config({ path: "./config.env" });
 
 const port = process.env.PORT || 4004;
 
@@ -12,6 +14,8 @@ app.listen(port, () => {
 
 const connectDB = async () => {
   try {
+    await kafkaService.connect();
+    await kafkaService.startConsumer()
     await mongoose.connect(
       process.env.DATABASE_URL || "mongodb://localhost:27017/notification"
     );

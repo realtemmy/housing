@@ -1,6 +1,6 @@
 services:
   # ---------------------------
-  # THE GATEWAY (Entry Point)
+  # THE GATEWAY
   # ---------------------------
   kong:
     image: kong:3.4
@@ -23,10 +23,10 @@ services:
       - app-network
 
   # ---------------------------
-  # INFRASTRUCTURE (Kafka & DB)
+  # INFRASTRUCTURE
   # ---------------------------
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.6.1  # Fixed: Pinned version
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_ID: 1
@@ -36,8 +36,9 @@ services:
       - "22181:2181"
     networks:
       - app-network
+
   broker:
-    image: confluentinc/cp-kafka:7.6.1      # Changed from 'latest'
+    image: confluentinc/cp-kafka:7.6.1
     container_name: broker
     depends_on:
       - zookeeper
@@ -51,9 +52,9 @@ services:
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker:29092,EXTERNAL://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-      # KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 # Optional: Good for single node
     networks:
       - app-network
+
   postgres:
     image: postgres:15-alpine
     container_name: local-db
@@ -67,17 +68,30 @@ services:
     networks:
       - app-network
 
+  # Added MongoDB for Notification Service
+  mongo:
+    image: mongo:6.0
+    container_name: local-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
   # ---------------------------
-  # AUTH SERVICE
+  # SERVICES
   # ---------------------------
   auth-service:
     build: ./services/auth-service
     container_name: auth-service
     restart: on-failure
+    command: npm run dev # Forces dev mode to avoid build errors
     depends_on:
       - broker
     environment:
       PORT: 4001
+      # Using External NeonDB is fine here
       DATABASE_URL: postgresql://neondb_owner:npg_l68EILRHOiDa@ep-misty-unit-a4w4sus9-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
       ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
       REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
@@ -85,56 +99,57 @@ services:
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       KAFKA_BROKER: "broker:29092"
       NODE_ENV: "development"
+    volumes:
+      - ./services/auth-service:/app
+      - /app/node_modules
     networks:
       - app-network
 
-  # ---------------------------
-  # BUILDING SERVICE
-  # ---------------------------
-  building-service:
-    build: ./services/building-service
-    container_name: building-service
-    restart: on-failure
-    depends_on:
-      - postgres
-      - broker
-    environment:
-      PORT: 4002
-      DATABASE_URL: "postgresql://postgres:temiloluwa@postgres:5433/hm-buildings?schema=public"
-      NODE_ENV: "development"
-    networks:
-      - app-network
+  # building-service:
+  #   build: ./services/building-service
+  #   container_name: building-service
+  #   restart: on-failure
+  #   command: npm run dev
+  #   depends_on:
+  #     - postgres
+  #     - broker
+  #   environment:
+  #     PORT: 4002
+  #     DATABASE_URL: "postgresql://postgres:password@postgres:5432/hm-buildings?schema=public"
+  #     NODE_ENV: "development"
+  #     KAFKA_BROKER: "broker:29092"
+  #   networks:
+  #     - app-network
 
-  # ---------------------------
-  # LEASE SERVICE
-  # ---------------------------
-  lease-service:
-    build: ./services/lease-service
-    container_name: lease-service
-    restart: on-failure
-    depends_on:
-      - postgres
-      - broker
-    environment:
-      PORT: 4003
-      DATABASE_URL: "postgresql://postgres:temiloluwa@postgres:5433/hm-leases?schema=public"
-      NODE_ENV: "development"
-    networks:
-      - app-network
+  # lease-service:
+  #   build: ./services/lease-service
+  #   container_name: lease-service
+  #   restart: on-failure
+  #   command: npm run dev
+  #   depends_on:
+  #     - postgres
+  #     - broker
+  #   environment:
+  #     PORT: 4003
+  #     DATABASE_URL: "postgresql://postgres:password@postgres:5432/hm-leases?schema=public"
+  #     NODE_ENV: "development"
+  #     KAFKA_BROKER: "broker:29092"
+  #   networks:
+  #     - app-network
 
-  # ---------------------------
-  # NOTIFICATION SERVICE
-  # ---------------------------
   notification-service:
     build: ./services/notification-service
     container_name: notification-service
     restart: on-failure
+    command: npm run dev
     depends_on:
       - broker
+      - mongo
     environment:
       PORT: 4004
-      DATABASE_URL: "mongodb://localhost:27017/notification"
+      DATABASE_URL: "mongodb://mongo:27017/notification"
       NODE_ENV: "development"
+      KAFKA_BROKER: "broker:29092"
     networks:
       - app-network
 
@@ -144,3 +159,4 @@ networks:
 
 volumes:
   postgres_data:
+  mongo_data: # Added volume for Mongo persistence

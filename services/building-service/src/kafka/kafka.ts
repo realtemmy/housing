@@ -11,7 +11,7 @@ class KafkaService {
   constructor() {
     this.kafka = new Kafka({
       clientId: "building-service",
-      brokers: [process.env.KAFKA_BROKER || "localhost:9090"],
+      brokers: ["broker:9092"],
       logLevel: logLevel.ERROR,
     });
     this.producer = this.kafka.producer();
