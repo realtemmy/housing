@@ -20,6 +20,15 @@ export const LeaseStatus = {
 export type LeaseStatus = (typeof LeaseStatus)[keyof typeof LeaseStatus]
 
 
+export const RentableType = {
+  UNIT: 'UNIT',
+  ROOM: 'ROOM',
+  BED: 'BED'
+} as const
+
+export type RentableType = (typeof RentableType)[keyof typeof RentableType]
+
+
 export const PaymentFrequency = {
   MONTHLY: 'MONTHLY',
   QUARTERLY: 'QUARTERLY',

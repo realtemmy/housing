@@ -41,7 +41,7 @@ class KafkaService {
 
   async startConsumer(): Promise<void> {
     await this.consumer.subscribe({
-      topics: ["auth.user.events"],
+      topics: ["auth.user.events", "payment.events"],
       fromBeginning: true,
     });
 

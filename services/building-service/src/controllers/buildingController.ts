@@ -88,7 +88,8 @@ export const createBuilding = async (
   next: NextFunction
 ) => {
   const validatedBuilding = buildingValidator.parse(req.body);
-  const { propertyId, name, floors, address, type } = validatedBuilding;
+  const { propertyId, name, floors, address, type, description, summary } =
+    validatedBuilding;
 
   // Verify property exists
   const property = await prisma.property.findUnique({
@@ -105,6 +106,8 @@ export const createBuilding = async (
       name,
       floors: floors ?? 0,
       type,
+      description,
+      summary,
       address: {
         create: {
           city: address.city,
@@ -139,6 +142,16 @@ export const updateBuilding = async (
   await prisma.building.findUniqueOrThrow({
     where: { id: buildingId },
   });
+
+  const updateData = {};
+
+  const allowedFields = ["name", "description", "summary", "propertyId"];
+
+  for (let key of req.body) {
+    if (req.body[key] !== null) {
+      (updateData as any)[key] = req.body[key];
+    }
+  }
 
   // Build an update payload that omits undefined values so Prisma doesn't receive `undefined`
   const dataToUpdate: any = {};

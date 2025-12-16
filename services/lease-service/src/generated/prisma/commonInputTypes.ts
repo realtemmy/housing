@@ -161,6 +161,13 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
+export type EnumRentableTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RentableType | Prisma.EnumRentableTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRentableTypeFilter<$PrismaModel> | $Enums.RentableType
+}
+
 export type DateTimeNullableFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -195,6 +202,16 @@ export type EnumLeaseStatusFilter<$PrismaModel = never> = {
   in?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel> | $Enums.LeaseStatus
+}
+
+export type EnumRentableTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RentableType | Prisma.EnumRentableTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRentableTypeWithAggregatesFilter<$PrismaModel> | $Enums.RentableType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRentableTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRentableTypeFilter<$PrismaModel>
 }
 
 export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -420,6 +437,13 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
+export type NestedEnumRentableTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RentableType | Prisma.EnumRentableTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRentableTypeFilter<$PrismaModel> | $Enums.RentableType
+}
+
 export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -454,6 +478,16 @@ export type NestedEnumLeaseStatusFilter<$PrismaModel = never> = {
   in?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel> | $Enums.LeaseStatus
+}
+
+export type NestedEnumRentableTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RentableType | Prisma.EnumRentableTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RentableType[] | Prisma.ListEnumRentableTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRentableTypeWithAggregatesFilter<$PrismaModel> | $Enums.RentableType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRentableTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRentableTypeFilter<$PrismaModel>
 }
 
 export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {

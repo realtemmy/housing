@@ -13,11 +13,12 @@ datasource db {
   provider = "postgresql"
 }
 
-enum BuildingType {
+enum UnitType {
   APARTMENT
   HOUSE
   HOSTEL
   HOTEL
+  STUDIO
 }
 
 enum AvailableStatus {
@@ -62,8 +63,6 @@ model Building {
   // One-to-one optional relation to Address
   address Address?
 
-  type BuildingType @default(APARTMENT)
-
   floors Int?
   units  Unit[] // cascade on delete
 
@@ -90,6 +89,7 @@ model Unit {
   id            String     @id @default(uuid())
   unitNumber    String
   summary       String?
+  type UnitType @default(APARTMENT)
 
   floor         Int?
   bedrooms      Int?
@@ -100,8 +100,6 @@ model Unit {
   rentAmount    Float?
   occupantId    String?
   depositAmount Float?
-
-  type String // e.g. "studio", "1-bedroom", etc.
 
   // Relations
   building   Building @relation(fields: [buildingId], references: [id])
@@ -124,6 +122,7 @@ model Room {
   description   String?
   summary       String?
   size          Int?
+  type String? // Dorm, Male, Female, standard, suite, studio etc
 
   rentAmount    Float?
   depositAmount Float?
@@ -137,6 +136,8 @@ model Room {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([unitId, name])
 }
 
 model Bed {

@@ -113,7 +113,7 @@ export const updateProperty = async (
   const propertyId = req.params.id as string;
 
   const updateData = {};
-  const allowedFields = ["title", "floors", "propertyId"];
+  const allowedFields = ["title", "floors"];
   for (let key of req.body) {
     if (allowedFields[key] !== null) {
       (updateData as any)[key] = allowedFields[key];

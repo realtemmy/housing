@@ -21,6 +21,12 @@ enum LeaseStatus {
   CANCELLED // Never started
 }
 
+enum RentableType {
+  UNIT
+  ROOM
+  BED
+}
+
 enum PaymentFrequency {
   MONTHLY
   QUARTERLY
@@ -43,7 +49,8 @@ model Tenant {
 
 model Lease {
   id       String @id @default(uuid())
-  unitId   String
+  rentableId String
+  rentableType RentableType
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id])
 
@@ -69,8 +76,8 @@ model Lease {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([tenantId])
-  @@index([unitId])
+  @@index([tenantId]) 
+  @@index([rentableType])
   @@index([status])
 }
 
