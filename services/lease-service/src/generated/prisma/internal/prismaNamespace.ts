@@ -756,7 +756,8 @@ export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof 
 
 export const LeaseScalarFieldEnum = {
   id: 'id',
-  unitId: 'unitId',
+  rentableId: 'rentableId',
+  rentableType: 'rentableType',
   tenantId: 'tenantId',
   actualMoveInDate: 'actualMoveInDate',
   actualMoveOutDate: 'actualMoveOutDate',
@@ -888,6 +889,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RentableType'
+ */
+export type EnumRentableTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentableType'>
+    
+
+
+/**
+ * Reference to a field of type 'RentableType[]'
+ */
+export type ListEnumRentableTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentableType[]'>
     
 
 

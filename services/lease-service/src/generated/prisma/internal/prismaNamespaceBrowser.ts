@@ -87,7 +87,8 @@ export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof 
 
 export const LeaseScalarFieldEnum = {
   id: 'id',
-  unitId: 'unitId',
+  rentableId: 'rentableId',
+  rentableType: 'rentableType',
   tenantId: 'tenantId',
   actualMoveInDate: 'actualMoveInDate',
   actualMoveOutDate: 'actualMoveOutDate',

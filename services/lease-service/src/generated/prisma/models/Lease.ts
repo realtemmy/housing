@@ -42,7 +42,8 @@ export type LeaseSumAggregateOutputType = {
 
 export type LeaseMinAggregateOutputType = {
   id: string | null
-  unitId: string | null
+  rentableId: string | null
+  rentableType: $Enums.RentableType | null
   tenantId: string | null
   actualMoveInDate: Date | null
   actualMoveOutDate: Date | null
@@ -61,7 +62,8 @@ export type LeaseMinAggregateOutputType = {
 
 export type LeaseMaxAggregateOutputType = {
   id: string | null
-  unitId: string | null
+  rentableId: string | null
+  rentableType: $Enums.RentableType | null
   tenantId: string | null
   actualMoveInDate: Date | null
   actualMoveOutDate: Date | null
@@ -80,7 +82,8 @@ export type LeaseMaxAggregateOutputType = {
 
 export type LeaseCountAggregateOutputType = {
   id: number
-  unitId: number
+  rentableId: number
+  rentableType: number
   tenantId: number
   actualMoveInDate: number
   actualMoveOutDate: number
@@ -115,7 +118,8 @@ export type LeaseSumAggregateInputType = {
 
 export type LeaseMinAggregateInputType = {
   id?: true
-  unitId?: true
+  rentableId?: true
+  rentableType?: true
   tenantId?: true
   actualMoveInDate?: true
   actualMoveOutDate?: true
@@ -134,7 +138,8 @@ export type LeaseMinAggregateInputType = {
 
 export type LeaseMaxAggregateInputType = {
   id?: true
-  unitId?: true
+  rentableId?: true
+  rentableType?: true
   tenantId?: true
   actualMoveInDate?: true
   actualMoveOutDate?: true
@@ -153,7 +158,8 @@ export type LeaseMaxAggregateInputType = {
 
 export type LeaseCountAggregateInputType = {
   id?: true
-  unitId?: true
+  rentableId?: true
+  rentableType?: true
   tenantId?: true
   actualMoveInDate?: true
   actualMoveOutDate?: true
@@ -259,7 +265,8 @@ export type LeaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type LeaseGroupByOutputType = {
   id: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   tenantId: string
   actualMoveInDate: Date | null
   actualMoveOutDate: Date | null
@@ -301,7 +308,8 @@ export type LeaseWhereInput = {
   OR?: Prisma.LeaseWhereInput[]
   NOT?: Prisma.LeaseWhereInput | Prisma.LeaseWhereInput[]
   id?: Prisma.StringFilter<"Lease"> | string
-  unitId?: Prisma.StringFilter<"Lease"> | string
+  rentableId?: Prisma.StringFilter<"Lease"> | string
+  rentableType?: Prisma.EnumRentableTypeFilter<"Lease"> | $Enums.RentableType
   tenantId?: Prisma.StringFilter<"Lease"> | string
   actualMoveInDate?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
   actualMoveOutDate?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
@@ -323,7 +331,8 @@ export type LeaseWhereInput = {
 
 export type LeaseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  rentableId?: Prisma.SortOrder
+  rentableType?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   actualMoveInDate?: Prisma.SortOrderInput | Prisma.SortOrder
   actualMoveOutDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -348,7 +357,8 @@ export type LeaseWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.LeaseWhereInput | Prisma.LeaseWhereInput[]
   OR?: Prisma.LeaseWhereInput[]
   NOT?: Prisma.LeaseWhereInput | Prisma.LeaseWhereInput[]
-  unitId?: Prisma.StringFilter<"Lease"> | string
+  rentableId?: Prisma.StringFilter<"Lease"> | string
+  rentableType?: Prisma.EnumRentableTypeFilter<"Lease"> | $Enums.RentableType
   tenantId?: Prisma.StringFilter<"Lease"> | string
   actualMoveInDate?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
   actualMoveOutDate?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
@@ -370,7 +380,8 @@ export type LeaseWhereUniqueInput = Prisma.AtLeast<{
 
 export type LeaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  rentableId?: Prisma.SortOrder
+  rentableType?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   actualMoveInDate?: Prisma.SortOrderInput | Prisma.SortOrder
   actualMoveOutDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -397,7 +408,8 @@ export type LeaseScalarWhereWithAggregatesInput = {
   OR?: Prisma.LeaseScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LeaseScalarWhereWithAggregatesInput | Prisma.LeaseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Lease"> | string
-  unitId?: Prisma.StringWithAggregatesFilter<"Lease"> | string
+  rentableId?: Prisma.StringWithAggregatesFilter<"Lease"> | string
+  rentableType?: Prisma.EnumRentableTypeWithAggregatesFilter<"Lease"> | $Enums.RentableType
   tenantId?: Prisma.StringWithAggregatesFilter<"Lease"> | string
   actualMoveInDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Lease"> | Date | string | null
   actualMoveOutDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Lease"> | Date | string | null
@@ -416,7 +428,8 @@ export type LeaseScalarWhereWithAggregatesInput = {
 
 export type LeaseCreateInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
   rentAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -437,7 +450,8 @@ export type LeaseCreateInput = {
 
 export type LeaseUncheckedCreateInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   tenantId: string
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
@@ -458,7 +472,8 @@ export type LeaseUncheckedCreateInput = {
 
 export type LeaseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -479,7 +494,8 @@ export type LeaseUpdateInput = {
 
 export type LeaseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -500,7 +516,8 @@ export type LeaseUncheckedUpdateInput = {
 
 export type LeaseCreateManyInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   tenantId: string
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
@@ -519,7 +536,8 @@ export type LeaseCreateManyInput = {
 
 export type LeaseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -537,7 +555,8 @@ export type LeaseUpdateManyMutationInput = {
 
 export type LeaseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -566,7 +585,8 @@ export type LeaseOrderByRelationAggregateInput = {
 
 export type LeaseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  rentableId?: Prisma.SortOrder
+  rentableType?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   actualMoveInDate?: Prisma.SortOrder
   actualMoveOutDate?: Prisma.SortOrder
@@ -592,7 +612,8 @@ export type LeaseAvgOrderByAggregateInput = {
 
 export type LeaseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  rentableId?: Prisma.SortOrder
+  rentableType?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   actualMoveInDate?: Prisma.SortOrder
   actualMoveOutDate?: Prisma.SortOrder
@@ -611,7 +632,8 @@ export type LeaseMaxOrderByAggregateInput = {
 
 export type LeaseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  rentableId?: Prisma.SortOrder
+  rentableType?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   actualMoveInDate?: Prisma.SortOrder
   actualMoveOutDate?: Prisma.SortOrder
@@ -682,6 +704,10 @@ export type LeaseUncheckedUpdateManyWithoutTenantNestedInput = {
   deleteMany?: Prisma.LeaseScalarWhereInput | Prisma.LeaseScalarWhereInput[]
 }
 
+export type EnumRentableTypeFieldUpdateOperationsInput = {
+  set?: $Enums.RentableType
+}
+
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
@@ -732,7 +758,8 @@ export type LeaseUpdateOneRequiredWithoutPaymentsNestedInput = {
 
 export type LeaseCreateWithoutTenantInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
   rentAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -752,7 +779,8 @@ export type LeaseCreateWithoutTenantInput = {
 
 export type LeaseUncheckedCreateWithoutTenantInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
   rentAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -801,7 +829,8 @@ export type LeaseScalarWhereInput = {
   OR?: Prisma.LeaseScalarWhereInput[]
   NOT?: Prisma.LeaseScalarWhereInput | Prisma.LeaseScalarWhereInput[]
   id?: Prisma.StringFilter<"Lease"> | string
-  unitId?: Prisma.StringFilter<"Lease"> | string
+  rentableId?: Prisma.StringFilter<"Lease"> | string
+  rentableType?: Prisma.EnumRentableTypeFilter<"Lease"> | $Enums.RentableType
   tenantId?: Prisma.StringFilter<"Lease"> | string
   actualMoveInDate?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
   actualMoveOutDate?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
@@ -820,7 +849,8 @@ export type LeaseScalarWhereInput = {
 
 export type LeaseCreateWithoutRenewalsInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
   rentAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -840,7 +870,8 @@ export type LeaseCreateWithoutRenewalsInput = {
 
 export type LeaseUncheckedCreateWithoutRenewalsInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   tenantId: string
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
@@ -876,7 +907,8 @@ export type LeaseUpdateToOneWithWhereWithoutRenewalsInput = {
 
 export type LeaseUpdateWithoutRenewalsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -896,7 +928,8 @@ export type LeaseUpdateWithoutRenewalsInput = {
 
 export type LeaseUncheckedUpdateWithoutRenewalsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -916,7 +949,8 @@ export type LeaseUncheckedUpdateWithoutRenewalsInput = {
 
 export type LeaseCreateWithoutPaymentsInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
   rentAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -936,7 +970,8 @@ export type LeaseCreateWithoutPaymentsInput = {
 
 export type LeaseUncheckedCreateWithoutPaymentsInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   tenantId: string
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
@@ -972,7 +1007,8 @@ export type LeaseUpdateToOneWithWhereWithoutPaymentsInput = {
 
 export type LeaseUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -992,7 +1028,8 @@ export type LeaseUpdateWithoutPaymentsInput = {
 
 export type LeaseUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1012,7 +1049,8 @@ export type LeaseUncheckedUpdateWithoutPaymentsInput = {
 
 export type LeaseCreateManyTenantInput = {
   id?: string
-  unitId: string
+  rentableId: string
+  rentableType: $Enums.RentableType
   actualMoveInDate?: Date | string | null
   actualMoveOutDate?: Date | string | null
   rentAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1030,7 +1068,8 @@ export type LeaseCreateManyTenantInput = {
 
 export type LeaseUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1050,7 +1089,8 @@ export type LeaseUpdateWithoutTenantInput = {
 
 export type LeaseUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1070,7 +1110,8 @@ export type LeaseUncheckedUpdateWithoutTenantInput = {
 
 export type LeaseUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableId?: Prisma.StringFieldUpdateOperationsInput | string
+  rentableType?: Prisma.EnumRentableTypeFieldUpdateOperationsInput | $Enums.RentableType
   actualMoveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   actualMoveOutDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1128,7 +1169,8 @@ export type LeaseCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.
 
 export type LeaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  unitId?: boolean
+  rentableId?: boolean
+  rentableType?: boolean
   tenantId?: boolean
   actualMoveInDate?: boolean
   actualMoveOutDate?: boolean
@@ -1151,7 +1193,8 @@ export type LeaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 
 export type LeaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  unitId?: boolean
+  rentableId?: boolean
+  rentableType?: boolean
   tenantId?: boolean
   actualMoveInDate?: boolean
   actualMoveOutDate?: boolean
@@ -1171,7 +1214,8 @@ export type LeaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type LeaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  unitId?: boolean
+  rentableId?: boolean
+  rentableType?: boolean
   tenantId?: boolean
   actualMoveInDate?: boolean
   actualMoveOutDate?: boolean
@@ -1191,7 +1235,8 @@ export type LeaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type LeaseSelectScalar = {
   id?: boolean
-  unitId?: boolean
+  rentableId?: boolean
+  rentableType?: boolean
   tenantId?: boolean
   actualMoveInDate?: boolean
   actualMoveOutDate?: boolean
@@ -1208,7 +1253,7 @@ export type LeaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LeaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitId" | "tenantId" | "actualMoveInDate" | "actualMoveOutDate" | "rentAmount" | "securityDeposit" | "serviceCharge" | "totalAmount" | "paymentFrequency" | "status" | "agreementUrl" | "terminationReason" | "terminationDate" | "createdAt" | "updatedAt", ExtArgs["result"]["lease"]>
+export type LeaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rentableId" | "rentableType" | "tenantId" | "actualMoveInDate" | "actualMoveOutDate" | "rentAmount" | "securityDeposit" | "serviceCharge" | "totalAmount" | "paymentFrequency" | "status" | "agreementUrl" | "terminationReason" | "terminationDate" | "createdAt" | "updatedAt", ExtArgs["result"]["lease"]>
 export type LeaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   renewals?: boolean | Prisma.Lease$renewalsArgs<ExtArgs>
@@ -1231,7 +1276,8 @@ export type $LeasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    unitId: string
+    rentableId: string
+    rentableType: $Enums.RentableType
     tenantId: string
     actualMoveInDate: Date | null
     actualMoveOutDate: Date | null
@@ -1673,7 +1719,8 @@ export interface Prisma__LeaseClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface LeaseFieldRefs {
   readonly id: Prisma.FieldRef<"Lease", 'String'>
-  readonly unitId: Prisma.FieldRef<"Lease", 'String'>
+  readonly rentableId: Prisma.FieldRef<"Lease", 'String'>
+  readonly rentableType: Prisma.FieldRef<"Lease", 'RentableType'>
   readonly tenantId: Prisma.FieldRef<"Lease", 'String'>
   readonly actualMoveInDate: Prisma.FieldRef<"Lease", 'DateTime'>
   readonly actualMoveOutDate: Prisma.FieldRef<"Lease", 'DateTime'>
