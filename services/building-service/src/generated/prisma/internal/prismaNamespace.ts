@@ -1212,7 +1212,6 @@ export const BuildingScalarFieldEnum = {
   description: 'description',
   summary: 'summary',
   propertyId: 'propertyId',
-  type: 'type',
   floors: 'floors',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1240,6 +1239,7 @@ export const UnitScalarFieldEnum = {
   id: 'id',
   unitNumber: 'unitNumber',
   summary: 'summary',
+  type: 'type',
   floor: 'floor',
   bedrooms: 'bedrooms',
   bathrooms: 'bathrooms',
@@ -1248,8 +1248,8 @@ export const UnitScalarFieldEnum = {
   rentAmount: 'rentAmount',
   occupantId: 'occupantId',
   depositAmount: 'depositAmount',
-  type: 'type',
   buildingId: 'buildingId',
+  initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1263,10 +1263,12 @@ export const RoomScalarFieldEnum = {
   description: 'description',
   summary: 'summary',
   size: 'size',
+  type: 'type',
   rentAmount: 'rentAmount',
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  initializedAt: 'initializedAt',
   unitId: 'unitId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1283,6 +1285,7 @@ export const BedScalarFieldEnum = {
   occupantId: 'occupantId',
   depositAmount: 'depositAmount',
   roomId: 'roomId',
+  initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1408,20 +1411,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'BuildingType'
- */
-export type EnumBuildingTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BuildingType'>
-    
-
-
-/**
- * Reference to a field of type 'BuildingType[]'
- */
-export type ListEnumBuildingTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BuildingType[]'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1446,6 +1435,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UnitType'
+ */
+export type EnumUnitTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitType'>
+    
+
+
+/**
+ * Reference to a field of type 'UnitType[]'
+ */
+export type ListEnumUnitTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitType[]'>
     
 
 

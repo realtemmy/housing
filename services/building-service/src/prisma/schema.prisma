@@ -110,6 +110,8 @@ model Unit {
 
   rooms      Room[]
 
+  initializedAt DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -128,6 +130,8 @@ model Room {
   depositAmount Float?
   status        AvailableStatus @default(AVAILABLE)
   occupantId String?
+
+  initializedAt DateTime?
 
   unitId     String
   unit       Unit    @relation(fields: [unitId], references: [id])
@@ -152,6 +156,7 @@ model Bed {
   roomId String
   room   Room   @relation(fields: [roomId], references: [id])
 
+  initializedAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -41,7 +41,7 @@ class KafkaService {
 
   async startConsumer(): Promise<void> {
     await this.consumer.subscribe({
-      topics: ["auth.user.events", "payment.events"],
+      topics: ["auth.user.events", "payment.events", "lease.events"],
       fromBeginning: true,
     });
 
@@ -68,6 +68,26 @@ class KafkaService {
                 message.timestamp || new Date().toISOString()
               );
             }
+            break;
+          // case "payment.events":
+          //   const paymentEvent = JSON.parse(value || "{}");
+          //   if (paymentEvent.type === "PAYMENT_SUCCESS") {
+          //     console.log("✅ Payment success");
+          //     // this.handlePaymentSuccess(paymentEvent.payload as IPaymentSuccessEvent);
+          //   }else if(paymentEvent.type === "PAYMENT_FAILED") {
+          //     console.log("❌ Payment failed");
+          //     // this.handlePaymentFailed(paymentEvent.payload as IPaymentFailedEvent);
+          //   }
+          //   break;
+          // case "lease.events":
+          //   const leaseEvent = JSON.parse(value || "{}");
+          //   if (leaseEvent.type === "LEASE_INITIATED") {
+          //     console.log("📦 Received lease initiated event: ", leaseEvent.payload);
+          //     await this.handleLeaseInitiated(leaseEvent.payload as ILeaseInitiatedEvent);
+          //   } else if (leaseEvent.type === "LEASE_CONFIRMED") {
+          //     console.log("📦 Received lease confirmed event: ", leaseEvent.payload);
+          //     await this.handleLeaseConfirmed(leaseEvent.payload as ILeaseConfirmedEvent);
+          //   }
             break;
           default:
             console.warn(`⚠️ Unhandled topic: ${topic}`);

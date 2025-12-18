@@ -88,7 +88,7 @@ export const createBuilding = async (
   next: NextFunction
 ) => {
   const validatedBuilding = buildingValidator.parse(req.body);
-  const { propertyId, name, floors, address, type, description, summary } =
+  const { propertyId, name, floors, address, description, summary } =
     validatedBuilding;
 
   // Verify property exists
@@ -105,7 +105,6 @@ export const createBuilding = async (
       propertyId,
       name,
       floors: floors ?? 0,
-      type,
       description,
       summary,
       address: {

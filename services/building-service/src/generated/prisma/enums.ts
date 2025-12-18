@@ -9,14 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
-export const BuildingType = {
+export const UnitType = {
   APARTMENT: 'APARTMENT',
   HOUSE: 'HOUSE',
   HOSTEL: 'HOSTEL',
-  HOTEL: 'HOTEL'
+  HOTEL: 'HOTEL',
+  STUDIO: 'STUDIO'
 } as const
 
-export type BuildingType = (typeof BuildingType)[keyof typeof BuildingType]
+export type UnitType = (typeof UnitType)[keyof typeof UnitType]
 
 
 export const AvailableStatus = {

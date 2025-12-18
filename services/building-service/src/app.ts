@@ -2,6 +2,8 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import AppError from "./utils/appError";
 
+import job from "./jobs/jobs";
+
 import globalErrorHandler from "./controllers/errorController";
 
 const app: Application = express();
@@ -15,6 +17,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+job.start();
 
 import propertyRoutes from "./routes/propertyRoutes";
 import buildingRoutes from "./routes/buildingRoutes";

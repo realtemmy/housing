@@ -99,7 +99,6 @@ export const BuildingScalarFieldEnum = {
   description: 'description',
   summary: 'summary',
   propertyId: 'propertyId',
-  type: 'type',
   floors: 'floors',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -127,6 +126,7 @@ export const UnitScalarFieldEnum = {
   id: 'id',
   unitNumber: 'unitNumber',
   summary: 'summary',
+  type: 'type',
   floor: 'floor',
   bedrooms: 'bedrooms',
   bathrooms: 'bathrooms',
@@ -135,8 +135,8 @@ export const UnitScalarFieldEnum = {
   rentAmount: 'rentAmount',
   occupantId: 'occupantId',
   depositAmount: 'depositAmount',
-  type: 'type',
   buildingId: 'buildingId',
+  initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -150,10 +150,12 @@ export const RoomScalarFieldEnum = {
   description: 'description',
   summary: 'summary',
   size: 'size',
+  type: 'type',
   rentAmount: 'rentAmount',
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  initializedAt: 'initializedAt',
   unitId: 'unitId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -170,6 +172,7 @@ export const BedScalarFieldEnum = {
   occupantId: 'occupantId',
   depositAmount: 'depositAmount',
   roomId: 'roomId',
+  initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

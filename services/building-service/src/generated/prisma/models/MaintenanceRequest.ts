@@ -541,10 +541,6 @@ export type EnumMaintenanceStatusFieldUpdateOperationsInput = {
   set?: $Enums.MaintenanceStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type MaintenanceRequestCreateNestedOneWithoutNotesInput = {
   create?: Prisma.XOR<Prisma.MaintenanceRequestCreateWithoutNotesInput, Prisma.MaintenanceRequestUncheckedCreateWithoutNotesInput>
   connectOrCreate?: Prisma.MaintenanceRequestCreateOrConnectWithoutNotesInput
