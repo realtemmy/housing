@@ -1,4 +1,3 @@
-import { Decimal } from "@prisma/client/runtime/client";
 import { Kafka, Producer, Consumer, logLevel } from "kafkajs";
 import { RentableType } from "../generated/prisma/enums";
 
@@ -7,11 +6,19 @@ import { RentableType } from "../generated/prisma/enums";
 // Lease confirmed (payment successful and agreement signed) - update unit status to occupied, send receipt and agreement to tenant
 // Lease expiring soon (Schedule jobs) - Alert Landlord/Owner of building and tenant
 
-interface ILeaseCreatedEvent {
+interface ILeaseInitiatedEvent {
   leaseId: string;
   rentableType: RentableType;
   rentableId: string;
-  totalAmount: Decimal;
+  totalAmount: number;
+}
+
+interface ILeaseConfirmedEvent {
+  leaseId: string;
+  rentableType: RentableType;
+  rentableId: string;
+  totalAmount: number;
+  reference: string;
 }
 
 class KafkaService {
@@ -22,7 +29,7 @@ class KafkaService {
   constructor() {
     this.kafka = new Kafka({
       clientId: "lease-service",
-      brokers: ["broker:9092"],
+      brokers: ["localhost:9092"],
       logLevel: logLevel.ERROR,
     });
     this.producer = this.kafka.producer();
@@ -38,7 +45,7 @@ class KafkaService {
     console.log("✅ Kafka connected");
   }
 
-  async leaseCreated(lease: ILeaseCreatedEvent): Promise<void> {
+  async leaseInitiated(lease: ILeaseInitiatedEvent): Promise<void> {
     if (!this.isConnected) {
       await this.connect();
     }
@@ -48,17 +55,37 @@ class KafkaService {
       messages: [
         {
           value: JSON.stringify({
-            type: "LEASE_CREATED",
+            type: "LEASE_INITIATED",
             payload: lease,
             timestamp: new Date().toISOString(),
           }),
         },
       ],
-    })
+    });
   }
-  async leaseConfirmed(): Promise<void> {
-    
+
+  // Listen to payment channel webhook
+  async leaseConfirmed(lease: ILeaseConfirmedEvent): Promise<void> {
+    if (!this.isConnected) {
+      await this.connect();
+    }
+    await this.producer.send({
+      topic: "lease.events",
+      messages: [
+        {
+          value: JSON.stringify({
+            type: "LEASE_CONFIRMED",
+            payload: lease,
+            timestamp: new Date().toISOString(),
+          }),
+        },
+      ],
+    });
   }
+  async leaseRenewed() {
+    // Leaseid, calculate new start date ie currentEnding + 1 year, end.
+  }
+  async leaseExpiringSoon() {}
 }
 
 const kafkaService = new KafkaService();

@@ -1,5 +1,7 @@
 import { Kafka, Consumer, Producer, logLevel } from "kafkajs";
 
+import { prisma } from "../lib/prisma";
+
 // building service listens for lease created and marks unit available for 15 minutes
 // building service listens for payment events from the payment service or lease activated and updated unit status
 
@@ -8,11 +10,25 @@ import { Kafka, Consumer, Producer, logLevel } from "kafkajs";
 
 // Allow subscription for new housing in a particular area?
 
+interface ILeaseInitiatedEvent {
+  leaseId: string;
+  rentableType: "UNIT" | "ROOM" | "BED";
+  rentableId: string;
+  totalAmount: number;
+}
+
+interface ILeaseConfirmedEvent {
+  leaseId: string;
+  rentableType: "UNIT" | "ROOM" | "BED";
+  rentableId: string;
+  totalAmount: number;
+  reference: string;
+}
+
 class KafkaService {
   private kafka: Kafka;
   private producer: Producer;
   private consumer: Consumer;
-  private isConsumerConnected: boolean = false;
   constructor() {
     this.kafka = new Kafka({
       clientId: "building-service",
@@ -34,6 +50,7 @@ class KafkaService {
   async startConsumers(): Promise<void> {
     this.consumer.subscribe({
       topics: ["lease.events", "payment.events"],
+      fromBeginning: true,
     });
 
     await this.consumer.run({
@@ -42,8 +59,21 @@ class KafkaService {
         switch (topic) {
           case "lease.events":
             const event = JSON.parse(value || "{}");
-            if (event.type === "LEASE_CREATED") {
-              console.log("📦 Received lease created event: ", event.payload);
+            if (event.type === "LEASE_INITIATED") {
+              this.handleLeaseInitiated(event.payload as ILeaseInitiatedEvent);
+            } else if (event.type === "LEASE_CONFIRMED") {
+              // Update unit/building to occupied
+              this.handleLeaseConfirmed(event.payload as ILeaseConfirmedEvent);
+            }
+            break;
+          case "payment.events":
+            const paymentEvent = JSON.parse(value || "{}");
+            if (paymentEvent.type === "PAYMENT_SUCCESS") {
+              console.log("✅ Payment success");
+              // this.handlePaymentSuccess(paymentEvent.payload as IPaymentSuccessEvent);
+            }else if(paymentEvent.type === "PAYMENT_FAILED") {
+              console.log("❌ Payment failed");
+              // this.handlePaymentFailed(paymentEvent.payload as IPaymentFailedEvent);
             }
             break;
 
@@ -57,63 +87,80 @@ class KafkaService {
   async connectConsumer(): Promise<void> {
     try {
       await this.consumer.connect();
-      this.isConsumerConnected = true;
       console.log("✅ Kafka Consumer connected");
     } catch (error) {
       console.error("❌ Error connecting to Kafka Consumer:", error);
       throw error;
     }
   }
-  // when pay
-  async listenForLeaseCreated(): Promise<void> {
-    if (!this.isConsumerConnected) {
-      await this.connectConsumer();
-    }
-    try {
-      await this.consumer.subscribe({
-        fromBeginning: true,
-        topic: "lease.created",
-      });
 
-      await this.consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
-          const value = message.value?.toString();
-          console.log("📦 Received lease created event: ", {
-            value,
-            topic,
-            partition,
-          });
-        },
-      });
-      // Find the unit and mark it as unavailable for 15 minutes if payment is not made
-    } catch (error) {
-      console.error("❌ Error listening for lease created:", error);
+  private async handleLeaseInitiated(lease: ILeaseInitiatedEvent) {
+    const { leaseId, rentableId, rentableType, totalAmount } = lease;
+    switch (rentableType) {
+      case "UNIT":
+        await prisma.unit.update({
+          where: { id: rentableId },
+          data: {
+            status: "RESERVED",
+            depositAmount: totalAmount,
+          },
+        });
+        break;
+
+      case "ROOM":
+        await prisma.room.update({
+          where: { id: rentableId },
+          data: {
+            status: "RESERVED",
+            depositAmount: totalAmount,
+          },
+        });
+        break;
+
+      case "BED":
+        await prisma.bed.update({
+          where: { id: rentableId },
+          data: {
+            status: "RESERVED",
+          },
+        });
+        break;
     }
   }
 
-  async listenForPaymentEvents(): Promise<void> {
-    if (!this.isConsumerConnected) {
-      await this.connectConsumer();
-    }
-    try {
-      await this.consumer.subscribe({
-        fromBeginning: true,
-        topic: "payment.events",
-      });
+  private async handleLeaseConfirmed(lease: ILeaseConfirmedEvent) {
+    const { leaseId, reference, rentableId, rentableType, totalAmount } = lease;
+    switch (rentableType) {
+      case "UNIT":
+        await prisma.unit.update({
+          where: { id: rentableId },
+          data: {
+            status: "OCCUPIED",
+            depositAmount: totalAmount,
+          },
+        });
+        break;
 
-      await this.consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
-          const value = message.value?.toString();
-          console.log("📦 Received payment event: ", {
-            value,
-            topic,
-            partition,
-          });
-        },
-      });
-    } catch (error) {
-      console.error("❌ Error listening for payment events:", error);
+      case "ROOM":
+        await prisma.room.update({
+          where: { id: rentableId },
+          data: {
+            status: "OCCUPIED",
+            depositAmount: totalAmount,
+          },
+        });
+        break;
+
+      case "BED":
+        await prisma.bed.update({
+          where: { id: rentableId },
+          data: {
+            status: "OCCUPIED",
+          },
+        });
+        break;
     }
+    
   }
 }
 

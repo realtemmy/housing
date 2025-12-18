@@ -34,6 +34,11 @@ enum PaymentFrequency {
   BI_ANNUALLY //6 months
 }
 
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+}
+
 model Tenant {
   id     String @id @default(uuid())
   userId String @unique
@@ -48,11 +53,11 @@ model Tenant {
 }
 
 model Lease {
-  id       String @id @default(uuid())
-  rentableId String
+  id           String       @id @default(uuid())
+  rentableId   String
   rentableType RentableType
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenantId     String
+  tenant       Tenant       @relation(fields: [tenantId], references: [id])
 
   actualMoveInDate  DateTime? // When they actually picked up keys/ commencement date
   actualMoveOutDate DateTime?
@@ -76,7 +81,7 @@ model Lease {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([tenantId]) 
+  @@index([tenantId])
   @@index([rentableType])
   @@index([status])
 }
@@ -97,12 +102,19 @@ model LeaseRenewal {
 }
 
 model LeasePayment {
-  id      String @id @default(uuid())
+  id String @id @default(uuid())
+
   leaseId String
   lease   Lease  @relation(fields: [leaseId], references: [id])
 
-  amount    Decimal  @db.Decimal(10, 2)
-  paidAt    DateTime @default(now())
+  amount    Decimal       @db.Decimal(10, 2)
+  paidAt    DateTime
   reference String // Payment Gateway Reference (Paystack/Flutterwave)
-  status    String // SUCCESS, FAILED
+  status    PaymentStatus // SUCCESS, FAILED
+  currency  String        @default("NGN")
+
+  paymentId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

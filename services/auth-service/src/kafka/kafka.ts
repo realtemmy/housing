@@ -148,6 +148,29 @@ class KafkaService {
       throw error;
     }
   }
+
+  async publishUserVerified(email: string, firstName: string): Promise<void> {
+    if (!this.isConnected) {
+      await this.connect();
+    }
+    try {
+      this.producer.send({
+        topic: "auth.user.events",
+        messages: [
+          {
+            value: JSON.stringify({
+              type: "USER_VERIFIED",
+              payload: { email, firstName },
+            }),
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("❌ Error publishing user verified event:", error);
+      throw error;
+    }
+  }
 }
 
 const kafkaService = new KafkaService();
