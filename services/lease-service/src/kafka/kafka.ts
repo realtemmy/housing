@@ -7,10 +7,10 @@ import { RentableType } from "../generated/prisma/enums";
 // Lease expiring soon (Schedule jobs) - Alert Landlord/Owner of building and tenant
 
 interface ILeaseInitiatedEvent {
-  leaseId: string;
+  // leaseId: string;
   rentableType: RentableType;
   rentableId: string;
-  totalAmount: number;
+  // totalAmount: number;
 }
 
 interface ILeaseConfirmedEvent {
@@ -82,6 +82,26 @@ class KafkaService {
       ],
     });
   }
+
+  async leaseCancelled(payload: {rentableType: RentableType, rentableId: string}){
+    if (!this.isConnected) {
+      await this.connect();
+    }
+
+    await this.producer.send({
+      topic: "lease.events",
+      messages: [
+        {
+          value: JSON.stringify({
+            type: "LEASE_CANCELLED",
+            payload,
+            timestamp: new Date().toISOString(),
+          }),
+        },
+      ],
+    });
+  }
+  
   async leaseRenewed() {
     // Leaseid, calculate new start date ie currentEnding + 1 year, end.
   }

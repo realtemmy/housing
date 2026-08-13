@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { addressFieldsValidator } from "./addressValidators";
+import { addressFieldsValidator } from "./address.validators";
 
 export const buildingValidator = z.object({
   propertyId: z.uuid("Invalid property ID"),

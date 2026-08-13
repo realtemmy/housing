@@ -37,3 +37,11 @@ export const PaymentFrequency = {
 } as const
 
 export type PaymentFrequency = (typeof PaymentFrequency)[keyof typeof PaymentFrequency]
+
+
+export const PaymentStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

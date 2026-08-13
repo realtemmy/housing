@@ -1,40 +1,39 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
 import cors from "cors";
 import AppError from "./utils/appError";
+import globalErrorHandler from "./controllers/error.controller";
 
-import job from "./jobs/jobs";
+import propertyRoutes from "./routes/property.routes";
+import buildingRoutes from "./routes/building.routes";
+import unitRoutes from "./routes/unit.routes";
+import roomRoutes from "./routes/room.routes";
+import bedRoutes from "./routes/bed.routes";
 
-import globalErrorHandler from "./controllers/errorController";
+import job from "./jobs/reserved-check.jobs";
 
 const app: Application = express();
 
 // CORS configuration
-app.use(cors({
-  origin: "*",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 
+// Start background jobs
 job.start();
 
-import propertyRoutes from "./routes/propertyRoutes";
-import buildingRoutes from "./routes/buildingRoutes";
-import unitRoutes from "./routes/unitRoutes";
-// import 
-
-// app.use("/", (req: Request, res: Response) => {
-//   res.status(200).json({
-//     status: "success",
-//     message: "Welcome to Properties routes!",
-//   });
-// });
-
+// Routes
 app.use("/api/properties", propertyRoutes);
 app.use("/api/buildings", buildingRoutes);
 app.use("/api/units", unitRoutes);
+app.use("/api/rooms", roomRoutes);
+app.use("/api/beds", bedRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {

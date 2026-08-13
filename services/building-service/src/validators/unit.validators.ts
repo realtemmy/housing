@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { UnitType } from "../generated/prisma/client";
 
 export const unitValidator = z.object({
   unitNumber: z.string().min(1, "Unit number is required"),
@@ -17,19 +18,18 @@ export const unitValidator = z.object({
     .int()
     .positive("Square footage must be a positive integer")
     .optional(),
-  type: z
-    .string()
-    .min(2, "Minimun of two characters is required for Unit type"),
+  type: z.nativeEnum(UnitType).optional().default("APARTMENT"),
   status: z
     .enum(["AVAILABLE", "OCCUPIED", "MAINTENANCE", "RESERVED"])
     .default("AVAILABLE"),
-  rentAmount: z.number().positive("Rent amount must be a positive number"),
+  rentAmount: z.number().positive("Rent amount must be a positive number").optional(),
   depositAmount: z
     .number()
     .nonnegative("Deposit amount must be a non-negative number")
     .optional(),
   buildingId: z.string().uuid("Invalid building ID"),
-  occupantId: z.uuid("Invalid Occupant ID").optional(),
+  propertyId: z.string().uuid("Invalid property ID").optional(),
+  occupantId: z.string().uuid("Invalid Occupant ID").optional(),
 });
 
 export const updateUnitValidator = z.object({
@@ -49,6 +49,7 @@ export const updateUnitValidator = z.object({
     .int()
     .positive("Square footage must be a positive integer")
     .optional(),
+  type: z.nativeEnum(UnitType).optional(),
   status: z
     .enum(["AVAILABLE", "OCCUPIED", "MAINTENANCE", "RESERVED"])
     .optional(),
@@ -61,5 +62,5 @@ export const updateUnitValidator = z.object({
     .nonnegative("Deposit amount must be a non-negative number")
     .optional(),
   buildingId: z.string().uuid("Invalid building ID").optional(),
-  occupantId: z.uuid("Invalid Occupant ID").optional(),
+  occupantId: z.string().uuid("Invalid Occupant ID").optional(),
 });

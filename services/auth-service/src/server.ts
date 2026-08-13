@@ -20,8 +20,8 @@ app.use(express.json());
 
 import AppError from "./utils/appError";
 
-import authRoutes from "./routes/authRoutes";
-import userRoutes from "./routes/userRoutes";
+import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
 
 import { Request, Response } from "express";
 import { Server } from "http";

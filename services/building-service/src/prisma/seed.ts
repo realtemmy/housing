@@ -1,6 +1,4 @@
-// import { PrismaClient, BuildingType, AvailableStatus } from "../../generated/prisma";
-//  npx tsx src/prisma/seed.ts 
-import { BuildingType, AvailableStatus } from "./../generated/prisma/client";
+import { UnitType, AvailableStatus } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
 
 async function main() {
@@ -24,7 +22,6 @@ async function main() {
     data: {
       name: "Block A - The Hive",
       description: "Main hostel block with shared amenities.",
-      type: BuildingType.HOSTEL, // <--- IMPORTANT: Flags this as a Hostel
       propertyId: property.id,
       floors: 2,
       address: {
@@ -42,7 +39,6 @@ async function main() {
   console.log(`Created Building: ${hostel.name}`);
 
   // 3. Create a Unit (e.g., "Flat 1" on the ground floor)
-  // Even in a hostel, rooms are often grouped into flats/units.
   const flat1 = await prisma.unit.create({
     data: {
       unitNumber: "Flat 1",
@@ -50,10 +46,10 @@ async function main() {
       floor: 0,
       bedrooms: 3,
       bathrooms: 2,
-      type: "3-bedroom-shared",
+      type: UnitType.HOSTEL,
       buildingId: hostel.id,
+      propertyId: property.id,
       status: AvailableStatus.AVAILABLE,
-      // Note: rentAmount is null here because we bill by the BED, not the unit.
     },
   });
 
@@ -65,17 +61,15 @@ async function main() {
       name: "Room A (Male Wing)",
       size: 200, // sqft
       unitId: flat1.id,
+      propertyId: property.id,
       status: AvailableStatus.AVAILABLE,
-      // rentAmount is null here too, because we are billing beds.
     },
   });
 
   // 5. Create Beds (The actual rentable items)
-  // Scenario: 4-Man Room (2 Bunk Beds)
-
   const bedsData = [
     { label: "Bunk 1 - Top", price: 150000, deposit: 20000 },
-    { label: "Bunk 1 - Bottom", price: 180000, deposit: 20000 }, // Bottom is usually more expensive
+    { label: "Bunk 1 - Bottom", price: 180000, deposit: 20000 },
     { label: "Bunk 2 - Top", price: 150000, deposit: 20000 },
     { label: "Bunk 2 - Bottom", price: 180000, deposit: 20000 },
   ];
@@ -88,6 +82,7 @@ async function main() {
         depositAmount: bed.deposit,
         status: AvailableStatus.AVAILABLE,
         roomId: roomA.id,
+        propertyId: property.id,
       },
     });
   }
@@ -95,7 +90,6 @@ async function main() {
   console.log(`Created ${bedsData.length} beds in ${roomA.name}`);
 
   // 6. Create a Maintenance Request (Linked to the Unit)
-  // Even though it's a bed issue, we link it to the Unit (Flat 1)
   await prisma.maintenanceRequest.create({
     data: {
       title: "Broken Fan in Room A",

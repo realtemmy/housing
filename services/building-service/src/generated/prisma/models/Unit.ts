@@ -58,6 +58,9 @@ export type UnitMinAggregateOutputType = {
   occupantId: string | null
   depositAmount: number | null
   buildingId: string | null
+  propertyId: string | null
+  reservedAt: Date | null
+  reservedUntil: Date | null
   initializedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -77,6 +80,9 @@ export type UnitMaxAggregateOutputType = {
   occupantId: string | null
   depositAmount: number | null
   buildingId: string | null
+  propertyId: string | null
+  reservedAt: Date | null
+  reservedUntil: Date | null
   initializedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -96,6 +102,9 @@ export type UnitCountAggregateOutputType = {
   occupantId: number
   depositAmount: number
   buildingId: number
+  propertyId: number
+  reservedAt: number
+  reservedUntil: number
   initializedAt: number
   createdAt: number
   updatedAt: number
@@ -135,6 +144,9 @@ export type UnitMinAggregateInputType = {
   occupantId?: true
   depositAmount?: true
   buildingId?: true
+  propertyId?: true
+  reservedAt?: true
+  reservedUntil?: true
   initializedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -154,6 +166,9 @@ export type UnitMaxAggregateInputType = {
   occupantId?: true
   depositAmount?: true
   buildingId?: true
+  propertyId?: true
+  reservedAt?: true
+  reservedUntil?: true
   initializedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -173,6 +188,9 @@ export type UnitCountAggregateInputType = {
   occupantId?: true
   depositAmount?: true
   buildingId?: true
+  propertyId?: true
+  reservedAt?: true
+  reservedUntil?: true
   initializedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -279,6 +297,9 @@ export type UnitGroupByOutputType = {
   occupantId: string | null
   depositAmount: number | null
   buildingId: string
+  propertyId: string
+  reservedAt: Date | null
+  reservedUntil: Date | null
   initializedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -321,10 +342,14 @@ export type UnitWhereInput = {
   occupantId?: Prisma.StringNullableFilter<"Unit"> | string | null
   depositAmount?: Prisma.FloatNullableFilter<"Unit"> | number | null
   buildingId?: Prisma.StringFilter<"Unit"> | string
+  propertyId?: Prisma.StringFilter<"Unit"> | string
+  reservedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  reservedUntil?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   initializedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
   building?: Prisma.XOR<Prisma.BuildingScalarRelationFilter, Prisma.BuildingWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   maintenance?: Prisma.MaintenanceRequestListRelationFilter
   photos?: Prisma.PhotoListRelationFilter
   rooms?: Prisma.RoomListRelationFilter
@@ -344,10 +369,14 @@ export type UnitOrderByWithRelationInput = {
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
   depositAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   buildingId?: Prisma.SortOrder
+  propertyId?: Prisma.SortOrder
+  reservedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reservedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   building?: Prisma.BuildingOrderByWithRelationInput
+  property?: Prisma.PropertyOrderByWithRelationInput
   maintenance?: Prisma.MaintenanceRequestOrderByRelationAggregateInput
   photos?: Prisma.PhotoOrderByRelationAggregateInput
   rooms?: Prisma.RoomOrderByRelationAggregateInput
@@ -371,10 +400,14 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   occupantId?: Prisma.StringNullableFilter<"Unit"> | string | null
   depositAmount?: Prisma.FloatNullableFilter<"Unit"> | number | null
   buildingId?: Prisma.StringFilter<"Unit"> | string
+  propertyId?: Prisma.StringFilter<"Unit"> | string
+  reservedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  reservedUntil?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   initializedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
   building?: Prisma.XOR<Prisma.BuildingScalarRelationFilter, Prisma.BuildingWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   maintenance?: Prisma.MaintenanceRequestListRelationFilter
   photos?: Prisma.PhotoListRelationFilter
   rooms?: Prisma.RoomListRelationFilter
@@ -394,6 +427,9 @@ export type UnitOrderByWithAggregationInput = {
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
   depositAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   buildingId?: Prisma.SortOrder
+  propertyId?: Prisma.SortOrder
+  reservedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reservedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -421,6 +457,9 @@ export type UnitScalarWhereWithAggregatesInput = {
   occupantId?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
   depositAmount?: Prisma.FloatNullableWithAggregatesFilter<"Unit"> | number | null
   buildingId?: Prisma.StringWithAggregatesFilter<"Unit"> | string
+  propertyId?: Prisma.StringWithAggregatesFilter<"Unit"> | string
+  reservedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Unit"> | Date | string | null
+  reservedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Unit"> | Date | string | null
   initializedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Unit"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Unit"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Unit"> | Date | string
@@ -439,10 +478,13 @@ export type UnitCreateInput = {
   rentAmount?: number | null
   occupantId?: string | null
   depositAmount?: number | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   building: Prisma.BuildingCreateNestedOneWithoutUnitsInput
+  property: Prisma.PropertyCreateNestedOneWithoutUnitsInput
   maintenance?: Prisma.MaintenanceRequestCreateNestedManyWithoutUnitInput
   photos?: Prisma.PhotoCreateNestedManyWithoutUnitInput
   rooms?: Prisma.RoomCreateNestedManyWithoutUnitInput
@@ -462,6 +504,9 @@ export type UnitUncheckedCreateInput = {
   occupantId?: string | null
   depositAmount?: number | null
   buildingId: string
+  propertyId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -483,10 +528,13 @@ export type UnitUpdateInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   building?: Prisma.BuildingUpdateOneRequiredWithoutUnitsNestedInput
+  property?: Prisma.PropertyUpdateOneRequiredWithoutUnitsNestedInput
   maintenance?: Prisma.MaintenanceRequestUpdateManyWithoutUnitNestedInput
   photos?: Prisma.PhotoUpdateManyWithoutUnitNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutUnitNestedInput
@@ -506,6 +554,9 @@ export type UnitUncheckedUpdateInput = {
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   buildingId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -528,6 +579,9 @@ export type UnitCreateManyInput = {
   occupantId?: string | null
   depositAmount?: number | null
   buildingId: string
+  propertyId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -546,6 +600,8 @@ export type UnitUpdateManyMutationInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -565,6 +621,9 @@ export type UnitUncheckedUpdateManyInput = {
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   buildingId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -599,6 +658,9 @@ export type UnitCountOrderByAggregateInput = {
   occupantId?: Prisma.SortOrder
   depositAmount?: Prisma.SortOrder
   buildingId?: Prisma.SortOrder
+  propertyId?: Prisma.SortOrder
+  reservedAt?: Prisma.SortOrder
+  reservedUntil?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -627,6 +689,9 @@ export type UnitMaxOrderByAggregateInput = {
   occupantId?: Prisma.SortOrder
   depositAmount?: Prisma.SortOrder
   buildingId?: Prisma.SortOrder
+  propertyId?: Prisma.SortOrder
+  reservedAt?: Prisma.SortOrder
+  reservedUntil?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -646,6 +711,9 @@ export type UnitMinOrderByAggregateInput = {
   occupantId?: Prisma.SortOrder
   depositAmount?: Prisma.SortOrder
   buildingId?: Prisma.SortOrder
+  propertyId?: Prisma.SortOrder
+  reservedAt?: Prisma.SortOrder
+  reservedUntil?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -668,6 +736,48 @@ export type UnitScalarRelationFilter = {
 export type UnitNullableScalarRelationFilter = {
   is?: Prisma.UnitWhereInput | null
   isNot?: Prisma.UnitWhereInput | null
+}
+
+export type UnitCreateNestedManyWithoutPropertyInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutPropertyInput, Prisma.UnitUncheckedCreateWithoutPropertyInput> | Prisma.UnitCreateWithoutPropertyInput[] | Prisma.UnitUncheckedCreateWithoutPropertyInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutPropertyInput | Prisma.UnitCreateOrConnectWithoutPropertyInput[]
+  createMany?: Prisma.UnitCreateManyPropertyInputEnvelope
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+}
+
+export type UnitUncheckedCreateNestedManyWithoutPropertyInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutPropertyInput, Prisma.UnitUncheckedCreateWithoutPropertyInput> | Prisma.UnitCreateWithoutPropertyInput[] | Prisma.UnitUncheckedCreateWithoutPropertyInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutPropertyInput | Prisma.UnitCreateOrConnectWithoutPropertyInput[]
+  createMany?: Prisma.UnitCreateManyPropertyInputEnvelope
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+}
+
+export type UnitUpdateManyWithoutPropertyNestedInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutPropertyInput, Prisma.UnitUncheckedCreateWithoutPropertyInput> | Prisma.UnitCreateWithoutPropertyInput[] | Prisma.UnitUncheckedCreateWithoutPropertyInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutPropertyInput | Prisma.UnitCreateOrConnectWithoutPropertyInput[]
+  upsert?: Prisma.UnitUpsertWithWhereUniqueWithoutPropertyInput | Prisma.UnitUpsertWithWhereUniqueWithoutPropertyInput[]
+  createMany?: Prisma.UnitCreateManyPropertyInputEnvelope
+  set?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  disconnect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  delete?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  update?: Prisma.UnitUpdateWithWhereUniqueWithoutPropertyInput | Prisma.UnitUpdateWithWhereUniqueWithoutPropertyInput[]
+  updateMany?: Prisma.UnitUpdateManyWithWhereWithoutPropertyInput | Prisma.UnitUpdateManyWithWhereWithoutPropertyInput[]
+  deleteMany?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
+}
+
+export type UnitUncheckedUpdateManyWithoutPropertyNestedInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutPropertyInput, Prisma.UnitUncheckedCreateWithoutPropertyInput> | Prisma.UnitCreateWithoutPropertyInput[] | Prisma.UnitUncheckedCreateWithoutPropertyInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutPropertyInput | Prisma.UnitCreateOrConnectWithoutPropertyInput[]
+  upsert?: Prisma.UnitUpsertWithWhereUniqueWithoutPropertyInput | Prisma.UnitUpsertWithWhereUniqueWithoutPropertyInput[]
+  createMany?: Prisma.UnitCreateManyPropertyInputEnvelope
+  set?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  disconnect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  delete?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  update?: Prisma.UnitUpdateWithWhereUniqueWithoutPropertyInput | Prisma.UnitUpdateWithWhereUniqueWithoutPropertyInput[]
+  updateMany?: Prisma.UnitUpdateManyWithWhereWithoutPropertyInput | Prisma.UnitUpdateManyWithWhereWithoutPropertyInput[]
+  deleteMany?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
 }
 
 export type UnitCreateNestedManyWithoutBuildingInput = {
@@ -768,6 +878,105 @@ export type UnitUpdateOneRequiredWithoutMaintenanceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutMaintenanceInput, Prisma.UnitUpdateWithoutMaintenanceInput>, Prisma.UnitUncheckedUpdateWithoutMaintenanceInput>
 }
 
+export type UnitCreateWithoutPropertyInput = {
+  id?: string
+  unitNumber: string
+  summary?: string | null
+  type?: $Enums.UnitType
+  floor?: number | null
+  bedrooms?: number | null
+  bathrooms?: number | null
+  sqft?: number | null
+  status?: $Enums.AvailableStatus
+  rentAmount?: number | null
+  occupantId?: string | null
+  depositAmount?: number | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
+  initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  building: Prisma.BuildingCreateNestedOneWithoutUnitsInput
+  maintenance?: Prisma.MaintenanceRequestCreateNestedManyWithoutUnitInput
+  photos?: Prisma.PhotoCreateNestedManyWithoutUnitInput
+  rooms?: Prisma.RoomCreateNestedManyWithoutUnitInput
+}
+
+export type UnitUncheckedCreateWithoutPropertyInput = {
+  id?: string
+  unitNumber: string
+  summary?: string | null
+  type?: $Enums.UnitType
+  floor?: number | null
+  bedrooms?: number | null
+  bathrooms?: number | null
+  sqft?: number | null
+  status?: $Enums.AvailableStatus
+  rentAmount?: number | null
+  occupantId?: string | null
+  depositAmount?: number | null
+  buildingId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
+  initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  maintenance?: Prisma.MaintenanceRequestUncheckedCreateNestedManyWithoutUnitInput
+  photos?: Prisma.PhotoUncheckedCreateNestedManyWithoutUnitInput
+  rooms?: Prisma.RoomUncheckedCreateNestedManyWithoutUnitInput
+}
+
+export type UnitCreateOrConnectWithoutPropertyInput = {
+  where: Prisma.UnitWhereUniqueInput
+  create: Prisma.XOR<Prisma.UnitCreateWithoutPropertyInput, Prisma.UnitUncheckedCreateWithoutPropertyInput>
+}
+
+export type UnitCreateManyPropertyInputEnvelope = {
+  data: Prisma.UnitCreateManyPropertyInput | Prisma.UnitCreateManyPropertyInput[]
+  skipDuplicates?: boolean
+}
+
+export type UnitUpsertWithWhereUniqueWithoutPropertyInput = {
+  where: Prisma.UnitWhereUniqueInput
+  update: Prisma.XOR<Prisma.UnitUpdateWithoutPropertyInput, Prisma.UnitUncheckedUpdateWithoutPropertyInput>
+  create: Prisma.XOR<Prisma.UnitCreateWithoutPropertyInput, Prisma.UnitUncheckedCreateWithoutPropertyInput>
+}
+
+export type UnitUpdateWithWhereUniqueWithoutPropertyInput = {
+  where: Prisma.UnitWhereUniqueInput
+  data: Prisma.XOR<Prisma.UnitUpdateWithoutPropertyInput, Prisma.UnitUncheckedUpdateWithoutPropertyInput>
+}
+
+export type UnitUpdateManyWithWhereWithoutPropertyInput = {
+  where: Prisma.UnitScalarWhereInput
+  data: Prisma.XOR<Prisma.UnitUpdateManyMutationInput, Prisma.UnitUncheckedUpdateManyWithoutPropertyInput>
+}
+
+export type UnitScalarWhereInput = {
+  AND?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
+  OR?: Prisma.UnitScalarWhereInput[]
+  NOT?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
+  id?: Prisma.StringFilter<"Unit"> | string
+  unitNumber?: Prisma.StringFilter<"Unit"> | string
+  summary?: Prisma.StringNullableFilter<"Unit"> | string | null
+  type?: Prisma.EnumUnitTypeFilter<"Unit"> | $Enums.UnitType
+  floor?: Prisma.IntNullableFilter<"Unit"> | number | null
+  bedrooms?: Prisma.IntNullableFilter<"Unit"> | number | null
+  bathrooms?: Prisma.IntNullableFilter<"Unit"> | number | null
+  sqft?: Prisma.IntNullableFilter<"Unit"> | number | null
+  status?: Prisma.EnumAvailableStatusFilter<"Unit"> | $Enums.AvailableStatus
+  rentAmount?: Prisma.FloatNullableFilter<"Unit"> | number | null
+  occupantId?: Prisma.StringNullableFilter<"Unit"> | string | null
+  depositAmount?: Prisma.FloatNullableFilter<"Unit"> | number | null
+  buildingId?: Prisma.StringFilter<"Unit"> | string
+  propertyId?: Prisma.StringFilter<"Unit"> | string
+  reservedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  reservedUntil?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  initializedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
+}
+
 export type UnitCreateWithoutBuildingInput = {
   id?: string
   unitNumber: string
@@ -781,9 +990,12 @@ export type UnitCreateWithoutBuildingInput = {
   rentAmount?: number | null
   occupantId?: string | null
   depositAmount?: number | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  property: Prisma.PropertyCreateNestedOneWithoutUnitsInput
   maintenance?: Prisma.MaintenanceRequestCreateNestedManyWithoutUnitInput
   photos?: Prisma.PhotoCreateNestedManyWithoutUnitInput
   rooms?: Prisma.RoomCreateNestedManyWithoutUnitInput
@@ -802,6 +1014,9 @@ export type UnitUncheckedCreateWithoutBuildingInput = {
   rentAmount?: number | null
   occupantId?: string | null
   depositAmount?: number | null
+  propertyId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -836,28 +1051,6 @@ export type UnitUpdateManyWithWhereWithoutBuildingInput = {
   data: Prisma.XOR<Prisma.UnitUpdateManyMutationInput, Prisma.UnitUncheckedUpdateManyWithoutBuildingInput>
 }
 
-export type UnitScalarWhereInput = {
-  AND?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
-  OR?: Prisma.UnitScalarWhereInput[]
-  NOT?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
-  id?: Prisma.StringFilter<"Unit"> | string
-  unitNumber?: Prisma.StringFilter<"Unit"> | string
-  summary?: Prisma.StringNullableFilter<"Unit"> | string | null
-  type?: Prisma.EnumUnitTypeFilter<"Unit"> | $Enums.UnitType
-  floor?: Prisma.IntNullableFilter<"Unit"> | number | null
-  bedrooms?: Prisma.IntNullableFilter<"Unit"> | number | null
-  bathrooms?: Prisma.IntNullableFilter<"Unit"> | number | null
-  sqft?: Prisma.IntNullableFilter<"Unit"> | number | null
-  status?: Prisma.EnumAvailableStatusFilter<"Unit"> | $Enums.AvailableStatus
-  rentAmount?: Prisma.FloatNullableFilter<"Unit"> | number | null
-  occupantId?: Prisma.StringNullableFilter<"Unit"> | string | null
-  depositAmount?: Prisma.FloatNullableFilter<"Unit"> | number | null
-  buildingId?: Prisma.StringFilter<"Unit"> | string
-  initializedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
-}
-
 export type UnitCreateWithoutRoomsInput = {
   id?: string
   unitNumber: string
@@ -871,10 +1064,13 @@ export type UnitCreateWithoutRoomsInput = {
   rentAmount?: number | null
   occupantId?: string | null
   depositAmount?: number | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   building: Prisma.BuildingCreateNestedOneWithoutUnitsInput
+  property: Prisma.PropertyCreateNestedOneWithoutUnitsInput
   maintenance?: Prisma.MaintenanceRequestCreateNestedManyWithoutUnitInput
   photos?: Prisma.PhotoCreateNestedManyWithoutUnitInput
 }
@@ -893,6 +1089,9 @@ export type UnitUncheckedCreateWithoutRoomsInput = {
   occupantId?: string | null
   depositAmount?: number | null
   buildingId: string
+  propertyId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -929,10 +1128,13 @@ export type UnitUpdateWithoutRoomsInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   building?: Prisma.BuildingUpdateOneRequiredWithoutUnitsNestedInput
+  property?: Prisma.PropertyUpdateOneRequiredWithoutUnitsNestedInput
   maintenance?: Prisma.MaintenanceRequestUpdateManyWithoutUnitNestedInput
   photos?: Prisma.PhotoUpdateManyWithoutUnitNestedInput
 }
@@ -951,6 +1153,9 @@ export type UnitUncheckedUpdateWithoutRoomsInput = {
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   buildingId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -971,10 +1176,13 @@ export type UnitCreateWithoutPhotosInput = {
   rentAmount?: number | null
   occupantId?: string | null
   depositAmount?: number | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   building: Prisma.BuildingCreateNestedOneWithoutUnitsInput
+  property: Prisma.PropertyCreateNestedOneWithoutUnitsInput
   maintenance?: Prisma.MaintenanceRequestCreateNestedManyWithoutUnitInput
   rooms?: Prisma.RoomCreateNestedManyWithoutUnitInput
 }
@@ -993,6 +1201,9 @@ export type UnitUncheckedCreateWithoutPhotosInput = {
   occupantId?: string | null
   depositAmount?: number | null
   buildingId: string
+  propertyId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1029,10 +1240,13 @@ export type UnitUpdateWithoutPhotosInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   building?: Prisma.BuildingUpdateOneRequiredWithoutUnitsNestedInput
+  property?: Prisma.PropertyUpdateOneRequiredWithoutUnitsNestedInput
   maintenance?: Prisma.MaintenanceRequestUpdateManyWithoutUnitNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutUnitNestedInput
 }
@@ -1051,6 +1265,9 @@ export type UnitUncheckedUpdateWithoutPhotosInput = {
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   buildingId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1071,10 +1288,13 @@ export type UnitCreateWithoutMaintenanceInput = {
   rentAmount?: number | null
   occupantId?: string | null
   depositAmount?: number | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   building: Prisma.BuildingCreateNestedOneWithoutUnitsInput
+  property: Prisma.PropertyCreateNestedOneWithoutUnitsInput
   photos?: Prisma.PhotoCreateNestedManyWithoutUnitInput
   rooms?: Prisma.RoomCreateNestedManyWithoutUnitInput
 }
@@ -1093,6 +1313,9 @@ export type UnitUncheckedCreateWithoutMaintenanceInput = {
   occupantId?: string | null
   depositAmount?: number | null
   buildingId: string
+  propertyId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1129,10 +1352,13 @@ export type UnitUpdateWithoutMaintenanceInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   building?: Prisma.BuildingUpdateOneRequiredWithoutUnitsNestedInput
+  property?: Prisma.PropertyUpdateOneRequiredWithoutUnitsNestedInput
   photos?: Prisma.PhotoUpdateManyWithoutUnitNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutUnitNestedInput
 }
@@ -1151,11 +1377,104 @@ export type UnitUncheckedUpdateWithoutMaintenanceInput = {
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   buildingId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   photos?: Prisma.PhotoUncheckedUpdateManyWithoutUnitNestedInput
   rooms?: Prisma.RoomUncheckedUpdateManyWithoutUnitNestedInput
+}
+
+export type UnitCreateManyPropertyInput = {
+  id?: string
+  unitNumber: string
+  summary?: string | null
+  type?: $Enums.UnitType
+  floor?: number | null
+  bedrooms?: number | null
+  bathrooms?: number | null
+  sqft?: number | null
+  status?: $Enums.AvailableStatus
+  rentAmount?: number | null
+  occupantId?: string | null
+  depositAmount?: number | null
+  buildingId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
+  initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UnitUpdateWithoutPropertyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  unitNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sqft?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
+  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  building?: Prisma.BuildingUpdateOneRequiredWithoutUnitsNestedInput
+  maintenance?: Prisma.MaintenanceRequestUpdateManyWithoutUnitNestedInput
+  photos?: Prisma.PhotoUpdateManyWithoutUnitNestedInput
+  rooms?: Prisma.RoomUpdateManyWithoutUnitNestedInput
+}
+
+export type UnitUncheckedUpdateWithoutPropertyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  unitNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sqft?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
+  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  buildingId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maintenance?: Prisma.MaintenanceRequestUncheckedUpdateManyWithoutUnitNestedInput
+  photos?: Prisma.PhotoUncheckedUpdateManyWithoutUnitNestedInput
+  rooms?: Prisma.RoomUncheckedUpdateManyWithoutUnitNestedInput
+}
+
+export type UnitUncheckedUpdateManyWithoutPropertyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  unitNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sqft?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
+  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  buildingId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UnitCreateManyBuildingInput = {
@@ -1171,6 +1490,9 @@ export type UnitCreateManyBuildingInput = {
   rentAmount?: number | null
   occupantId?: string | null
   depositAmount?: number | null
+  propertyId: string
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1189,9 +1511,12 @@ export type UnitUpdateWithoutBuildingInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  property?: Prisma.PropertyUpdateOneRequiredWithoutUnitsNestedInput
   maintenance?: Prisma.MaintenanceRequestUpdateManyWithoutUnitNestedInput
   photos?: Prisma.PhotoUpdateManyWithoutUnitNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutUnitNestedInput
@@ -1210,6 +1535,9 @@ export type UnitUncheckedUpdateWithoutBuildingInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1231,6 +1559,9 @@ export type UnitUncheckedUpdateManyWithoutBuildingInput = {
   rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1299,10 +1630,14 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   occupantId?: boolean
   depositAmount?: boolean
   buildingId?: boolean
+  propertyId?: boolean
+  reservedAt?: boolean
+  reservedUntil?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   maintenance?: boolean | Prisma.Unit$maintenanceArgs<ExtArgs>
   photos?: boolean | Prisma.Unit$photosArgs<ExtArgs>
   rooms?: boolean | Prisma.Unit$roomsArgs<ExtArgs>
@@ -1323,10 +1658,14 @@ export type UnitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   occupantId?: boolean
   depositAmount?: boolean
   buildingId?: boolean
+  propertyId?: boolean
+  reservedAt?: boolean
+  reservedUntil?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["unit"]>
 
 export type UnitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1343,10 +1682,14 @@ export type UnitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   occupantId?: boolean
   depositAmount?: boolean
   buildingId?: boolean
+  propertyId?: boolean
+  reservedAt?: boolean
+  reservedUntil?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["unit"]>
 
 export type UnitSelectScalar = {
@@ -1363,14 +1706,18 @@ export type UnitSelectScalar = {
   occupantId?: boolean
   depositAmount?: boolean
   buildingId?: boolean
+  propertyId?: boolean
+  reservedAt?: boolean
+  reservedUntil?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitNumber" | "summary" | "type" | "floor" | "bedrooms" | "bathrooms" | "sqft" | "status" | "rentAmount" | "occupantId" | "depositAmount" | "buildingId" | "initializedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["unit"]>
+export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitNumber" | "summary" | "type" | "floor" | "bedrooms" | "bathrooms" | "sqft" | "status" | "rentAmount" | "occupantId" | "depositAmount" | "buildingId" | "propertyId" | "reservedAt" | "reservedUntil" | "initializedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   maintenance?: boolean | Prisma.Unit$maintenanceArgs<ExtArgs>
   photos?: boolean | Prisma.Unit$photosArgs<ExtArgs>
   rooms?: boolean | Prisma.Unit$roomsArgs<ExtArgs>
@@ -1378,15 +1725,18 @@ export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 }
 export type UnitIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }
 export type UnitIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }
 
 export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Unit"
   objects: {
     building: Prisma.$BuildingPayload<ExtArgs>
+    property: Prisma.$PropertyPayload<ExtArgs>
     maintenance: Prisma.$MaintenanceRequestPayload<ExtArgs>[]
     photos: Prisma.$PhotoPayload<ExtArgs>[]
     rooms: Prisma.$RoomPayload<ExtArgs>[]
@@ -1405,6 +1755,9 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     occupantId: string | null
     depositAmount: number | null
     buildingId: string
+    propertyId: string
+    reservedAt: Date | null
+    reservedUntil: Date | null
     initializedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1803,6 +2156,7 @@ readonly fields: UnitFieldRefs;
 export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   building<T extends Prisma.BuildingDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BuildingDefaultArgs<ExtArgs>>): Prisma.Prisma__BuildingClient<runtime.Types.Result.GetResult<Prisma.$BuildingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   maintenance<T extends Prisma.Unit$maintenanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$maintenanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenanceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   photos<T extends Prisma.Unit$photosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$photosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rooms<T extends Prisma.Unit$roomsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$roomsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1848,6 +2202,9 @@ export interface UnitFieldRefs {
   readonly occupantId: Prisma.FieldRef<"Unit", 'String'>
   readonly depositAmount: Prisma.FieldRef<"Unit", 'Float'>
   readonly buildingId: Prisma.FieldRef<"Unit", 'String'>
+  readonly propertyId: Prisma.FieldRef<"Unit", 'String'>
+  readonly reservedAt: Prisma.FieldRef<"Unit", 'DateTime'>
+  readonly reservedUntil: Prisma.FieldRef<"Unit", 'DateTime'>
   readonly initializedAt: Prisma.FieldRef<"Unit", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Unit", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Unit", 'DateTime'>

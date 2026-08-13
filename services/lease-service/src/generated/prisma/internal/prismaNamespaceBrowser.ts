@@ -128,7 +128,11 @@ export const LeasePaymentScalarFieldEnum = {
   amount: 'amount',
   paidAt: 'paidAt',
   reference: 'reference',
-  status: 'status'
+  status: 'status',
+  currency: 'currency',
+  paymentId: 'paymentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type LeasePaymentScalarFieldEnum = (typeof LeasePaymentScalarFieldEnum)[keyof typeof LeasePaymentScalarFieldEnum]

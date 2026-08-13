@@ -1,6 +1,7 @@
 import { Kafka, Consumer, Producer, logLevel } from "kafkajs";
 
 import { prisma } from "../lib/prisma";
+import AppError from "../utils/appError";
 
 // building service listens for lease created and marks unit available for 15 minutes
 // building service listens for payment events from the payment service or lease activated and updated unit status
@@ -64,6 +65,9 @@ class KafkaService {
             } else if (event.type === "LEASE_CONFIRMED") {
               // Update unit/building to occupied
               this.handleLeaseConfirmed(event.payload as ILeaseConfirmedEvent);
+            } else if (event.type === "LEASE_CANCELLED") {
+              // Revert the status of the unit to available
+              this.handleLeaseCancelled(event.payload as ILeaseInitiatedEvent);
             }
             break;
           case "payment.events":
@@ -71,7 +75,7 @@ class KafkaService {
             if (paymentEvent.type === "PAYMENT_SUCCESS") {
               console.log("✅ Payment success");
               // this.handlePaymentSuccess(paymentEvent.payload as IPaymentSuccessEvent);
-            }else if(paymentEvent.type === "PAYMENT_FAILED") {
+            } else if (paymentEvent.type === "PAYMENT_FAILED") {
               console.log("❌ Payment failed");
               // this.handlePaymentFailed(paymentEvent.payload as IPaymentFailedEvent);
             }
@@ -95,35 +99,73 @@ class KafkaService {
   }
 
   private async handleLeaseInitiated(lease: ILeaseInitiatedEvent) {
-    const { leaseId, rentableId, rentableType, totalAmount } = lease;
+    const { rentableId, rentableType } = lease;
     switch (rentableType) {
       case "UNIT":
-        await prisma.unit.update({
-          where: { id: rentableId },
-          data: {
-            status: "RESERVED",
-            depositAmount: totalAmount,
-          },
+        // First check if unit is available
+
+        await prisma.$transaction(async (tx) => {
+          const unit = await tx.unit.findUnique({
+            where: { id: rentableId, status: "AVAILABLE" },
+          });
+          if (!unit) {
+            throw new AppError("Unit not found or not available", 404);
+          }
+
+          await tx.unit.update({
+            where: { id: rentableId },
+            data: {
+              status: "RESERVED",
+              reservedAt: new Date(),
+              reservedUntil: new Date(Date.now() + 15 * 60 * 1000),
+            },
+          });
         });
+
         break;
 
       case "ROOM":
-        await prisma.room.update({
-          where: { id: rentableId },
-          data: {
-            status: "RESERVED",
-            depositAmount: totalAmount,
-          },
+        await prisma.$transaction(async (tx) => {
+          // First check if room is available
+          const room = await tx.room.findUnique({
+            where: { id: rentableId, status: "AVAILABLE" },
+          });
+          if (!room) {
+            throw new AppError("Room not found or not available", 404);
+          }
+
+          await tx.room.update({
+            where: { id: rentableId },
+            data: {
+              status: "RESERVED",
+              reservedAt: new Date(),
+              reservedUntil: new Date(Date.now() + 15 * 60 * 1000),
+            },
+          });
         });
+
         break;
 
       case "BED":
-        await prisma.bed.update({
-          where: { id: rentableId },
-          data: {
-            status: "RESERVED",
-          },
+        await prisma.$transaction(async (tx) => {
+          // Confirm bed is available and not reserved
+          const bed = await tx.bed.findUnique({
+            where: { id: rentableId, status: "AVAILABLE" },
+          });
+          if (!bed) {
+            throw new AppError("Bed not found or not available", 404);
+          }
+
+          await tx.bed.update({
+            where: { id: rentableId },
+            data: {
+              status: "RESERVED",
+              reservedAt: new Date(),
+              reservedUntil: new Date(Date.now() + 15 * 60 * 1000),
+            },
+          });
         });
+
         break;
     }
   }
@@ -160,7 +202,78 @@ class KafkaService {
         });
         break;
     }
-    
+  }
+
+  private async handleLeaseCancelled(payload: {
+    rentableType: "UNIT" | "ROOM" | "BED";
+    rentableId: string;
+  }) {
+    const { rentableType, rentableId } = payload;
+    switch (rentableType) {
+      case "UNIT":
+        await prisma.$transaction(async (tx) => {
+          const unit = await tx.unit.findUnique({
+            where: { id: rentableId, status: { in: ["RESERVED", "OCCUPIED"] } },
+          });
+
+          if (!unit) {
+            throw new AppError("Unit not found or not reserved", 404);
+          }
+
+          await tx.unit.update({
+            where: { id: rentableId },
+            data: {
+              status: "AVAILABLE",
+              reservedAt: null,
+              reservedUntil: null,
+              depositAmount: null,
+            },
+          });
+        });
+        break;
+      case "ROOM":
+        await prisma.$transaction(async (tx) => {
+          const room = await tx.room.findUnique({
+            where: { id: rentableId, status: { in: ["RESERVED", "OCCUPIED"] } },
+          });
+
+          if (!room) {
+            throw new AppError("Room not found or not reserved", 404);
+          }
+
+          await tx.room.update({
+            where: { id: rentableId },
+            data: {
+              status: "AVAILABLE",
+              reservedAt: null,
+              reservedUntil: null,
+              depositAmount: null,
+            },
+          });
+        });
+        break;
+      case "BED":
+        await prisma.$transaction(async (tx) => {
+          const bed = await tx.bed.findUnique({
+            where: { id: rentableId, status: { in: ["RESERVED", "OCCUPIED"] } },
+          });
+
+          if (!bed) {
+            throw new AppError("Bed not found or not reserved", 404);
+          }
+
+          await tx.bed.update({
+            where: { id: rentableId },
+            data: {
+              status: "AVAILABLE",
+              reservedAt: null,
+              reservedUntil: null,
+              depositAmount: null,
+            },
+          });
+        });
+        break;
+    }
   }
 }
 

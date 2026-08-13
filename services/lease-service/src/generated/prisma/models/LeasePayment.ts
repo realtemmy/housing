@@ -40,7 +40,11 @@ export type LeasePaymentMinAggregateOutputType = {
   amount: runtime.Decimal | null
   paidAt: Date | null
   reference: string | null
-  status: string | null
+  status: $Enums.PaymentStatus | null
+  currency: string | null
+  paymentId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type LeasePaymentMaxAggregateOutputType = {
@@ -49,7 +53,11 @@ export type LeasePaymentMaxAggregateOutputType = {
   amount: runtime.Decimal | null
   paidAt: Date | null
   reference: string | null
-  status: string | null
+  status: $Enums.PaymentStatus | null
+  currency: string | null
+  paymentId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type LeasePaymentCountAggregateOutputType = {
@@ -59,6 +67,10 @@ export type LeasePaymentCountAggregateOutputType = {
   paidAt: number
   reference: number
   status: number
+  currency: number
+  paymentId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -78,6 +90,10 @@ export type LeasePaymentMinAggregateInputType = {
   paidAt?: true
   reference?: true
   status?: true
+  currency?: true
+  paymentId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type LeasePaymentMaxAggregateInputType = {
@@ -87,6 +103,10 @@ export type LeasePaymentMaxAggregateInputType = {
   paidAt?: true
   reference?: true
   status?: true
+  currency?: true
+  paymentId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type LeasePaymentCountAggregateInputType = {
@@ -96,6 +116,10 @@ export type LeasePaymentCountAggregateInputType = {
   paidAt?: true
   reference?: true
   status?: true
+  currency?: true
+  paymentId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -191,7 +215,11 @@ export type LeasePaymentGroupByOutputType = {
   amount: runtime.Decimal
   paidAt: Date
   reference: string
-  status: string
+  status: $Enums.PaymentStatus
+  currency: string
+  paymentId: string
+  createdAt: Date
+  updatedAt: Date
   _count: LeasePaymentCountAggregateOutputType | null
   _avg: LeasePaymentAvgAggregateOutputType | null
   _sum: LeasePaymentSumAggregateOutputType | null
@@ -223,7 +251,11 @@ export type LeasePaymentWhereInput = {
   amount?: Prisma.DecimalFilter<"LeasePayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
   reference?: Prisma.StringFilter<"LeasePayment"> | string
-  status?: Prisma.StringFilter<"LeasePayment"> | string
+  status?: Prisma.EnumPaymentStatusFilter<"LeasePayment"> | $Enums.PaymentStatus
+  currency?: Prisma.StringFilter<"LeasePayment"> | string
+  paymentId?: Prisma.StringFilter<"LeasePayment"> | string
+  createdAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
 }
 
@@ -234,6 +266,10 @@ export type LeasePaymentOrderByWithRelationInput = {
   paidAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   lease?: Prisma.LeaseOrderByWithRelationInput
 }
 
@@ -246,7 +282,11 @@ export type LeasePaymentWhereUniqueInput = Prisma.AtLeast<{
   amount?: Prisma.DecimalFilter<"LeasePayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
   reference?: Prisma.StringFilter<"LeasePayment"> | string
-  status?: Prisma.StringFilter<"LeasePayment"> | string
+  status?: Prisma.EnumPaymentStatusFilter<"LeasePayment"> | $Enums.PaymentStatus
+  currency?: Prisma.StringFilter<"LeasePayment"> | string
+  paymentId?: Prisma.StringFilter<"LeasePayment"> | string
+  createdAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
 }, "id">
 
@@ -257,6 +297,10 @@ export type LeasePaymentOrderByWithAggregationInput = {
   paidAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.LeasePaymentCountOrderByAggregateInput
   _avg?: Prisma.LeasePaymentAvgOrderByAggregateInput
   _max?: Prisma.LeasePaymentMaxOrderByAggregateInput
@@ -273,15 +317,23 @@ export type LeasePaymentScalarWhereWithAggregatesInput = {
   amount?: Prisma.DecimalWithAggregatesFilter<"LeasePayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeWithAggregatesFilter<"LeasePayment"> | Date | string
   reference?: Prisma.StringWithAggregatesFilter<"LeasePayment"> | string
-  status?: Prisma.StringWithAggregatesFilter<"LeasePayment"> | string
+  status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"LeasePayment"> | $Enums.PaymentStatus
+  currency?: Prisma.StringWithAggregatesFilter<"LeasePayment"> | string
+  paymentId?: Prisma.StringWithAggregatesFilter<"LeasePayment"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"LeasePayment"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LeasePayment"> | Date | string
 }
 
 export type LeasePaymentCreateInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAt?: Date | string
+  paidAt: Date | string
   reference: string
-  status: string
+  status: $Enums.PaymentStatus
+  currency?: string
+  paymentId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutPaymentsInput
 }
 
@@ -289,9 +341,13 @@ export type LeasePaymentUncheckedCreateInput = {
   id?: string
   leaseId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAt?: Date | string
+  paidAt: Date | string
   reference: string
-  status: string
+  status: $Enums.PaymentStatus
+  currency?: string
+  paymentId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LeasePaymentUpdateInput = {
@@ -299,7 +355,11 @@ export type LeasePaymentUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutPaymentsNestedInput
 }
 
@@ -309,16 +369,24 @@ export type LeasePaymentUncheckedUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeasePaymentCreateManyInput = {
   id?: string
   leaseId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAt?: Date | string
+  paidAt: Date | string
   reference: string
-  status: string
+  status: $Enums.PaymentStatus
+  currency?: string
+  paymentId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LeasePaymentUpdateManyMutationInput = {
@@ -326,7 +394,11 @@ export type LeasePaymentUpdateManyMutationInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeasePaymentUncheckedUpdateManyInput = {
@@ -335,7 +407,11 @@ export type LeasePaymentUncheckedUpdateManyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeasePaymentListRelationFilter = {
@@ -355,6 +431,10 @@ export type LeasePaymentCountOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type LeasePaymentAvgOrderByAggregateInput = {
@@ -368,6 +448,10 @@ export type LeasePaymentMaxOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type LeasePaymentMinOrderByAggregateInput = {
@@ -377,6 +461,10 @@ export type LeasePaymentMinOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type LeasePaymentSumOrderByAggregateInput = {
@@ -425,20 +513,32 @@ export type LeasePaymentUncheckedUpdateManyWithoutLeaseNestedInput = {
   deleteMany?: Prisma.LeasePaymentScalarWhereInput | Prisma.LeasePaymentScalarWhereInput[]
 }
 
+export type EnumPaymentStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PaymentStatus
+}
+
 export type LeasePaymentCreateWithoutLeaseInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAt?: Date | string
+  paidAt: Date | string
   reference: string
-  status: string
+  status: $Enums.PaymentStatus
+  currency?: string
+  paymentId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LeasePaymentUncheckedCreateWithoutLeaseInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAt?: Date | string
+  paidAt: Date | string
   reference: string
-  status: string
+  status: $Enums.PaymentStatus
+  currency?: string
+  paymentId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LeasePaymentCreateOrConnectWithoutLeaseInput = {
@@ -476,15 +576,23 @@ export type LeasePaymentScalarWhereInput = {
   amount?: Prisma.DecimalFilter<"LeasePayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
   reference?: Prisma.StringFilter<"LeasePayment"> | string
-  status?: Prisma.StringFilter<"LeasePayment"> | string
+  status?: Prisma.EnumPaymentStatusFilter<"LeasePayment"> | $Enums.PaymentStatus
+  currency?: Prisma.StringFilter<"LeasePayment"> | string
+  paymentId?: Prisma.StringFilter<"LeasePayment"> | string
+  createdAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LeasePayment"> | Date | string
 }
 
 export type LeasePaymentCreateManyLeaseInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAt?: Date | string
+  paidAt: Date | string
   reference: string
-  status: string
+  status: $Enums.PaymentStatus
+  currency?: string
+  paymentId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LeasePaymentUpdateWithoutLeaseInput = {
@@ -492,7 +600,11 @@ export type LeasePaymentUpdateWithoutLeaseInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeasePaymentUncheckedUpdateWithoutLeaseInput = {
@@ -500,7 +612,11 @@ export type LeasePaymentUncheckedUpdateWithoutLeaseInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LeasePaymentUncheckedUpdateManyWithoutLeaseInput = {
@@ -508,7 +624,11 @@ export type LeasePaymentUncheckedUpdateManyWithoutLeaseInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -520,6 +640,10 @@ export type LeasePaymentSelect<ExtArgs extends runtime.Types.Extensions.Internal
   paidAt?: boolean
   reference?: boolean
   status?: boolean
+  currency?: boolean
+  paymentId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leasePayment"]>
 
@@ -530,6 +654,10 @@ export type LeasePaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   paidAt?: boolean
   reference?: boolean
   status?: boolean
+  currency?: boolean
+  paymentId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leasePayment"]>
 
@@ -540,6 +668,10 @@ export type LeasePaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   paidAt?: boolean
   reference?: boolean
   status?: boolean
+  currency?: boolean
+  paymentId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leasePayment"]>
 
@@ -550,9 +682,13 @@ export type LeasePaymentSelectScalar = {
   paidAt?: boolean
   reference?: boolean
   status?: boolean
+  currency?: boolean
+  paymentId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type LeasePaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaseId" | "amount" | "paidAt" | "reference" | "status", ExtArgs["result"]["leasePayment"]>
+export type LeasePaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaseId" | "amount" | "paidAt" | "reference" | "status" | "currency" | "paymentId" | "createdAt" | "updatedAt", ExtArgs["result"]["leasePayment"]>
 export type LeasePaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
 }
@@ -574,7 +710,11 @@ export type $LeasePaymentPayload<ExtArgs extends runtime.Types.Extensions.Intern
     amount: runtime.Decimal
     paidAt: Date
     reference: string
-    status: string
+    status: $Enums.PaymentStatus
+    currency: string
+    paymentId: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["leasePayment"]>
   composites: {}
 }
@@ -1004,7 +1144,11 @@ export interface LeasePaymentFieldRefs {
   readonly amount: Prisma.FieldRef<"LeasePayment", 'Decimal'>
   readonly paidAt: Prisma.FieldRef<"LeasePayment", 'DateTime'>
   readonly reference: Prisma.FieldRef<"LeasePayment", 'String'>
-  readonly status: Prisma.FieldRef<"LeasePayment", 'String'>
+  readonly status: Prisma.FieldRef<"LeasePayment", 'PaymentStatus'>
+  readonly currency: Prisma.FieldRef<"LeasePayment", 'String'>
+  readonly paymentId: Prisma.FieldRef<"LeasePayment", 'String'>
+  readonly createdAt: Prisma.FieldRef<"LeasePayment", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"LeasePayment", 'DateTime'>
 }
     
 

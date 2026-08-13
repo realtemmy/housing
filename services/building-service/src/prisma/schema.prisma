@@ -28,7 +28,6 @@ enum AvailableStatus {
   RESERVED
 }
 
-
 enum MaintenanceStatus {
   OPEN
   IN_PROGRESS
@@ -49,13 +48,18 @@ model Property {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  units     Unit[]
+  rooms     Room[]
+  beds      Bed[]
+
+  @@index([ownerId])
 }
 
 model Building {
-  id   String @id @default(uuid())
-  name String
+  id          String  @id @default(uuid())
+  name        String
   description String?
-  summary String?
+  summary     String?
 
   property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
@@ -68,6 +72,8 @@ model Building {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([propertyId])
 }
 
 model Address {
@@ -86,15 +92,15 @@ model Address {
 }
 
 model Unit {
-  id            String     @id @default(uuid())
-  unitNumber    String
-  summary       String?
-  type UnitType @default(APARTMENT)
+  id         String   @id @default(uuid())
+  unitNumber String
+  summary    String?
+  type       UnitType @default(APARTMENT)
 
-  floor         Int?
-  bedrooms      Int?
-  bathrooms     Int?
-  sqft          Int?
+  floor     Int?
+  bedrooms  Int?
+  bathrooms Int?
+  sqft      Int?
 
   status        AvailableStatus @default(AVAILABLE)
   rentAmount    Float?
@@ -105,10 +111,16 @@ model Unit {
   building   Building @relation(fields: [buildingId], references: [id])
   buildingId String
 
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+
   maintenance MaintenanceRequest[]
   photos      Photo[]
 
-  rooms      Room[]
+  rooms Room[]
+
+  reservedAt    DateTime?
+  reservedUntil DateTime?
 
   initializedAt DateTime?
 
@@ -116,41 +128,51 @@ model Unit {
   updatedAt DateTime @updatedAt
 
   @@unique([buildingId, unitNumber])
+  @@index([propertyId])
+  @@index([buildingId])
 }
 
 model Room {
-  id            String     @id @default(uuid())
-  name          String
-  description   String?
-  summary       String?
-  size          Int?
-  type String? // Dorm, Male, Female, standard, suite, studio etc
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  summary     String?
+  size        Int?
+  type        String? // Dorm, Male, Female, standard, suite, studio etc
 
   rentAmount    Float?
   depositAmount Float?
   status        AvailableStatus @default(AVAILABLE)
-  occupantId String?
+  occupantId    String?
 
   initializedAt DateTime?
 
-  unitId     String
-  unit       Unit    @relation(fields: [unitId], references: [id])
+  unitId String
+  unit   Unit   @relation(fields: [unitId], references: [id])
 
-  beds      Bed[]
+  beds Bed[]
+
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+
+  reservedAt    DateTime?
+  reservedUntil DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([unitId, name])
+  @@index([propertyId])
+  @@index([unitId])
 }
 
 model Bed {
   id    String @id @default(uuid())
   label String // e.g., "Bed 1", "Top Bunk", "Window Side"
 
-  rentAmount Float
-  status     AvailableStatus   @default(AVAILABLE)
-  occupantId String?
+  rentAmount    Float
+  status        AvailableStatus @default(AVAILABLE)
+  occupantId    String?
   depositAmount Float?
 
   roomId String
@@ -158,8 +180,17 @@ model Bed {
 
   initializedAt DateTime?
 
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+
+  reservedAt    DateTime?
+  reservedUntil DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([propertyId])
+  @@index([roomId])
 }
 
 model Photo {

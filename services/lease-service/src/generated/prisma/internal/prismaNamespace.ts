@@ -797,7 +797,11 @@ export const LeasePaymentScalarFieldEnum = {
   amount: 'amount',
   paidAt: 'paidAt',
   reference: 'reference',
-  status: 'status'
+  status: 'status',
+  currency: 'currency',
+  paymentId: 'paymentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type LeasePaymentScalarFieldEnum = (typeof LeasePaymentScalarFieldEnum)[keyof typeof LeasePaymentScalarFieldEnum]
@@ -952,6 +956,20 @@ export type ListEnumLeaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus'
+ */
+export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus[]'
+ */
+export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
     
 
 
