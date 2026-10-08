@@ -6,16 +6,42 @@ export interface GetPropertiesOptions {
   limit?: number;
   search?: string;
   orderBy?: "asc" | "desc";
+  includeDeleted?: boolean;
 }
 
 export interface CreatePropertyInput {
   title: string;
   description?: string | null;
+  address?: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+    longitude?: number;
+    latitude?: number;
+  };
+  purchasePrice?: number;
+  currentValue?: number;
 }
 
 export interface UpdatePropertyInput {
   title?: string;
   description?: string | null;
+  address?: {
+    street?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+    longitude?: number;
+    latitude?: number;
+  };
+  purchasePrice?: number;
+  currentValue?: number;
+  verificationStatus?: string;
+  verificationNotes?: string;
+  isActive?: boolean;
 }
 
 export class PropertyService {
@@ -26,8 +52,10 @@ export class PropertyService {
     const orderBy = options.orderBy === "asc" ? "asc" : "desc";
     const skip = (page - 1) * limit;
 
-    const whereClause = {
+    // Build where clause - exclude soft deleted records unless includeDeleted is true
+    const whereClause: any = {
       ownerId,
+      ...(options.includeDeleted ? {} : { deletedAt: null }),
       title: {
         contains: search,
         mode: "insensitive" as const,
@@ -43,8 +71,14 @@ export class PropertyService {
         orderBy: { createdAt: orderBy },
         include: {
           _count: {
-            select: { buildings: true, units: true },
+            select: { buildings: true, units: true, rooms: true },
           },
+          buildings: {
+            include: {
+              address: true,
+            },
+          },
+          address: true,
         },
       }),
     ]);
@@ -62,16 +96,17 @@ export class PropertyService {
 
   async getPropertyById(id: string, ownerId: string) {
     const property = await prisma.property.findFirst({
-      where: { id, ownerId },
+      where: { id, ownerId, deletedAt: null },
       include: {
         _count: {
-          select: { buildings: true, units: true },
+          select: { buildings: true, units: true, rooms: true },
         },
         buildings: {
           include: {
             address: true,
           },
         },
+        address: true,
       },
     });
 
@@ -83,11 +118,35 @@ export class PropertyService {
   }
 
   async createProperty(ownerId: string, input: CreatePropertyInput) {
+    // Create address if provided
+    let addressId: string | undefined;
+    if (input.address) {
+      const address = await prisma.address.create({
+        data: {
+          street: input.address.street,
+          city: input.address.city,
+          state: input.address.state,
+          postalCode: input.address.postalCode,
+          country: input.address.country,
+          longitude: input.address.longitude,
+          latitude: input.address.latitude,
+        },
+      });
+      addressId = address.id;
+    }
+
     const property = await prisma.property.create({
       data: {
         title: input.title,
         description: input.description ?? null,
         ownerId,
+        address: addressId ? { connect: { id: addressId } } : undefined,
+        purchasePrice: input.purchasePrice ?? undefined,
+        currentValue: input.currentValue ?? undefined,
+        verificationStatus: "PENDING",
+        isActive: true,
+        createdBy: ownerId,
+        updatedBy: ownerId,
       },
     });
 
@@ -96,11 +155,54 @@ export class PropertyService {
 
   async updateProperty(id: string, ownerId: string, input: UpdatePropertyInput) {
     const property = await prisma.property.findFirst({
-      where: { id, ownerId },
+      where: { id, ownerId, deletedAt: null },
     });
 
     if (!property) {
       throw new AppError("Property not found or unauthorized", 404);
+    }
+
+    // Handle address updates if provided
+    let addressConnect: { connect: { id: string } } | { disconnect: true } | undefined;
+    if (input.address !== undefined) {
+      if (input.address === null) {
+        // Remove existing address
+        addressConnect = { disconnect: true };
+      } else {
+        // Update or create address
+        let addressId: string | undefined;
+        if (property.address) {
+          // Update existing address
+          await prisma.address.update({
+            where: { id: property.address },
+            data: {
+              street: input.address.street,
+              city: input.address.city,
+              state: input.address.state,
+              postalCode: input.address.postalCode,
+              country: input.address.country,
+              longitude: input.address.longitude,
+              latitude: input.address.latitude,
+            },
+          });
+          addressId = property.address;
+        } else {
+          // Create new address
+          const address = await prisma.address.create({
+            data: {
+              street: input.address.street,
+              city: input.address.city,
+              state: input.address.state,
+              postalCode: input.address.postalCode,
+              country: input.address.country,
+              longitude: input.address.longitude,
+              latitude: input.address.latitude,
+            },
+          });
+          addressId = address.id;
+        }
+        addressConnect = addressId ? { connect: { id: addressId } } : undefined;
+      }
     }
 
     const updatedProperty = await prisma.property.update({
@@ -108,29 +210,77 @@ export class PropertyService {
       data: {
         ...(input.title !== undefined && { title: input.title }),
         ...(input.description !== undefined && { description: input.description }),
+        ...(addressConnect !== undefined && { address: addressConnect }),
+        ...(input.purchasePrice !== undefined && { purchasePrice: input.purchasePrice }),
+        ...(input.currentValue !== undefined && { currentValue: input.currentValue }),
+        ...(input.verificationStatus !== undefined && {
+          verificationStatus: input.verificationStatus,
+          ...(input.verificationStatus === "VERIFIED" && { verifiedAt: new Date() }),
+          ...(input.verificationStatus !== "VERIFIED" && { verifiedAt: null })
+        }),
+        ...(input.verificationNotes !== undefined && { verificationNotes: input.verificationNotes }),
+        ...(input.isActive !== undefined && { isActive: input.isActive }),
+        updatedBy: ownerId,
       },
     });
 
     return updatedProperty;
   }
 
-  async deleteProperty(id: string, ownerId: string) {
+  async softDeleteProperty(id: string, ownerId: string) {
     const property = await prisma.property.findFirst({
-      where: { id, ownerId },
-      include: { buildings: true, units: true },
+      where: { id, ownerId, deletedAt: null },
     });
 
     if (!property) {
       throw new AppError("Property not found or unauthorized", 404);
     }
 
-    if (property.buildings.length > 0 || property.units.length > 0) {
-      throw new AppError("Cannot delete property with existing buildings or units. Delete them first.", 400);
+    // Check if property has any active buildings/units/rooms/beds
+    const [buildingCount, unitCount, roomCount, bedCount] = await prisma.$transaction([
+      prisma.building.count({ where: { propertyId: id } }),
+      prisma.unit.count({ where: { propertyId: id } }),
+      prisma.room.count({ where: { propertyId: id } }),
+      prisma.bed.count({ where: { propertyId: id } }),
+    ]);
+
+    if (buildingCount > 0 || unitCount > 0 || roomCount > 0 || bedCount > 0) {
+      throw new AppError("Cannot delete property with existing buildings, units, rooms, or beds. Delete them first.", 400);
     }
 
-    await prisma.property.delete({
+    const deletedProperty = await prisma.property.update({
       where: { id },
+      data: {
+        deletedAt: new Date(),
+        updatedBy: ownerId,
+      },
     });
+
+    return deletedProperty;
+  }
+
+  async restoreProperty(id: string, ownerId: string) {
+    const property = await prisma.property.findFirst({
+      where: { id, ownerId },
+    });
+
+    if (!property) {
+      throw new AppError("Property not found", 404);
+    }
+
+    if (!property.deletedAt) {
+      throw new AppError("Property is not deleted", 400);
+    }
+
+    const restoredProperty = await prisma.property.update({
+      where: { id },
+      data: {
+        deletedAt: null,
+        updatedBy: ownerId,
+      },
+    });
+
+    return restoredProperty;
   }
 }
 

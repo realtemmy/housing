@@ -28,14 +28,14 @@ export type AggregateRoom = {
 
 export type RoomAvgAggregateOutputType = {
   size: number | null
-  rentAmount: number | null
-  depositAmount: number | null
+  rentAmount: runtime.Decimal | null
+  depositAmount: runtime.Decimal | null
 }
 
 export type RoomSumAggregateOutputType = {
   size: number | null
-  rentAmount: number | null
-  depositAmount: number | null
+  rentAmount: runtime.Decimal | null
+  depositAmount: runtime.Decimal | null
 }
 
 export type RoomMinAggregateOutputType = {
@@ -45,17 +45,20 @@ export type RoomMinAggregateOutputType = {
   summary: string | null
   size: number | null
   type: string | null
-  rentAmount: number | null
-  depositAmount: number | null
+  rentAmount: runtime.Decimal | null
+  depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus | null
   occupantId: string | null
   initializedAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
   unitId: string | null
   propertyId: string | null
   reservedAt: Date | null
   reservedUntil: Date | null
-  createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type RoomMaxAggregateOutputType = {
@@ -65,17 +68,20 @@ export type RoomMaxAggregateOutputType = {
   summary: string | null
   size: number | null
   type: string | null
-  rentAmount: number | null
-  depositAmount: number | null
+  rentAmount: runtime.Decimal | null
+  depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus | null
   occupantId: string | null
   initializedAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
   unitId: string | null
   propertyId: string | null
   reservedAt: Date | null
   reservedUntil: Date | null
-  createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type RoomCountAggregateOutputType = {
@@ -90,12 +96,15 @@ export type RoomCountAggregateOutputType = {
   status: number
   occupantId: number
   initializedAt: number
+  createdAt: number
+  updatedAt: number
+  deletedAt: number
+  createdBy: number
+  updatedBy: number
   unitId: number
   propertyId: number
   reservedAt: number
   reservedUntil: number
-  createdAt: number
-  updatedAt: number
   _all: number
 }
 
@@ -124,12 +133,15 @@ export type RoomMinAggregateInputType = {
   status?: true
   occupantId?: true
   initializedAt?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
   unitId?: true
   propertyId?: true
   reservedAt?: true
   reservedUntil?: true
-  createdAt?: true
-  updatedAt?: true
 }
 
 export type RoomMaxAggregateInputType = {
@@ -144,12 +156,15 @@ export type RoomMaxAggregateInputType = {
   status?: true
   occupantId?: true
   initializedAt?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
   unitId?: true
   propertyId?: true
   reservedAt?: true
   reservedUntil?: true
-  createdAt?: true
-  updatedAt?: true
 }
 
 export type RoomCountAggregateInputType = {
@@ -164,12 +179,15 @@ export type RoomCountAggregateInputType = {
   status?: true
   occupantId?: true
   initializedAt?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
   unitId?: true
   propertyId?: true
   reservedAt?: true
   reservedUntil?: true
-  createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -266,17 +284,20 @@ export type RoomGroupByOutputType = {
   summary: string | null
   size: number | null
   type: string | null
-  rentAmount: number | null
-  depositAmount: number | null
+  rentAmount: runtime.Decimal | null
+  depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus
   occupantId: string | null
   initializedAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
   unitId: string
   propertyId: string
   reservedAt: Date | null
   reservedUntil: Date | null
-  createdAt: Date
-  updatedAt: Date
   _count: RoomCountAggregateOutputType | null
   _avg: RoomAvgAggregateOutputType | null
   _sum: RoomSumAggregateOutputType | null
@@ -309,17 +330,20 @@ export type RoomWhereInput = {
   summary?: Prisma.StringNullableFilter<"Room"> | string | null
   size?: Prisma.IntNullableFilter<"Room"> | number | null
   type?: Prisma.StringNullableFilter<"Room"> | string | null
-  rentAmount?: Prisma.FloatNullableFilter<"Room"> | number | null
-  depositAmount?: Prisma.FloatNullableFilter<"Room"> | number | null
+  rentAmount?: Prisma.DecimalNullableFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.DecimalNullableFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Room"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Room"> | string | null
   initializedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Room"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Room"> | string | null
   unitId?: Prisma.StringFilter<"Room"> | string
   propertyId?: Prisma.StringFilter<"Room"> | string
   reservedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
   beds?: Prisma.BedListRelationFilter
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
@@ -337,12 +361,15 @@ export type RoomOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   unitId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reservedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   unit?: Prisma.UnitOrderByWithRelationInput
   beds?: Prisma.BedOrderByRelationAggregateInput
   property?: Prisma.PropertyOrderByWithRelationInput
@@ -359,17 +386,20 @@ export type RoomWhereUniqueInput = Prisma.AtLeast<{
   summary?: Prisma.StringNullableFilter<"Room"> | string | null
   size?: Prisma.IntNullableFilter<"Room"> | number | null
   type?: Prisma.StringNullableFilter<"Room"> | string | null
-  rentAmount?: Prisma.FloatNullableFilter<"Room"> | number | null
-  depositAmount?: Prisma.FloatNullableFilter<"Room"> | number | null
+  rentAmount?: Prisma.DecimalNullableFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.DecimalNullableFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Room"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Room"> | string | null
   initializedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Room"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Room"> | string | null
   unitId?: Prisma.StringFilter<"Room"> | string
   propertyId?: Prisma.StringFilter<"Room"> | string
   reservedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
   beds?: Prisma.BedListRelationFilter
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
@@ -387,12 +417,15 @@ export type RoomOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   unitId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reservedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.RoomCountOrderByAggregateInput
   _avg?: Prisma.RoomAvgOrderByAggregateInput
   _max?: Prisma.RoomMaxOrderByAggregateInput
@@ -410,17 +443,20 @@ export type RoomScalarWhereWithAggregatesInput = {
   summary?: Prisma.StringNullableWithAggregatesFilter<"Room"> | string | null
   size?: Prisma.IntNullableWithAggregatesFilter<"Room"> | number | null
   type?: Prisma.StringNullableWithAggregatesFilter<"Room"> | string | null
-  rentAmount?: Prisma.FloatNullableWithAggregatesFilter<"Room"> | number | null
-  depositAmount?: Prisma.FloatNullableWithAggregatesFilter<"Room"> | number | null
+  rentAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusWithAggregatesFilter<"Room"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableWithAggregatesFilter<"Room"> | string | null
   initializedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Room"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Room"> | Date | string | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Room"> | string | null
+  updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Room"> | string | null
   unitId?: Prisma.StringWithAggregatesFilter<"Room"> | string
   propertyId?: Prisma.StringWithAggregatesFilter<"Room"> | string
   reservedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Room"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Room"> | Date | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
 }
 
 export type RoomCreateInput = {
@@ -430,15 +466,18 @@ export type RoomCreateInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
-  reservedAt?: Date | string | null
-  reservedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   unit: Prisma.UnitCreateNestedOneWithoutRoomsInput
   beds?: Prisma.BedCreateNestedManyWithoutRoomInput
   property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
@@ -451,17 +490,20 @@ export type RoomUncheckedCreateInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   unitId: string
   propertyId: string
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
   beds?: Prisma.BedUncheckedCreateNestedManyWithoutRoomInput
 }
 
@@ -472,15 +514,18 @@ export type RoomUpdateInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   unit?: Prisma.UnitUpdateOneRequiredWithoutRoomsNestedInput
   beds?: Prisma.BedUpdateManyWithoutRoomNestedInput
   property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
@@ -493,17 +538,20 @@ export type RoomUncheckedUpdateInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   beds?: Prisma.BedUncheckedUpdateManyWithoutRoomNestedInput
 }
 
@@ -514,17 +562,20 @@ export type RoomCreateManyInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   unitId: string
   propertyId: string
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type RoomUpdateManyMutationInput = {
@@ -534,15 +585,18 @@ export type RoomUpdateManyMutationInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RoomUncheckedUpdateManyInput = {
@@ -552,17 +606,20 @@ export type RoomUncheckedUpdateManyInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoomListRelationFilter = {
@@ -592,12 +649,15 @@ export type RoomCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrder
   reservedUntil?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type RoomAvgOrderByAggregateInput = {
@@ -618,12 +678,15 @@ export type RoomMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrder
   reservedUntil?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type RoomMinOrderByAggregateInput = {
@@ -638,12 +701,15 @@ export type RoomMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrder
   reservedUntil?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type RoomSumOrderByAggregateInput = {
@@ -762,15 +828,18 @@ export type RoomCreateWithoutPropertyInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
-  reservedAt?: Date | string | null
-  reservedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   unit: Prisma.UnitCreateNestedOneWithoutRoomsInput
   beds?: Prisma.BedCreateNestedManyWithoutRoomInput
 }
@@ -782,16 +851,19 @@ export type RoomUncheckedCreateWithoutPropertyInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   unitId: string
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
   beds?: Prisma.BedUncheckedCreateNestedManyWithoutRoomInput
 }
 
@@ -831,17 +903,20 @@ export type RoomScalarWhereInput = {
   summary?: Prisma.StringNullableFilter<"Room"> | string | null
   size?: Prisma.IntNullableFilter<"Room"> | number | null
   type?: Prisma.StringNullableFilter<"Room"> | string | null
-  rentAmount?: Prisma.FloatNullableFilter<"Room"> | number | null
-  depositAmount?: Prisma.FloatNullableFilter<"Room"> | number | null
+  rentAmount?: Prisma.DecimalNullableFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.DecimalNullableFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Room"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Room"> | string | null
   initializedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Room"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Room"> | string | null
   unitId?: Prisma.StringFilter<"Room"> | string
   propertyId?: Prisma.StringFilter<"Room"> | string
   reservedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
 }
 
 export type RoomCreateWithoutUnitInput = {
@@ -851,15 +926,18 @@ export type RoomCreateWithoutUnitInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
-  reservedAt?: Date | string | null
-  reservedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   beds?: Prisma.BedCreateNestedManyWithoutRoomInput
   property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
 }
@@ -871,16 +949,19 @@ export type RoomUncheckedCreateWithoutUnitInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   propertyId: string
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
   beds?: Prisma.BedUncheckedCreateNestedManyWithoutRoomInput
 }
 
@@ -917,15 +998,18 @@ export type RoomCreateWithoutBedsInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
-  reservedAt?: Date | string | null
-  reservedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  reservedAt?: Date | string | null
+  reservedUntil?: Date | string | null
   unit: Prisma.UnitCreateNestedOneWithoutRoomsInput
   property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
 }
@@ -937,17 +1021,20 @@ export type RoomUncheckedCreateWithoutBedsInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   unitId: string
   propertyId: string
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type RoomCreateOrConnectWithoutBedsInput = {
@@ -973,15 +1060,18 @@ export type RoomUpdateWithoutBedsInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   unit?: Prisma.UnitUpdateOneRequiredWithoutRoomsNestedInput
   property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
 }
@@ -993,17 +1083,20 @@ export type RoomUncheckedUpdateWithoutBedsInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoomCreateManyPropertyInput = {
@@ -1013,16 +1106,19 @@ export type RoomCreateManyPropertyInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   unitId: string
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type RoomUpdateWithoutPropertyInput = {
@@ -1032,15 +1128,18 @@ export type RoomUpdateWithoutPropertyInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   unit?: Prisma.UnitUpdateOneRequiredWithoutRoomsNestedInput
   beds?: Prisma.BedUpdateManyWithoutRoomNestedInput
 }
@@ -1052,16 +1151,19 @@ export type RoomUncheckedUpdateWithoutPropertyInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   beds?: Prisma.BedUncheckedUpdateManyWithoutRoomNestedInput
 }
 
@@ -1072,16 +1174,19 @@ export type RoomUncheckedUpdateManyWithoutPropertyInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoomCreateManyUnitInput = {
@@ -1091,16 +1196,19 @@ export type RoomCreateManyUnitInput = {
   summary?: string | null
   size?: number | null
   type?: string | null
-  rentAmount?: number | null
-  depositAmount?: number | null
+  rentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
   initializedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   propertyId: string
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type RoomUpdateWithoutUnitInput = {
@@ -1110,15 +1218,18 @@ export type RoomUpdateWithoutUnitInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   beds?: Prisma.BedUpdateManyWithoutRoomNestedInput
   property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
 }
@@ -1130,16 +1241,19 @@ export type RoomUncheckedUpdateWithoutUnitInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   beds?: Prisma.BedUncheckedUpdateManyWithoutRoomNestedInput
 }
 
@@ -1150,16 +1264,19 @@ export type RoomUncheckedUpdateManyWithoutUnitInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  depositAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1205,12 +1322,15 @@ export type RoomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   occupantId?: boolean
   initializedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
   unitId?: boolean
   propertyId?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   beds?: boolean | Prisma.Room$bedsArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
@@ -1229,12 +1349,15 @@ export type RoomSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   occupantId?: boolean
   initializedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
   unitId?: boolean
   propertyId?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["room"]>
@@ -1251,12 +1374,15 @@ export type RoomSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   occupantId?: boolean
   initializedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
   unitId?: boolean
   propertyId?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["room"]>
@@ -1273,15 +1399,18 @@ export type RoomSelectScalar = {
   status?: boolean
   occupantId?: boolean
   initializedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
   unitId?: boolean
   propertyId?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type RoomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "summary" | "size" | "type" | "rentAmount" | "depositAmount" | "status" | "occupantId" | "initializedAt" | "unitId" | "propertyId" | "reservedAt" | "reservedUntil" | "createdAt" | "updatedAt", ExtArgs["result"]["room"]>
+export type RoomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "summary" | "size" | "type" | "rentAmount" | "depositAmount" | "status" | "occupantId" | "initializedAt" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "unitId" | "propertyId" | "reservedAt" | "reservedUntil", ExtArgs["result"]["room"]>
 export type RoomInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   beds?: boolean | Prisma.Room$bedsArgs<ExtArgs>
@@ -1311,17 +1440,20 @@ export type $RoomPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     summary: string | null
     size: number | null
     type: string | null
-    rentAmount: number | null
-    depositAmount: number | null
+    rentAmount: runtime.Decimal | null
+    depositAmount: runtime.Decimal | null
     status: $Enums.AvailableStatus
     occupantId: string | null
     initializedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date | null
+    createdBy: string | null
+    updatedBy: string | null
     unitId: string
     propertyId: string
     reservedAt: Date | null
     reservedUntil: Date | null
-    createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["room"]>
   composites: {}
 }
@@ -1754,17 +1886,20 @@ export interface RoomFieldRefs {
   readonly summary: Prisma.FieldRef<"Room", 'String'>
   readonly size: Prisma.FieldRef<"Room", 'Int'>
   readonly type: Prisma.FieldRef<"Room", 'String'>
-  readonly rentAmount: Prisma.FieldRef<"Room", 'Float'>
-  readonly depositAmount: Prisma.FieldRef<"Room", 'Float'>
+  readonly rentAmount: Prisma.FieldRef<"Room", 'Decimal'>
+  readonly depositAmount: Prisma.FieldRef<"Room", 'Decimal'>
   readonly status: Prisma.FieldRef<"Room", 'AvailableStatus'>
   readonly occupantId: Prisma.FieldRef<"Room", 'String'>
   readonly initializedAt: Prisma.FieldRef<"Room", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Room", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Room", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Room", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"Room", 'String'>
+  readonly updatedBy: Prisma.FieldRef<"Room", 'String'>
   readonly unitId: Prisma.FieldRef<"Room", 'String'>
   readonly propertyId: Prisma.FieldRef<"Room", 'String'>
   readonly reservedAt: Prisma.FieldRef<"Room", 'DateTime'>
   readonly reservedUntil: Prisma.FieldRef<"Room", 'DateTime'>
-  readonly createdAt: Prisma.FieldRef<"Room", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Room", 'DateTime'>
 }
     
 

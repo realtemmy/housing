@@ -1,0 +1,283 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum LeaseStatus {
+  PENDING // Created, waiting for payment/signature
+  ACTIVE // Paid and currently living there
+  TERMINATED // Ended early (eviction or break)
+  EXPIRED // Contract time ended normally
+  CANCELLED // Never started
+}
+
+enum RentableType {
+  UNIT
+  ROOM
+  BED
+}
+
+enum PaymentFrequency {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+  BI_ANNUALLY //6 months
+}
+
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+}
+
+model Tenant {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  emergencyContact String?
+  metadata         Json? // Store background check results, etc.
+
+  leases Lease[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lease {
+  id           String       @id @default(uuid())
+  rentableId   String
+  rentableType RentableType
+  tenantId     String
+  tenant       Tenant       @relation(fields: [tenantId], references: [id])
+
+  actualMoveInDate  DateTime? // When they actually picked up keys/ commencement date
+  actualMoveOutDate DateTime?
+
+  // FINANCIALS (Use Decimal for money, never Float!)
+  rentAmount       Decimal          @db.Decimal(10, 2)
+  securityDeposit  Decimal          @default(0) @db.Decimal(10, 2)
+  serviceCharge    Decimal          @default(0) @db.Decimal(10, 2) // Common in serviced estates
+  totalAmount      Decimal          @db.Decimal(10, 2)
+  paymentFrequency PaymentFrequency @default(YEARLY)
+  status           LeaseStatus      @default(PENDING)
+
+  // DIGITAL LEASE AGREEMENT
+  agreementStatus    String @default("DRAFT") // DRAFT, PENDING_SIGNATURE, SIGNED, EXECUTED, TERMINATED
+  agreementUrl       String? // PDF link to the lease agreement
+  agreementHash      String? // Hash of the document for integrity verification
+  signedAt           DateTime? // When the lease was fully executed
+  signedByTenant     Boolean @default(false) // Whether tenant has signed
+  signedByLandlord   Boolean @default(false) // Whether landlord has signed
+  tenantSignedAt     DateTime? // When tenant signed
+  landlordSignedAt   DateTime? // When landlord signed
+  signingUrl         String? // URL for electronic signing
+  signingExpiresAt   DateTime? // When the signing link expires
+  terminationReason  String?
+  terminationDate    DateTime?
+
+  renewals LeaseRenewal[]
+  payments LeasePayment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tenantId])
+  @@index([rentableType])
+  @@index([status])
+  @@index([agreementStatus])
+}
+
+model LeaseRenewal {
+  id String @id @default(uuid())
+
+  leaseId String
+  lease   Lease  @relation(fields: [leaseId], references: [id])
+
+  requestedAt DateTime @default(now())
+  newStart    DateTime
+  newEnd      DateTime
+  newRent     Decimal? @db.Decimal(10, 2)
+
+  approved Boolean @default(true)
+  notes    String?
+}
+
+model LeasePayment {
+  id String @id @default(uuid())
+
+  leaseId String
+  lease   Lease  @relation(fields: [leaseId], references: [id])
+
+  amount    Decimal       @db.Decimal(10, 2)
+  paidAt    DateTime
+  reference String // Payment Gateway Reference (Paystack/Flutterwave)
+  status    PaymentStatus // SUCCESS, FAILED
+  currency  String        @default("NGN")
+
+  paymentId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  WITHDRAWN
+  EXPIRED
+}
+
+model Application {
+  id           String  @id @default(uuid())
+
+  // Applicant (references User from auth service)
+  applicantId  String
+
+  // What they're applying for (optional foreign keys)
+  propertyId   String?
+  unitId       String?
+  roomId       String?
+  bedId        String?
+
+  // Application details
+  status       ApplicationStatus @default(DRAFT)
+  submittedAt  DateTime?
+  reviewedAt   DateTime?
+  reviewedBy   String? // References User who reviewed
+
+  // Move-in details
+  desiredMoveInDate DateTime?
+
+  // Financials
+  applicationFee     Decimal? @db.Decimal(10, 2)
+  applicationFeePaid Boolean @default(false)
+
+  // Application content
+  coverLetter        String?
+  answers            Json? // Custom application question answers
+
+  // Notes
+  adminNotes         String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes for common queries
+  @@index([applicantId])
+  @@index([status])
+  @@index([propertyId])
+  @@index([unitId])
+  @@index([roomId])
+  @@index([bedId])
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  EXPIRED
+  CANCELLED
+  CONVERTED
+}
+
+model Reservation {
+  id           String  @id @default(uuid())
+
+  // Reservor (user making the reservation - references User from auth service)
+  reservorId   String
+
+  // Optional application reference
+  applicationId String?
+
+  // What is being reserved (optional foreign keys)
+  unitId       String?
+  roomId       String?
+  bedId        String?
+
+  // Reservation details
+  status       ReservationStatus @default(PENDING)
+  reservedAt   DateTime @default(now())
+  expiresAt    DateTime
+
+  // Financials
+  reservationFee     Decimal? @db.Decimal(10, 2)
+  reservationFeePaid Boolean @default(false)
+  depositAmount      Decimal? @db.Decimal(10, 2)
+  depositPaid        Boolean @default(false)
+
+  // Notes
+  notes              String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes for common queries
+  @@index([reservorId])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([unitId])
+  @@index([roomId])
+  @@index([bedId])
+  @@index([applicationId])
+}
+
+enum PaymentGateway {
+  PAYSTACK
+  FLUTTERWAVE
+  STRIPE
+}
+
+enum PaymentTransactionStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+model PaymentTransaction {
+  id           String  @id @default(uuid())
+
+  // Reference to what this payment is for
+  applicationId String?
+  reservationId String?
+  leasePaymentId String?
+
+  // Payment details
+  gateway        PaymentGateway
+  gatewayTransactionId String? // ID from the payment gateway
+  amount         Decimal       @db.Decimal(10, 2)
+  currency       String        @default("NGN")
+  status         PaymentTransactionStatus @default(PENDING)
+
+  // Customer information (for gateway)
+  customerEmail  String?
+  customerName   String?
+
+  // Gateway response
+  gatewayResponse Json?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes for common queries
+  @@index([applicationId])
+  @@index([reservationId])
+  @@index([leasePaymentId])
+  @@index([status])
+  @@index([gatewayTransactionId])
+}

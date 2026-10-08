@@ -22,18 +22,15 @@ export const unitValidator = z.object({
   status: z
     .enum(["AVAILABLE", "OCCUPIED", "MAINTENANCE", "RESERVED"])
     .default("AVAILABLE"),
-  rentAmount: z.number().positive("Rent amount must be a positive number").optional(),
-  depositAmount: z
-    .number()
-    .nonnegative("Deposit amount must be a non-negative number")
-    .optional(),
-  buildingId: z.string().uuid("Invalid building ID"),
-  propertyId: z.string().uuid("Invalid property ID").optional(),
-  occupantId: z.string().uuid("Invalid Occupant ID").optional(),
+  rentAmount: z.number().min(0, "Rent amount must be zero or positive").optional(),
+  depositAmount: z.number().min(0, "Deposit amount must be zero or positive").optional(),
+  buildingId: z.string().min(1, "Building ID is required").optional(),
+  propertyId: z.string().min(1, "Property ID is required").optional(),
+  occupantId: z.string().optional(),
 });
 
 export const updateUnitValidator = z.object({
-  unitNumber: z.string().min(1, "Unit number is required").optional(),
+  unitNumber: z.string().min(1, "Unit number must not be empty").optional(),
   floor: z.number().int().optional(),
   bedrooms: z
     .number()
@@ -53,14 +50,10 @@ export const updateUnitValidator = z.object({
   status: z
     .enum(["AVAILABLE", "OCCUPIED", "MAINTENANCE", "RESERVED"])
     .optional(),
-  rentAmount: z
-    .number()
-    .positive("Rent amount must be a positive number")
-    .optional(),
-  depositAmount: z
-    .number()
-    .nonnegative("Deposit amount must be a non-negative number")
-    .optional(),
-  buildingId: z.string().uuid("Invalid building ID").optional(),
-  occupantId: z.string().uuid("Invalid Occupant ID").optional(),
+  rentAmount: z.number().min(0, "Rent amount must be zero or positive").optional(),
+  depositAmount: z.number().min(0, "Deposit amount must be zero or positive").optional(),
+  buildingId: z.string().optional(),
+  propertyId: z.string().optional(),
+  occupantId: z.string().optional(),
+  verified: z.boolean().optional(),
 });

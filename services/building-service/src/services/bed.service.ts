@@ -1,6 +1,7 @@
 import { prisma } from "../lib/prisma";
 import AppError from "../utils/appError";
 import { AvailableStatus } from "../generated/prisma/client";
+import { Prisma } from "../generated/prisma/client";
 
 export interface CreateBedInput {
   label: string;
@@ -25,6 +26,7 @@ export interface GetBedsOptions {
   roomId?: string;
   propertyId?: string;
   status?: string;
+  includeDeleted?: boolean;
 }
 
 export class BedService {
@@ -33,10 +35,13 @@ export class BedService {
     const limit = options.limit && options.limit > 0 ? options.limit : 20;
     const skip = (page - 1) * limit;
 
+    // Build where clause - exclude soft deleted records unless includeDeleted is true
     const whereClause: any = {
       property: {
         ownerId,
+        ...(options.includeDeleted ? {} : { deletedAt: null }),
       },
+      ...(options.includeDeleted ? {} : { deletedAt: null }),
     };
 
     if (options.roomId) whereClause.roomId = options.roomId;
@@ -72,6 +77,7 @@ export class BedService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         room: { select: { id: true, name: true, unitId: true } },
@@ -91,6 +97,7 @@ export class BedService {
       where: {
         id: input.roomId,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         property: true,
@@ -104,12 +111,17 @@ export class BedService {
     const bed = await prisma.bed.create({
       data: {
         label: input.label,
-        rentAmount: input.rentAmount,
-        depositAmount: input.depositAmount ?? null,
+        rentAmount: new Prisma.Decimal(input.rentAmount.toString()),
+        depositAmount: input.depositAmount !== null && input.depositAmount !== undefined
+          ? new Prisma.Decimal(input.depositAmount.toString())
+          : null,
         status: input.status ?? "AVAILABLE",
         roomId: input.roomId,
         propertyId: room.propertyId,
         occupantId: input.occupantId ?? null,
+        initializedAt: null,
+        createdBy: ownerId,
+        updatedBy: ownerId,
       },
       include: {
         room: { select: { id: true, name: true } },
@@ -125,6 +137,7 @@ export class BedService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
     });
 
@@ -136,10 +149,11 @@ export class BedService {
       where: { id },
       data: {
         ...(input.label !== undefined && { label: input.label }),
-        ...(input.rentAmount !== undefined && { rentAmount: input.rentAmount }),
-        ...(input.depositAmount !== undefined && { depositAmount: input.depositAmount }),
+        ...(input.rentAmount !== undefined && { rentAmount: new Prisma.Decimal(input.rentAmount.toString()) }),
+        ...(input.depositAmount !== null && input.depositAmount !== undefined && { depositAmount: new Prisma.Decimal(input.depositAmount.toString()) }),
         ...(input.status !== undefined && { status: input.status }),
         ...(input.occupantId !== undefined && { occupantId: input.occupantId }),
+        updatedBy: ownerId,
       },
       include: {
         room: { select: { id: true, name: true } },
@@ -150,7 +164,31 @@ export class BedService {
     return updatedBed;
   }
 
-  async deleteBed(id: string, ownerId: string) {
+  async softDeleteBed(id: string, ownerId: string) {
+    const bed = await prisma.bed.findFirst({
+      where: {
+        id,
+        property: { ownerId },
+        deletedAt: null,
+      },
+    });
+
+    if (!bed) {
+      throw new AppError("Bed not found or unauthorized", 404);
+    }
+
+    const deletedBed = await prisma.bed.update({
+      where: { id },
+      data: {
+        deletedAt: new Date(),
+        updatedBy: ownerId,
+      },
+    });
+
+    return deletedBed;
+  }
+
+  async restoreBed(id: string, ownerId: string) {
     const bed = await prisma.bed.findFirst({
       where: {
         id,
@@ -159,12 +197,26 @@ export class BedService {
     });
 
     if (!bed) {
-      throw new AppError("Bed not found or unauthorized", 404);
+      throw new AppError("Bed not found", 404);
     }
 
-    await prisma.bed.delete({
+    if (!bed.deletedAt) {
+      throw new AppError("Bed is not deleted", 400);
+    }
+
+    const restoredBed = await prisma.bed.update({
       where: { id },
+      data: {
+        deletedAt: null,
+        updatedBy: ownerId,
+      },
+      include: {
+        room: { select: { id: true, name: true } },
+        property: { select: { id: true, title: true } },
+      },
     });
+
+    return restoredBed;
   }
 }
 

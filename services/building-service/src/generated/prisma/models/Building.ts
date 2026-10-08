@@ -41,8 +41,12 @@ export type BuildingMinAggregateOutputType = {
   summary: string | null
   propertyId: string | null
   floors: number | null
+  verified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
 }
 
 export type BuildingMaxAggregateOutputType = {
@@ -52,8 +56,12 @@ export type BuildingMaxAggregateOutputType = {
   summary: string | null
   propertyId: string | null
   floors: number | null
+  verified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
 }
 
 export type BuildingCountAggregateOutputType = {
@@ -63,8 +71,12 @@ export type BuildingCountAggregateOutputType = {
   summary: number
   propertyId: number
   floors: number
+  verified: number
   createdAt: number
   updatedAt: number
+  deletedAt: number
+  createdBy: number
+  updatedBy: number
   _all: number
 }
 
@@ -84,8 +96,12 @@ export type BuildingMinAggregateInputType = {
   summary?: true
   propertyId?: true
   floors?: true
+  verified?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
 }
 
 export type BuildingMaxAggregateInputType = {
@@ -95,8 +111,12 @@ export type BuildingMaxAggregateInputType = {
   summary?: true
   propertyId?: true
   floors?: true
+  verified?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
 }
 
 export type BuildingCountAggregateInputType = {
@@ -106,8 +126,12 @@ export type BuildingCountAggregateInputType = {
   summary?: true
   propertyId?: true
   floors?: true
+  verified?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
   _all?: true
 }
 
@@ -204,8 +228,12 @@ export type BuildingGroupByOutputType = {
   summary: string | null
   propertyId: string
   floors: number | null
+  verified: boolean
   createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
   _count: BuildingCountAggregateOutputType | null
   _avg: BuildingAvgAggregateOutputType | null
   _sum: BuildingSumAggregateOutputType | null
@@ -238,8 +266,12 @@ export type BuildingWhereInput = {
   summary?: Prisma.StringNullableFilter<"Building"> | string | null
   propertyId?: Prisma.StringFilter<"Building"> | string
   floors?: Prisma.IntNullableFilter<"Building"> | number | null
+  verified?: Prisma.BoolFilter<"Building"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Building"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Building"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Building"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Building"> | string | null
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   address?: Prisma.XOR<Prisma.AddressNullableScalarRelationFilter, Prisma.AddressWhereInput> | null
   units?: Prisma.UnitListRelationFilter
@@ -252,8 +284,12 @@ export type BuildingOrderByWithRelationInput = {
   summary?: Prisma.SortOrderInput | Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   floors?: Prisma.SortOrderInput | Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   property?: Prisma.PropertyOrderByWithRelationInput
   address?: Prisma.AddressOrderByWithRelationInput
   units?: Prisma.UnitOrderByRelationAggregateInput
@@ -269,8 +305,12 @@ export type BuildingWhereUniqueInput = Prisma.AtLeast<{
   summary?: Prisma.StringNullableFilter<"Building"> | string | null
   propertyId?: Prisma.StringFilter<"Building"> | string
   floors?: Prisma.IntNullableFilter<"Building"> | number | null
+  verified?: Prisma.BoolFilter<"Building"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Building"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Building"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Building"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Building"> | string | null
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   address?: Prisma.XOR<Prisma.AddressNullableScalarRelationFilter, Prisma.AddressWhereInput> | null
   units?: Prisma.UnitListRelationFilter
@@ -283,8 +323,12 @@ export type BuildingOrderByWithAggregationInput = {
   summary?: Prisma.SortOrderInput | Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   floors?: Prisma.SortOrderInput | Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.BuildingCountOrderByAggregateInput
   _avg?: Prisma.BuildingAvgOrderByAggregateInput
   _max?: Prisma.BuildingMaxOrderByAggregateInput
@@ -302,8 +346,12 @@ export type BuildingScalarWhereWithAggregatesInput = {
   summary?: Prisma.StringNullableWithAggregatesFilter<"Building"> | string | null
   propertyId?: Prisma.StringWithAggregatesFilter<"Building"> | string
   floors?: Prisma.IntNullableWithAggregatesFilter<"Building"> | number | null
+  verified?: Prisma.BoolWithAggregatesFilter<"Building"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Building"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Building"> | Date | string | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Building"> | string | null
+  updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Building"> | string | null
 }
 
 export type BuildingCreateInput = {
@@ -312,8 +360,12 @@ export type BuildingCreateInput = {
   description?: string | null
   summary?: string | null
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   property: Prisma.PropertyCreateNestedOneWithoutBuildingsInput
   address?: Prisma.AddressCreateNestedOneWithoutBuildingInput
   units?: Prisma.UnitCreateNestedManyWithoutBuildingInput
@@ -326,8 +378,12 @@ export type BuildingUncheckedCreateInput = {
   summary?: string | null
   propertyId: string
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   address?: Prisma.AddressUncheckedCreateNestedOneWithoutBuildingInput
   units?: Prisma.UnitUncheckedCreateNestedManyWithoutBuildingInput
 }
@@ -338,8 +394,12 @@ export type BuildingUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.PropertyUpdateOneRequiredWithoutBuildingsNestedInput
   address?: Prisma.AddressUpdateOneWithoutBuildingNestedInput
   units?: Prisma.UnitUpdateManyWithoutBuildingNestedInput
@@ -352,8 +412,12 @@ export type BuildingUncheckedUpdateInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.AddressUncheckedUpdateOneWithoutBuildingNestedInput
   units?: Prisma.UnitUncheckedUpdateManyWithoutBuildingNestedInput
 }
@@ -365,8 +429,12 @@ export type BuildingCreateManyInput = {
   summary?: string | null
   propertyId: string
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
 }
 
 export type BuildingUpdateManyMutationInput = {
@@ -375,8 +443,12 @@ export type BuildingUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BuildingUncheckedUpdateManyInput = {
@@ -386,8 +458,12 @@ export type BuildingUncheckedUpdateManyInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BuildingListRelationFilter = {
@@ -407,8 +483,12 @@ export type BuildingCountOrderByAggregateInput = {
   summary?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   floors?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
 }
 
 export type BuildingAvgOrderByAggregateInput = {
@@ -422,8 +502,12 @@ export type BuildingMaxOrderByAggregateInput = {
   summary?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   floors?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
 }
 
 export type BuildingMinOrderByAggregateInput = {
@@ -433,12 +517,21 @@ export type BuildingMinOrderByAggregateInput = {
   summary?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
   floors?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
 }
 
 export type BuildingSumOrderByAggregateInput = {
   floors?: Prisma.SortOrder
+}
+
+export type BuildingNullableScalarRelationFilter = {
+  is?: Prisma.BuildingWhereInput | null
+  isNot?: Prisma.BuildingWhereInput | null
 }
 
 export type BuildingScalarRelationFilter = {
@@ -502,10 +595,12 @@ export type BuildingCreateNestedOneWithoutAddressInput = {
   connect?: Prisma.BuildingWhereUniqueInput
 }
 
-export type BuildingUpdateOneRequiredWithoutAddressNestedInput = {
+export type BuildingUpdateOneWithoutAddressNestedInput = {
   create?: Prisma.XOR<Prisma.BuildingCreateWithoutAddressInput, Prisma.BuildingUncheckedCreateWithoutAddressInput>
   connectOrCreate?: Prisma.BuildingCreateOrConnectWithoutAddressInput
   upsert?: Prisma.BuildingUpsertWithoutAddressInput
+  disconnect?: Prisma.BuildingWhereInput | boolean
+  delete?: Prisma.BuildingWhereInput | boolean
   connect?: Prisma.BuildingWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.BuildingUpdateToOneWithWhereWithoutAddressInput, Prisma.BuildingUpdateWithoutAddressInput>, Prisma.BuildingUncheckedUpdateWithoutAddressInput>
 }
@@ -530,8 +625,12 @@ export type BuildingCreateWithoutPropertyInput = {
   description?: string | null
   summary?: string | null
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   address?: Prisma.AddressCreateNestedOneWithoutBuildingInput
   units?: Prisma.UnitCreateNestedManyWithoutBuildingInput
 }
@@ -542,8 +641,12 @@ export type BuildingUncheckedCreateWithoutPropertyInput = {
   description?: string | null
   summary?: string | null
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   address?: Prisma.AddressUncheckedCreateNestedOneWithoutBuildingInput
   units?: Prisma.UnitUncheckedCreateNestedManyWithoutBuildingInput
 }
@@ -584,8 +687,12 @@ export type BuildingScalarWhereInput = {
   summary?: Prisma.StringNullableFilter<"Building"> | string | null
   propertyId?: Prisma.StringFilter<"Building"> | string
   floors?: Prisma.IntNullableFilter<"Building"> | number | null
+  verified?: Prisma.BoolFilter<"Building"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Building"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Building"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Building"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Building"> | string | null
 }
 
 export type BuildingCreateWithoutAddressInput = {
@@ -594,8 +701,12 @@ export type BuildingCreateWithoutAddressInput = {
   description?: string | null
   summary?: string | null
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   property: Prisma.PropertyCreateNestedOneWithoutBuildingsInput
   units?: Prisma.UnitCreateNestedManyWithoutBuildingInput
 }
@@ -607,8 +718,12 @@ export type BuildingUncheckedCreateWithoutAddressInput = {
   summary?: string | null
   propertyId: string
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   units?: Prisma.UnitUncheckedCreateNestedManyWithoutBuildingInput
 }
 
@@ -634,8 +749,12 @@ export type BuildingUpdateWithoutAddressInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.PropertyUpdateOneRequiredWithoutBuildingsNestedInput
   units?: Prisma.UnitUpdateManyWithoutBuildingNestedInput
 }
@@ -647,8 +766,12 @@ export type BuildingUncheckedUpdateWithoutAddressInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   units?: Prisma.UnitUncheckedUpdateManyWithoutBuildingNestedInput
 }
 
@@ -658,8 +781,12 @@ export type BuildingCreateWithoutUnitsInput = {
   description?: string | null
   summary?: string | null
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   property: Prisma.PropertyCreateNestedOneWithoutBuildingsInput
   address?: Prisma.AddressCreateNestedOneWithoutBuildingInput
 }
@@ -671,8 +798,12 @@ export type BuildingUncheckedCreateWithoutUnitsInput = {
   summary?: string | null
   propertyId: string
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
   address?: Prisma.AddressUncheckedCreateNestedOneWithoutBuildingInput
 }
 
@@ -698,8 +829,12 @@ export type BuildingUpdateWithoutUnitsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.PropertyUpdateOneRequiredWithoutBuildingsNestedInput
   address?: Prisma.AddressUpdateOneWithoutBuildingNestedInput
 }
@@ -711,8 +846,12 @@ export type BuildingUncheckedUpdateWithoutUnitsInput = {
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.AddressUncheckedUpdateOneWithoutBuildingNestedInput
 }
 
@@ -722,8 +861,12 @@ export type BuildingCreateManyPropertyInput = {
   description?: string | null
   summary?: string | null
   floors?: number | null
+  verified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
 }
 
 export type BuildingUpdateWithoutPropertyInput = {
@@ -732,8 +875,12 @@ export type BuildingUpdateWithoutPropertyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.AddressUpdateOneWithoutBuildingNestedInput
   units?: Prisma.UnitUpdateManyWithoutBuildingNestedInput
 }
@@ -744,8 +891,12 @@ export type BuildingUncheckedUpdateWithoutPropertyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.AddressUncheckedUpdateOneWithoutBuildingNestedInput
   units?: Prisma.UnitUncheckedUpdateManyWithoutBuildingNestedInput
 }
@@ -756,8 +907,12 @@ export type BuildingUncheckedUpdateManyWithoutPropertyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -798,8 +953,12 @@ export type BuildingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   summary?: boolean
   propertyId?: boolean
   floors?: boolean
+  verified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   address?: boolean | Prisma.Building$addressArgs<ExtArgs>
   units?: boolean | Prisma.Building$unitsArgs<ExtArgs>
@@ -813,8 +972,12 @@ export type BuildingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   summary?: boolean
   propertyId?: boolean
   floors?: boolean
+  verified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["building"]>
 
@@ -825,8 +988,12 @@ export type BuildingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   summary?: boolean
   propertyId?: boolean
   floors?: boolean
+  verified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["building"]>
 
@@ -837,11 +1004,15 @@ export type BuildingSelectScalar = {
   summary?: boolean
   propertyId?: boolean
   floors?: boolean
+  verified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
 }
 
-export type BuildingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "summary" | "propertyId" | "floors" | "createdAt" | "updatedAt", ExtArgs["result"]["building"]>
+export type BuildingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "summary" | "propertyId" | "floors" | "verified" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy", ExtArgs["result"]["building"]>
 export type BuildingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   address?: boolean | Prisma.Building$addressArgs<ExtArgs>
@@ -869,8 +1040,12 @@ export type $BuildingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     summary: string | null
     propertyId: string
     floors: number | null
+    verified: boolean
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
+    createdBy: string | null
+    updatedBy: string | null
   }, ExtArgs["result"]["building"]>
   composites: {}
 }
@@ -1303,8 +1478,12 @@ export interface BuildingFieldRefs {
   readonly summary: Prisma.FieldRef<"Building", 'String'>
   readonly propertyId: Prisma.FieldRef<"Building", 'String'>
   readonly floors: Prisma.FieldRef<"Building", 'Int'>
+  readonly verified: Prisma.FieldRef<"Building", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Building", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Building", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Building", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"Building", 'String'>
+  readonly updatedBy: Prisma.FieldRef<"Building", 'String'>
 }
     
 

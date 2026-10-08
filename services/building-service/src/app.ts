@@ -8,6 +8,7 @@ import buildingRoutes from "./routes/building.routes";
 import unitRoutes from "./routes/unit.routes";
 import roomRoutes from "./routes/room.routes";
 import bedRoutes from "./routes/bed.routes";
+import listingRoutes from "./routes/listing.routes";
 
 import job from "./jobs/reserved-check.jobs";
 
@@ -34,6 +35,7 @@ app.use("/api/buildings", buildingRoutes);
 app.use("/api/units", unitRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/beds", bedRoutes);
+app.use("/api/listings", listingRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {

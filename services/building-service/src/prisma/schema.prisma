@@ -35,24 +35,74 @@ enum MaintenanceStatus {
   CANCELLED
 }
 
+enum VerificationStatus {
+  PENDING
+  UNDER_REVIEW
+  VERIFIED
+  REJECTED
+}
+
+enum ListingStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  CLOSED
+}
+
 model Property {
   id          String  @id @default(uuid())
   title       String
   description String?
+
+  // Ownership and management
   ownerId     String
 
-  buildings Building[] // @relation(onDelete: Cascade)
+  // Verification and status
+  verificationStatus VerificationStatus @default(PENDING)
+  verifiedAt DateTime?
+  verifiedBy String? // ID of verifier (user or system)
+  verificationNotes String?
 
-  verified Boolean @default(false)
+  // Status flags
   isActive Boolean @default(true)
 
+  // Listing information
+  listingTitle String?
+  listingDescription String?
+  listingStatus ListingStatus @default(DRAFT)
+  listingViews Int @default(0)
+  isFeatured Boolean @default(false)
+  virtualTourUrl String?
+  amenities Json?
+
+  // Geographic information
+  address Address?
+
+  // Financial information (using Decimal for currency precision)
+  purchasePrice Decimal? @db.Decimal(15, 2)
+  currentValue Decimal? @db.Decimal(15, 2)
+
+  // Timestamps for tracking
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  units     Unit[]
-  rooms     Room[]
-  beds      Bed[]
+  deletedAt DateTime?  // Soft delete
 
+  // Audit trail
+  createdBy String?
+  updatedBy String?
+
+  // Relationships
+  buildings Building[] @relation("PropertyBuildings")
+  units Unit[]
+  rooms Room[]
+  beds Bed[]
+
+  // Indexes for query performance
   @@index([ownerId])
+  @@index([verificationStatus])
+  @@index([isActive])
+  @@index([deletedAt])
+  @@index([listingStatus])
 }
 
 model Building {
@@ -61,19 +111,34 @@ model Building {
   description String?
   summary     String?
 
-  property   Property @relation(fields: [propertyId], references: [id])
+  // Ownership and relationships
+  property   Property @relation("PropertyBuildings", fields: [propertyId], references: [id], onDelete: Cascade)
   propertyId String
 
-  // One-to-one optional relation to Address
+  // Geographic information (optional, inherits from property if not set)
   address Address?
 
+  // Building details
   floors Int?
-  units  Unit[] // cascade on delete
 
+  // Status and verification
+  verified Boolean @default(false)
+
+  // Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  deletedAt DateTime?  // Soft delete
 
+  // Audit trail
+  createdBy String?
+  updatedBy String?
+
+  // Relationships
+  units Unit[] // cascade on delete
+
+  // Indexes
   @@index([propertyId])
+  @@index([deletedAt])
 }
 
 model Address {
@@ -86,9 +151,21 @@ model Address {
   longitude  Float?
   latitude   Float?
 
-  // Address belongs to one building
-  building   Building @relation(fields: [buildingId], references: [id])
-  buildingId String   @unique
+  // Relationship to building (optional - address can exist without building initially)
+  building   Building? @relation(fields: [buildingId], references: [id])
+  buildingId String? @unique
+
+  // For properties without buildings (land-only listings)
+  property   Property? @relation(fields: [propertyId], references: [id])
+  propertyId String? @unique
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes
+  @@index([buildingId])
+  @@index([propertyId])
 }
 
 model Unit {
@@ -97,39 +174,62 @@ model Unit {
   summary    String?
   type       UnitType @default(APARTMENT)
 
+  // Physical details
   floor     Int?
   bedrooms  Int?
   bathrooms Int?
   sqft      Int?
 
-  status        AvailableStatus @default(AVAILABLE)
-  rentAmount    Float?
-  occupantId    String?
-  depositAmount Float?
+  // Financial information (using Decimal for currency precision)
+  rentAmount    Decimal? @db.Decimal(10, 2)
+  depositAmount Decimal? @db.Decimal(10, 2)
 
-  // Relations
+  // Status and availability
+  status        AvailableStatus @default(AVAILABLE)
+  occupantId    String?
+
+  // Listing information
+  listingTitle String?
+  listingDescription String?
+  listingStatus ListingStatus @default(DRAFT)
+  listingViews Int @default(0)
+  isFeatured Boolean @default(false)
+  virtualTourUrl String?
+  amenities Json?
+
+  // Tracking dates
+  initializedAt DateTime?
+  reservedAt    DateTime?
+  reservedUntil DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?  // Soft delete
+
+  // Audit trail
+  createdBy String?
+  updatedBy String?
+
+  // Relationships
   building   Building @relation(fields: [buildingId], references: [id])
   buildingId String
 
-  propertyId String
   property   Property @relation(fields: [propertyId], references: [id])
+  propertyId String
 
   maintenance MaintenanceRequest[]
   photos      Photo[]
 
   rooms Room[]
 
-  reservedAt    DateTime?
-  reservedUntil DateTime?
-
-  initializedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  // Indexes
   @@unique([buildingId, unitNumber])
   @@index([propertyId])
   @@index([buildingId])
+  @@index([status])
+  @@index([deletedAt])
+  @@index([listingStatus])
 }
 
 model Room {
@@ -140,13 +240,34 @@ model Room {
   size        Int?
   type        String? // Dorm, Male, Female, standard, suite, studio etc
 
-  rentAmount    Float?
-  depositAmount Float?
+  // Financial information (using Decimal for currency precision)
+  rentAmount    Decimal? @db.Decimal(10, 2)
+  depositAmount Decimal? @db.Decimal(10, 2)
   status        AvailableStatus @default(AVAILABLE)
   occupantId    String?
 
+  // Listing information
+  listingTitle String?
+  listingDescription String?
+  listingStatus ListingStatus @default(DRAFT)
+  listingViews Int @default(0)
+  isFeatured Boolean @default(false)
+  virtualTourUrl String?
+  amenities Json?
+
+  // Tracking dates
   initializedAt DateTime?
 
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?  // Soft delete
+
+  // Audit trail
+  createdBy String?
+  updatedBy String?
+
+  // Relationships
   unitId String
   unit   Unit   @relation(fields: [unitId], references: [id])
 
@@ -158,27 +279,48 @@ model Room {
   reservedAt    DateTime?
   reservedUntil DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  // Indexes
   @@unique([unitId, name])
   @@index([propertyId])
   @@index([unitId])
+  @@index([deletedAt])
+  @@index([listingStatus])
 }
 
 model Bed {
   id    String @id @default(uuid())
   label String // e.g., "Bed 1", "Top Bunk", "Window Side"
 
-  rentAmount    Float
+  // Financial information (using Decimal for currency precision)
+  rentAmount    Decimal @db.Decimal(10, 2)
+  depositAmount Decimal? @db.Decimal(10, 2)
   status        AvailableStatus @default(AVAILABLE)
   occupantId    String?
-  depositAmount Float?
 
+  // Listing information
+  listingTitle String?
+  listingDescription String?
+  listingStatus ListingStatus @default(DRAFT)
+  listingViews Int @default(0)
+  isFeatured Boolean @default(false)
+  virtualTourUrl String?
+  amenities Json?
+
+  // Tracking dates
+  initializedAt DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?  // Soft delete
+
+  // Audit trail
+  createdBy String?
+  updatedBy String?
+
+  // Relationships
   roomId String
   room   Room   @relation(fields: [roomId], references: [id])
-
-  initializedAt DateTime?
 
   propertyId String
   property   Property @relation(fields: [propertyId], references: [id])
@@ -186,11 +328,11 @@ model Bed {
   reservedAt    DateTime?
   reservedUntil DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  // Indexes
   @@index([propertyId])
   @@index([roomId])
+  @@index([deletedAt])
+  @@index([listingStatus])
 }
 
 model Photo {
@@ -198,10 +340,15 @@ model Photo {
   url     String
   caption String?
 
+  // Relationships (optional - photo can exist without unit initially)
   unit   Unit?   @relation(fields: [unitId], references: [id])
   unitId String?
 
+  // Timestamps
   createdAt DateTime @default(now())
+
+  // Indexes
+  @@index([unitId])
 }
 
 model MaintenanceRequest {
@@ -209,21 +356,30 @@ model MaintenanceRequest {
   title       String
   description String?
 
+  // Relationships
   unit   Unit   @relation(fields: [unitId], references: [id])
   unitId String
 
   requesterId String
   assigneeId  String
 
+  // Status and priority
   status   MaintenanceStatus @default(OPEN)
   priority Int?
 
+  // Timestamps
   requestedAt DateTime  @default(now())
   resolvedAt  DateTime?
 
+  // Relationships
   attachments Attachment[]
   notes       MaintenanceNote[]
 
+  // Timestamps for record keeping
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes
   @@index([requesterId])
   @@index([assigneeId])
 }

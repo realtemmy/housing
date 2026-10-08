@@ -1,26 +1,20 @@
 import { z } from "zod";
-import { AvailableStatus } from "../generated/prisma/enums";
+import { AvailableStatus } from "../generated/prisma/client";
 
 export const bedValidator = z.object({
-  label: z.string().min(3, "Label must be at least 3 characters long"),
-  rentAmount: z.number().min(1, "Rent amount must be at least 1"),
-  depositAmount: z
-    .number()
-    .min(1, "Deposit amount must be at least 1")
-    .optional(),
-  status: z.enum(AvailableStatus).default(AvailableStatus.AVAILABLE),
-  occupantId: z.string().optional(),
-  roomId: z.string(),
+  label: z.string().min(1, "Label is required"),
+  rentAmount: z.number().min(0, "Rent amount must be zero or positive"),
+  depositAmount: z.number().min(0, "Deposit amount must be zero or positive").optional().nullable(),
+  status: z.nativeEnum(AvailableStatus).optional().default("AVAILABLE"),
+  roomId: z.string().min(1, "Room ID is required"),
+  occupantId: z.string().optional().nullable(),
 });
 
 export const updateBedValidator = z.object({
-  label: z.string().min(3, "Label must be at least 3 characters long").optional(),
-  rentAmount: z.number().min(1, "Rent amount must be at least 1").optional(),
-  depositAmount: z
-    .number()
-    .min(1, "Deposit amount must be at least 1")
-    .optional(),
-  status: z.enum(AvailableStatus),
-  occupantId: z.string().optional(),
+  label: z.string().min(1, "Label must not be empty").optional(),
+  rentAmount: z.number().min(0, "Rent amount must be zero or positive").optional(),
+  depositAmount: z.number().min(0, "Deposit amount must be zero or positive").optional().nullable(),
+  status: z.nativeEnum(AvailableStatus).optional(),
+  occupantId: z.string().optional().nullable(),
   roomId: z.string().optional(),
 });

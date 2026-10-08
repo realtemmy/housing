@@ -2,9 +2,21 @@
   "permissions": {
     "allow": [
       "Bash(cat:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(rtk ls *)",
+      "Bash(rtk find *)",
+      "Bash(rtk grep *)",
+      "Bash(mkdir -p services/auth-service/src/routes)",
+      "Bash(rtk prisma *)",
+      "Bash(npx prisma@7.0.0 generate --schema ./src/prisma/schema.prisma)",
+      "Bash(rtk npm *)",
+      "Bash(rtk tsc *)",
+      "Bash(npx tsc *)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "additionalDirectories": [
+      "/Users/mac/housing/services/auth-service/src"
+    ]
   }
 }

@@ -84,10 +84,18 @@ export const PropertyScalarFieldEnum = {
   title: 'title',
   description: 'description',
   ownerId: 'ownerId',
-  verified: 'verified',
+  verificationStatus: 'verificationStatus',
+  verifiedAt: 'verifiedAt',
+  verifiedBy: 'verifiedBy',
+  verificationNotes: 'verificationNotes',
   isActive: 'isActive',
+  purchasePrice: 'purchasePrice',
+  currentValue: 'currentValue',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy'
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
@@ -100,8 +108,12 @@ export const BuildingScalarFieldEnum = {
   summary: 'summary',
   propertyId: 'propertyId',
   floors: 'floors',
+  verified: 'verified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy'
 } as const
 
 export type BuildingScalarFieldEnum = (typeof BuildingScalarFieldEnum)[keyof typeof BuildingScalarFieldEnum]
@@ -116,7 +128,10 @@ export const AddressScalarFieldEnum = {
   country: 'country',
   longitude: 'longitude',
   latitude: 'latitude',
-  buildingId: 'buildingId'
+  buildingId: 'buildingId',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
@@ -131,17 +146,20 @@ export const UnitScalarFieldEnum = {
   bedrooms: 'bedrooms',
   bathrooms: 'bathrooms',
   sqft: 'sqft',
-  status: 'status',
   rentAmount: 'rentAmount',
-  occupantId: 'occupantId',
   depositAmount: 'depositAmount',
-  buildingId: 'buildingId',
-  propertyId: 'propertyId',
+  status: 'status',
+  occupantId: 'occupantId',
+  initializedAt: 'initializedAt',
   reservedAt: 'reservedAt',
   reservedUntil: 'reservedUntil',
-  initializedAt: 'initializedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  buildingId: 'buildingId',
+  propertyId: 'propertyId'
 } as const
 
 export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
@@ -159,12 +177,15 @@ export const RoomScalarFieldEnum = {
   status: 'status',
   occupantId: 'occupantId',
   initializedAt: 'initializedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
   unitId: 'unitId',
   propertyId: 'propertyId',
   reservedAt: 'reservedAt',
-  reservedUntil: 'reservedUntil',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  reservedUntil: 'reservedUntil'
 } as const
 
 export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
@@ -174,16 +195,19 @@ export const BedScalarFieldEnum = {
   id: 'id',
   label: 'label',
   rentAmount: 'rentAmount',
+  depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
-  depositAmount: 'depositAmount',
-  roomId: 'roomId',
   initializedAt: 'initializedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  roomId: 'roomId',
   propertyId: 'propertyId',
   reservedAt: 'reservedAt',
-  reservedUntil: 'reservedUntil',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  reservedUntil: 'reservedUntil'
 } as const
 
 export type BedScalarFieldEnum = (typeof BedScalarFieldEnum)[keyof typeof BedScalarFieldEnum]
@@ -210,7 +234,9 @@ export const MaintenanceRequestScalarFieldEnum = {
   status: 'status',
   priority: 'priority',
   requestedAt: 'requestedAt',
-  resolvedAt: 'resolvedAt'
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type MaintenanceRequestScalarFieldEnum = (typeof MaintenanceRequestScalarFieldEnum)[keyof typeof MaintenanceRequestScalarFieldEnum]

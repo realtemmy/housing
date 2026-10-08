@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(rtk prisma *)",
+      "Bash(node node_modules/prisma/build/index.js --version)",
+      "Bash(npm install *)",
+      "Bash(rtk npm *)",
+      "Bash(./node_modules/.bin/prisma validate *)",
+      "Bash(./node_modules/.bin/prisma generate *)",
+      "Bash(rtk npx *)",
+      "Bash(DATABASE_URL=\"postgresql://test:test@localhost:5432/test\" rtk npx tsx test-direct.ts)",
+      "Bash(DATABASE_URL=\"postgresql://test:test@localhost:5432/test\" rtk npx tsx test-instance-details.ts)",
+      "Bash(DATABASE_URL=\"postgresql://test:test@localhost:5432/test\" rtk npx tsx test-runtime-data.ts)",
+      "Bash(DATABASE_URL=\"postgresql://test:test@localhost:5432/test\" rtk npx tsx test-transaction.ts)",
+      "Bash(DATABASE_URL=\"postgresql://test:test@localhost:5432/test\" rtk npx tsx test-runtime-data-detail.ts)"
+    ]
+  }
+}

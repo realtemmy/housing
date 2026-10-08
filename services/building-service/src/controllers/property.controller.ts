@@ -14,12 +14,14 @@ export const getAllProperties = async (req: Request, res: Response, next: NextFu
     const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
     const search = (req.query.search as string) || "";
     const orderBy = (req.query.orderBy as string) === "asc" ? "asc" : "desc";
+    const includeDeleted = (req.query.includeDeleted as string) === "true";
 
     const result = await propertyService.getAllProperties(ownerId, {
       page,
       limit,
       search,
       orderBy,
+      includeDeleted,
     });
 
     res.status(200).json({
@@ -97,11 +99,30 @@ export const deleteProperty = async (req: Request, res: Response, next: NextFunc
     }
 
     const propertyId = req.params.id as string;
-    await propertyService.deleteProperty(propertyId, ownerId);
+    await propertyService.softDeleteProperty(propertyId, ownerId);
 
-    res.status(204).json({
+    res.status(200).json({
       status: "success",
-      data: null,
+      message: "Property deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const restoreProperty = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const ownerId = req.userId;
+    if (!ownerId) {
+      return next(new AppError("User unauthenticated", 401));
+    }
+
+    const propertyId = req.params.id as string;
+    const property = await propertyService.restoreProperty(propertyId, ownerId);
+
+    res.status(200).json({
+      status: "success",
+      data: property,
     });
   } catch (error) {
     next(error);

@@ -1,6 +1,7 @@
 import { prisma } from "../lib/prisma";
 import AppError from "../utils/appError";
 import { AvailableStatus } from "../generated/prisma/client";
+import { Prisma } from "../generated/prisma/client";
 
 export interface CreateRoomInput {
   name: string;
@@ -24,6 +25,7 @@ export interface UpdateRoomInput {
   depositAmount?: number | null;
   status?: AvailableStatus;
   occupantId?: string | null;
+  verified?: boolean;
 }
 
 export interface GetRoomsOptions {
@@ -32,6 +34,7 @@ export interface GetRoomsOptions {
   unitId?: string;
   propertyId?: string;
   status?: string;
+  includeDeleted?: boolean;
 }
 
 export class RoomService {
@@ -40,10 +43,13 @@ export class RoomService {
     const limit = options.limit && options.limit > 0 ? options.limit : 20;
     const skip = (page - 1) * limit;
 
+    // Build where clause - exclude soft deleted records unless includeDeleted is true
     const whereClause: any = {
       property: {
         ownerId,
+        ...(options.includeDeleted ? {} : { deletedAt: null }),
       },
+      ...(options.includeDeleted ? {} : { deletedAt: null }),
     };
 
     if (options.unitId) whereClause.unitId = options.unitId;
@@ -80,6 +86,7 @@ export class RoomService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         beds: true,
@@ -100,6 +107,7 @@ export class RoomService {
       where: {
         id: input.unitId,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         property: true,
@@ -117,11 +125,14 @@ export class RoomService {
         summary: input.summary ?? null,
         size: input.size ?? null,
         type: input.type ?? null,
-        rentAmount: input.rentAmount ?? null,
-        depositAmount: input.depositAmount ?? null,
+        rentAmount: input.rentAmount !== null && input.rentAmount !== undefined ? new Prisma.Decimal(input.rentAmount.toString()) : null,
+        depositAmount: input.depositAmount !== null && input.depositAmount !== undefined ? new Prisma.Decimal(input.depositAmount.toString()) : null,
         status: input.status ?? "AVAILABLE",
         unitId: input.unitId,
         propertyId: unit.propertyId,
+        initializedAt: null,
+        createdBy: ownerId,
+        updatedBy: ownerId,
       },
       include: {
         unit: { select: { id: true, unitNumber: true } },
@@ -137,6 +148,7 @@ export class RoomService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
     });
 
@@ -152,10 +164,12 @@ export class RoomService {
         ...(input.summary !== undefined && { summary: input.summary }),
         ...(input.size !== undefined && { size: input.size }),
         ...(input.type !== undefined && { type: input.type }),
-        ...(input.rentAmount !== undefined && { rentAmount: input.rentAmount }),
-        ...(input.depositAmount !== undefined && { depositAmount: input.depositAmount }),
+        ...(input.rentAmount !== null && input.rentAmount !== undefined && { rentAmount: new Prisma.Decimal(input.rentAmount.toString()) }),
+        ...(input.depositAmount !== null && input.depositAmount !== undefined && { depositAmount: new Prisma.Decimal(input.depositAmount.toString()) }),
         ...(input.status !== undefined && { status: input.status }),
         ...(input.occupantId !== undefined && { occupantId: input.occupantId }),
+        ...(input.verified !== undefined && { verified: input.verified }),
+        updatedBy: ownerId,
       },
       include: {
         beds: true,
@@ -166,11 +180,12 @@ export class RoomService {
     return updatedRoom;
   }
 
-  async deleteRoom(id: string, ownerId: string) {
+  async softDeleteRoom(id: string, ownerId: string) {
     const room = await prisma.room.findFirst({
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         beds: true,
@@ -185,9 +200,46 @@ export class RoomService {
       throw new AppError("Cannot delete room with existing beds. Delete beds first.", 400);
     }
 
-    await prisma.room.delete({
+    const deletedRoom = await prisma.room.update({
       where: { id },
+      data: {
+        deletedAt: new Date(),
+        updatedBy: ownerId,
+      },
     });
+
+    return deletedRoom;
+  }
+
+  async restoreRoom(id: string, ownerId: string) {
+    const room = await prisma.room.findFirst({
+      where: {
+        id,
+        property: { ownerId },
+      },
+    });
+
+    if (!room) {
+      throw new AppError("Room not found", 404);
+    }
+
+    if (!room.deletedAt) {
+      throw new AppError("Room is not deleted", 400);
+    }
+
+    const restoredRoom = await prisma.room.update({
+      where: { id },
+      data: {
+        deletedAt: null,
+        updatedBy: ownerId,
+      },
+      include: {
+        unit: { select: { id: true, unitNumber: true } },
+        property: { select: { id: true, title: true } },
+      },
+    });
+
+    return restoredRoom;
   }
 }
 

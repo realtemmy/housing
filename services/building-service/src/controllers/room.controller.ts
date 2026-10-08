@@ -78,7 +78,6 @@ export const updateRoom = async (req: Request, res: Response, next: NextFunction
 
     const roomId = req.params.id as string;
     const validatedData = updateRoomValidator.parse(req.body);
-
     const updatedRoom = await roomService.updateRoom(roomId, ownerId, validatedData);
 
     res.status(200).json({
@@ -98,11 +97,30 @@ export const deleteRoom = async (req: Request, res: Response, next: NextFunction
     }
 
     const roomId = req.params.id as string;
-    await roomService.deleteRoom(roomId, ownerId);
+    await roomService.softDeleteRoom(roomId, ownerId);
 
-    res.status(204).json({
+    res.status(200).json({
       status: "success",
-      data: null,
+      message: "Room deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const restoreRoom = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const ownerId = req.userId;
+    if (!ownerId) {
+      return next(new AppError("User unauthenticated", 401));
+    }
+
+    const roomId = req.params.id as string;
+    const room = await roomService.restoreRoom(roomId, ownerId);
+
+    res.status(200).json({
+      status: "success",
+      data: room,
     });
   } catch (error) {
     next(error);

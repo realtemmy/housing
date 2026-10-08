@@ -5,6 +5,7 @@ import {
   getRoomById,
   updateRoom,
   deleteRoom,
+  restoreRoom,
 } from "../controllers/room.controller";
 import { extractUser } from "../middlewares/extractUser";
 
@@ -14,5 +15,6 @@ router.use(extractUser);
 
 router.route("/").get(getAllRooms).post(createRoom);
 router.route("/:id").get(getRoomById).patch(updateRoom).delete(deleteRoom);
+router.route("/:id/restore").patch(restoreRoom);
 
 export default router;

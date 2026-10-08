@@ -77,7 +77,6 @@ export const UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
-  photo: 'photo',
   bio: 'bio',
   isEmailVerified: 'isEmailVerified',
   isPhoneVerified: 'isPhoneVerified',
@@ -85,10 +84,15 @@ export const UserScalarFieldEnum = {
   role: 'role',
   provider: 'provider',
   providerId: 'providerId',
+  verificationToken: 'verificationToken',
+  verificationTokenExpiresAt: 'verificationTokenExpiresAt',
   resetToken: 'resetToken',
   resetTokenExpiresAt: 'resetTokenExpiresAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  lastLoginAt: 'lastLoginAt',
+  termsAccepted: 'termsAccepted',
+  termsAcceptedAt: 'termsAcceptedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

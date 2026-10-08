@@ -20,8 +20,20 @@ export type PropertyModel = runtime.Types.Result.DefaultSelection<Prisma.$Proper
 
 export type AggregateProperty = {
   _count: PropertyCountAggregateOutputType | null
+  _avg: PropertyAvgAggregateOutputType | null
+  _sum: PropertySumAggregateOutputType | null
   _min: PropertyMinAggregateOutputType | null
   _max: PropertyMaxAggregateOutputType | null
+}
+
+export type PropertyAvgAggregateOutputType = {
+  purchasePrice: runtime.Decimal | null
+  currentValue: runtime.Decimal | null
+}
+
+export type PropertySumAggregateOutputType = {
+  purchasePrice: runtime.Decimal | null
+  currentValue: runtime.Decimal | null
 }
 
 export type PropertyMinAggregateOutputType = {
@@ -29,10 +41,18 @@ export type PropertyMinAggregateOutputType = {
   title: string | null
   description: string | null
   ownerId: string | null
-  verified: boolean | null
+  verificationStatus: $Enums.VerificationStatus | null
+  verifiedAt: Date | null
+  verifiedBy: string | null
+  verificationNotes: string | null
   isActive: boolean | null
+  purchasePrice: runtime.Decimal | null
+  currentValue: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
 }
 
 export type PropertyMaxAggregateOutputType = {
@@ -40,10 +60,18 @@ export type PropertyMaxAggregateOutputType = {
   title: string | null
   description: string | null
   ownerId: string | null
-  verified: boolean | null
+  verificationStatus: $Enums.VerificationStatus | null
+  verifiedAt: Date | null
+  verifiedBy: string | null
+  verificationNotes: string | null
   isActive: boolean | null
+  purchasePrice: runtime.Decimal | null
+  currentValue: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
 }
 
 export type PropertyCountAggregateOutputType = {
@@ -51,23 +79,49 @@ export type PropertyCountAggregateOutputType = {
   title: number
   description: number
   ownerId: number
-  verified: number
+  verificationStatus: number
+  verifiedAt: number
+  verifiedBy: number
+  verificationNotes: number
   isActive: number
+  purchasePrice: number
+  currentValue: number
   createdAt: number
   updatedAt: number
+  deletedAt: number
+  createdBy: number
+  updatedBy: number
   _all: number
 }
 
+
+export type PropertyAvgAggregateInputType = {
+  purchasePrice?: true
+  currentValue?: true
+}
+
+export type PropertySumAggregateInputType = {
+  purchasePrice?: true
+  currentValue?: true
+}
 
 export type PropertyMinAggregateInputType = {
   id?: true
   title?: true
   description?: true
   ownerId?: true
-  verified?: true
+  verificationStatus?: true
+  verifiedAt?: true
+  verifiedBy?: true
+  verificationNotes?: true
   isActive?: true
+  purchasePrice?: true
+  currentValue?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
 }
 
 export type PropertyMaxAggregateInputType = {
@@ -75,10 +129,18 @@ export type PropertyMaxAggregateInputType = {
   title?: true
   description?: true
   ownerId?: true
-  verified?: true
+  verificationStatus?: true
+  verifiedAt?: true
+  verifiedBy?: true
+  verificationNotes?: true
   isActive?: true
+  purchasePrice?: true
+  currentValue?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
 }
 
 export type PropertyCountAggregateInputType = {
@@ -86,10 +148,18 @@ export type PropertyCountAggregateInputType = {
   title?: true
   description?: true
   ownerId?: true
-  verified?: true
+  verificationStatus?: true
+  verifiedAt?: true
+  verifiedBy?: true
+  verificationNotes?: true
   isActive?: true
+  purchasePrice?: true
+  currentValue?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  createdBy?: true
+  updatedBy?: true
   _all?: true
 }
 
@@ -131,6 +201,18 @@ export type PropertyAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: PropertyAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: PropertySumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: PropertyMinAggregateInputType
@@ -161,6 +243,8 @@ export type PropertyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: PropertyCountAggregateInputType | true
+  _avg?: PropertyAvgAggregateInputType
+  _sum?: PropertySumAggregateInputType
   _min?: PropertyMinAggregateInputType
   _max?: PropertyMaxAggregateInputType
 }
@@ -170,11 +254,21 @@ export type PropertyGroupByOutputType = {
   title: string
   description: string | null
   ownerId: string
-  verified: boolean
+  verificationStatus: $Enums.VerificationStatus
+  verifiedAt: Date | null
+  verifiedBy: string | null
+  verificationNotes: string | null
   isActive: boolean
+  purchasePrice: runtime.Decimal | null
+  currentValue: runtime.Decimal | null
   createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
+  createdBy: string | null
+  updatedBy: string | null
   _count: PropertyCountAggregateOutputType | null
+  _avg: PropertyAvgAggregateOutputType | null
+  _sum: PropertySumAggregateOutputType | null
   _min: PropertyMinAggregateOutputType | null
   _max: PropertyMaxAggregateOutputType | null
 }
@@ -202,10 +296,19 @@ export type PropertyWhereInput = {
   title?: Prisma.StringFilter<"Property"> | string
   description?: Prisma.StringNullableFilter<"Property"> | string | null
   ownerId?: Prisma.StringFilter<"Property"> | string
-  verified?: Prisma.BoolFilter<"Property"> | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFilter<"Property"> | $Enums.VerificationStatus
+  verifiedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  verifiedBy?: Prisma.StringNullableFilter<"Property"> | string | null
+  verificationNotes?: Prisma.StringNullableFilter<"Property"> | string | null
   isActive?: Prisma.BoolFilter<"Property"> | boolean
+  purchasePrice?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Property"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Property"> | string | null
+  address?: Prisma.XOR<Prisma.AddressNullableScalarRelationFilter, Prisma.AddressWhereInput> | null
   buildings?: Prisma.BuildingListRelationFilter
   units?: Prisma.UnitListRelationFilter
   rooms?: Prisma.RoomListRelationFilter
@@ -217,10 +320,19 @@ export type PropertyOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   ownerId?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  verifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentValue?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.AddressOrderByWithRelationInput
   buildings?: Prisma.BuildingOrderByRelationAggregateInput
   units?: Prisma.UnitOrderByRelationAggregateInput
   rooms?: Prisma.RoomOrderByRelationAggregateInput
@@ -235,10 +347,19 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Property"> | string
   description?: Prisma.StringNullableFilter<"Property"> | string | null
   ownerId?: Prisma.StringFilter<"Property"> | string
-  verified?: Prisma.BoolFilter<"Property"> | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFilter<"Property"> | $Enums.VerificationStatus
+  verifiedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  verifiedBy?: Prisma.StringNullableFilter<"Property"> | string | null
+  verificationNotes?: Prisma.StringNullableFilter<"Property"> | string | null
   isActive?: Prisma.BoolFilter<"Property"> | boolean
+  purchasePrice?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Property"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Property"> | string | null
+  address?: Prisma.XOR<Prisma.AddressNullableScalarRelationFilter, Prisma.AddressWhereInput> | null
   buildings?: Prisma.BuildingListRelationFilter
   units?: Prisma.UnitListRelationFilter
   rooms?: Prisma.RoomListRelationFilter
@@ -250,13 +371,23 @@ export type PropertyOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   ownerId?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  verifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentValue?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PropertyCountOrderByAggregateInput
+  _avg?: Prisma.PropertyAvgOrderByAggregateInput
   _max?: Prisma.PropertyMaxOrderByAggregateInput
   _min?: Prisma.PropertyMinOrderByAggregateInput
+  _sum?: Prisma.PropertySumOrderByAggregateInput
 }
 
 export type PropertyScalarWhereWithAggregatesInput = {
@@ -267,10 +398,18 @@ export type PropertyScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Property"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   ownerId?: Prisma.StringWithAggregatesFilter<"Property"> | string
-  verified?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusWithAggregatesFilter<"Property"> | $Enums.VerificationStatus
+  verifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Property"> | Date | string | null
+  verifiedBy?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
+  verificationNotes?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
+  purchasePrice?: Prisma.DecimalNullableWithAggregatesFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.DecimalNullableWithAggregatesFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Property"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Property"> | Date | string | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
+  updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
 }
 
 export type PropertyCreateInput = {
@@ -278,10 +417,19 @@ export type PropertyCreateInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingCreateNestedManyWithoutPropertyInput
   units?: Prisma.UnitCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomCreateNestedManyWithoutPropertyInput
@@ -293,10 +441,19 @@ export type PropertyUncheckedCreateInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressUncheckedCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingUncheckedCreateNestedManyWithoutPropertyInput
   units?: Prisma.UnitUncheckedCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomUncheckedCreateNestedManyWithoutPropertyInput
@@ -308,10 +465,19 @@ export type PropertyUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUpdateManyWithoutPropertyNestedInput
   units?: Prisma.UnitUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutPropertyNestedInput
@@ -323,10 +489,19 @@ export type PropertyUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUncheckedUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUncheckedUpdateManyWithoutPropertyNestedInput
   units?: Prisma.UnitUncheckedUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUncheckedUpdateManyWithoutPropertyNestedInput
@@ -338,10 +513,18 @@ export type PropertyCreateManyInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
 }
 
 export type PropertyUpdateManyMutationInput = {
@@ -349,10 +532,18 @@ export type PropertyUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PropertyUncheckedUpdateManyInput = {
@@ -360,10 +551,18 @@ export type PropertyUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PropertyCountOrderByAggregateInput = {
@@ -371,10 +570,23 @@ export type PropertyCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  verifiedBy?: Prisma.SortOrder
+  verificationNotes?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  currentValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
+}
+
+export type PropertyAvgOrderByAggregateInput = {
+  purchasePrice?: Prisma.SortOrder
+  currentValue?: Prisma.SortOrder
 }
 
 export type PropertyMaxOrderByAggregateInput = {
@@ -382,10 +594,18 @@ export type PropertyMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  verifiedBy?: Prisma.SortOrder
+  verificationNotes?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  currentValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
 }
 
 export type PropertyMinOrderByAggregateInput = {
@@ -393,15 +613,33 @@ export type PropertyMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  verifiedBy?: Prisma.SortOrder
+  verificationNotes?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  currentValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
+}
+
+export type PropertySumOrderByAggregateInput = {
+  purchasePrice?: Prisma.SortOrder
+  currentValue?: Prisma.SortOrder
 }
 
 export type PropertyScalarRelationFilter = {
   is?: Prisma.PropertyWhereInput
   isNot?: Prisma.PropertyWhereInput
+}
+
+export type PropertyNullableScalarRelationFilter = {
+  is?: Prisma.PropertyWhereInput | null
+  isNot?: Prisma.PropertyWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -412,8 +650,24 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type EnumVerificationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.VerificationStatus
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -432,6 +686,22 @@ export type PropertyUpdateOneRequiredWithoutBuildingsNestedInput = {
   upsert?: Prisma.PropertyUpsertWithoutBuildingsInput
   connect?: Prisma.PropertyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PropertyUpdateToOneWithWhereWithoutBuildingsInput, Prisma.PropertyUpdateWithoutBuildingsInput>, Prisma.PropertyUncheckedUpdateWithoutBuildingsInput>
+}
+
+export type PropertyCreateNestedOneWithoutAddressInput = {
+  create?: Prisma.XOR<Prisma.PropertyCreateWithoutAddressInput, Prisma.PropertyUncheckedCreateWithoutAddressInput>
+  connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutAddressInput
+  connect?: Prisma.PropertyWhereUniqueInput
+}
+
+export type PropertyUpdateOneWithoutAddressNestedInput = {
+  create?: Prisma.XOR<Prisma.PropertyCreateWithoutAddressInput, Prisma.PropertyUncheckedCreateWithoutAddressInput>
+  connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutAddressInput
+  upsert?: Prisma.PropertyUpsertWithoutAddressInput
+  disconnect?: Prisma.PropertyWhereInput | boolean
+  delete?: Prisma.PropertyWhereInput | boolean
+  connect?: Prisma.PropertyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PropertyUpdateToOneWithWhereWithoutAddressInput, Prisma.PropertyUpdateWithoutAddressInput>, Prisma.PropertyUncheckedUpdateWithoutAddressInput>
 }
 
 export type PropertyCreateNestedOneWithoutUnitsInput = {
@@ -481,10 +751,19 @@ export type PropertyCreateWithoutBuildingsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressCreateNestedOneWithoutPropertyInput
   units?: Prisma.UnitCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomCreateNestedManyWithoutPropertyInput
   beds?: Prisma.BedCreateNestedManyWithoutPropertyInput
@@ -495,10 +774,19 @@ export type PropertyUncheckedCreateWithoutBuildingsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressUncheckedCreateNestedOneWithoutPropertyInput
   units?: Prisma.UnitUncheckedCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomUncheckedCreateNestedManyWithoutPropertyInput
   beds?: Prisma.BedUncheckedCreateNestedManyWithoutPropertyInput
@@ -525,10 +813,19 @@ export type PropertyUpdateWithoutBuildingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUpdateOneWithoutPropertyNestedInput
   units?: Prisma.UnitUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutPropertyNestedInput
   beds?: Prisma.BedUpdateManyWithoutPropertyNestedInput
@@ -539,10 +836,127 @@ export type PropertyUncheckedUpdateWithoutBuildingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUncheckedUpdateOneWithoutPropertyNestedInput
+  units?: Prisma.UnitUncheckedUpdateManyWithoutPropertyNestedInput
+  rooms?: Prisma.RoomUncheckedUpdateManyWithoutPropertyNestedInput
+  beds?: Prisma.BedUncheckedUpdateManyWithoutPropertyNestedInput
+}
+
+export type PropertyCreateWithoutAddressInput = {
+  id?: string
+  title: string
+  description?: string | null
+  ownerId: string
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
+  isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  buildings?: Prisma.BuildingCreateNestedManyWithoutPropertyInput
+  units?: Prisma.UnitCreateNestedManyWithoutPropertyInput
+  rooms?: Prisma.RoomCreateNestedManyWithoutPropertyInput
+  beds?: Prisma.BedCreateNestedManyWithoutPropertyInput
+}
+
+export type PropertyUncheckedCreateWithoutAddressInput = {
+  id?: string
+  title: string
+  description?: string | null
+  ownerId: string
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
+  isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  buildings?: Prisma.BuildingUncheckedCreateNestedManyWithoutPropertyInput
+  units?: Prisma.UnitUncheckedCreateNestedManyWithoutPropertyInput
+  rooms?: Prisma.RoomUncheckedCreateNestedManyWithoutPropertyInput
+  beds?: Prisma.BedUncheckedCreateNestedManyWithoutPropertyInput
+}
+
+export type PropertyCreateOrConnectWithoutAddressInput = {
+  where: Prisma.PropertyWhereUniqueInput
+  create: Prisma.XOR<Prisma.PropertyCreateWithoutAddressInput, Prisma.PropertyUncheckedCreateWithoutAddressInput>
+}
+
+export type PropertyUpsertWithoutAddressInput = {
+  update: Prisma.XOR<Prisma.PropertyUpdateWithoutAddressInput, Prisma.PropertyUncheckedUpdateWithoutAddressInput>
+  create: Prisma.XOR<Prisma.PropertyCreateWithoutAddressInput, Prisma.PropertyUncheckedCreateWithoutAddressInput>
+  where?: Prisma.PropertyWhereInput
+}
+
+export type PropertyUpdateToOneWithWhereWithoutAddressInput = {
+  where?: Prisma.PropertyWhereInput
+  data: Prisma.XOR<Prisma.PropertyUpdateWithoutAddressInput, Prisma.PropertyUncheckedUpdateWithoutAddressInput>
+}
+
+export type PropertyUpdateWithoutAddressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  buildings?: Prisma.BuildingUpdateManyWithoutPropertyNestedInput
+  units?: Prisma.UnitUpdateManyWithoutPropertyNestedInput
+  rooms?: Prisma.RoomUpdateManyWithoutPropertyNestedInput
+  beds?: Prisma.BedUpdateManyWithoutPropertyNestedInput
+}
+
+export type PropertyUncheckedUpdateWithoutAddressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  buildings?: Prisma.BuildingUncheckedUpdateManyWithoutPropertyNestedInput
   units?: Prisma.UnitUncheckedUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUncheckedUpdateManyWithoutPropertyNestedInput
   beds?: Prisma.BedUncheckedUpdateManyWithoutPropertyNestedInput
@@ -553,10 +967,19 @@ export type PropertyCreateWithoutUnitsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomCreateNestedManyWithoutPropertyInput
   beds?: Prisma.BedCreateNestedManyWithoutPropertyInput
@@ -567,10 +990,19 @@ export type PropertyUncheckedCreateWithoutUnitsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressUncheckedCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingUncheckedCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomUncheckedCreateNestedManyWithoutPropertyInput
   beds?: Prisma.BedUncheckedCreateNestedManyWithoutPropertyInput
@@ -597,10 +1029,19 @@ export type PropertyUpdateWithoutUnitsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutPropertyNestedInput
   beds?: Prisma.BedUpdateManyWithoutPropertyNestedInput
@@ -611,10 +1052,19 @@ export type PropertyUncheckedUpdateWithoutUnitsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUncheckedUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUncheckedUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUncheckedUpdateManyWithoutPropertyNestedInput
   beds?: Prisma.BedUncheckedUpdateManyWithoutPropertyNestedInput
@@ -625,10 +1075,19 @@ export type PropertyCreateWithoutRoomsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingCreateNestedManyWithoutPropertyInput
   units?: Prisma.UnitCreateNestedManyWithoutPropertyInput
   beds?: Prisma.BedCreateNestedManyWithoutPropertyInput
@@ -639,10 +1098,19 @@ export type PropertyUncheckedCreateWithoutRoomsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressUncheckedCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingUncheckedCreateNestedManyWithoutPropertyInput
   units?: Prisma.UnitUncheckedCreateNestedManyWithoutPropertyInput
   beds?: Prisma.BedUncheckedCreateNestedManyWithoutPropertyInput
@@ -669,10 +1137,19 @@ export type PropertyUpdateWithoutRoomsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUpdateManyWithoutPropertyNestedInput
   units?: Prisma.UnitUpdateManyWithoutPropertyNestedInput
   beds?: Prisma.BedUpdateManyWithoutPropertyNestedInput
@@ -683,10 +1160,19 @@ export type PropertyUncheckedUpdateWithoutRoomsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUncheckedUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUncheckedUpdateManyWithoutPropertyNestedInput
   units?: Prisma.UnitUncheckedUpdateManyWithoutPropertyNestedInput
   beds?: Prisma.BedUncheckedUpdateManyWithoutPropertyNestedInput
@@ -697,10 +1183,19 @@ export type PropertyCreateWithoutBedsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingCreateNestedManyWithoutPropertyInput
   units?: Prisma.UnitCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomCreateNestedManyWithoutPropertyInput
@@ -711,10 +1206,19 @@ export type PropertyUncheckedCreateWithoutBedsInput = {
   title: string
   description?: string | null
   ownerId: string
-  verified?: boolean
+  verificationStatus?: $Enums.VerificationStatus
+  verifiedAt?: Date | string | null
+  verifiedBy?: string | null
+  verificationNotes?: string | null
   isActive?: boolean
+  purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  address?: Prisma.AddressUncheckedCreateNestedOneWithoutPropertyInput
   buildings?: Prisma.BuildingUncheckedCreateNestedManyWithoutPropertyInput
   units?: Prisma.UnitUncheckedCreateNestedManyWithoutPropertyInput
   rooms?: Prisma.RoomUncheckedCreateNestedManyWithoutPropertyInput
@@ -741,10 +1245,19 @@ export type PropertyUpdateWithoutBedsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUpdateManyWithoutPropertyNestedInput
   units?: Prisma.UnitUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUpdateManyWithoutPropertyNestedInput
@@ -755,10 +1268,19 @@ export type PropertyUncheckedUpdateWithoutBedsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.AddressUncheckedUpdateOneWithoutPropertyNestedInput
   buildings?: Prisma.BuildingUncheckedUpdateManyWithoutPropertyNestedInput
   units?: Prisma.UnitUncheckedUpdateManyWithoutPropertyNestedInput
   rooms?: Prisma.RoomUncheckedUpdateManyWithoutPropertyNestedInput
@@ -827,10 +1349,19 @@ export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   title?: boolean
   description?: boolean
   ownerId?: boolean
-  verified?: boolean
+  verificationStatus?: boolean
+  verifiedAt?: boolean
+  verifiedBy?: boolean
+  verificationNotes?: boolean
   isActive?: boolean
+  purchasePrice?: boolean
+  currentValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
+  address?: boolean | Prisma.Property$addressArgs<ExtArgs>
   buildings?: boolean | Prisma.Property$buildingsArgs<ExtArgs>
   units?: boolean | Prisma.Property$unitsArgs<ExtArgs>
   rooms?: boolean | Prisma.Property$roomsArgs<ExtArgs>
@@ -843,10 +1374,18 @@ export type PropertySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   title?: boolean
   description?: boolean
   ownerId?: boolean
-  verified?: boolean
+  verificationStatus?: boolean
+  verifiedAt?: boolean
+  verifiedBy?: boolean
+  verificationNotes?: boolean
   isActive?: boolean
+  purchasePrice?: boolean
+  currentValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
 }, ExtArgs["result"]["property"]>
 
 export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -854,10 +1393,18 @@ export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   title?: boolean
   description?: boolean
   ownerId?: boolean
-  verified?: boolean
+  verificationStatus?: boolean
+  verifiedAt?: boolean
+  verifiedBy?: boolean
+  verificationNotes?: boolean
   isActive?: boolean
+  purchasePrice?: boolean
+  currentValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
 }, ExtArgs["result"]["property"]>
 
 export type PropertySelectScalar = {
@@ -865,14 +1412,23 @@ export type PropertySelectScalar = {
   title?: boolean
   description?: boolean
   ownerId?: boolean
-  verified?: boolean
+  verificationStatus?: boolean
+  verifiedAt?: boolean
+  verifiedBy?: boolean
+  verificationNotes?: boolean
   isActive?: boolean
+  purchasePrice?: boolean
+  currentValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
 }
 
-export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "ownerId" | "verified" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["property"]>
+export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "ownerId" | "verificationStatus" | "verifiedAt" | "verifiedBy" | "verificationNotes" | "isActive" | "purchasePrice" | "currentValue" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy", ExtArgs["result"]["property"]>
 export type PropertyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  address?: boolean | Prisma.Property$addressArgs<ExtArgs>
   buildings?: boolean | Prisma.Property$buildingsArgs<ExtArgs>
   units?: boolean | Prisma.Property$unitsArgs<ExtArgs>
   rooms?: boolean | Prisma.Property$roomsArgs<ExtArgs>
@@ -885,6 +1441,7 @@ export type PropertyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Property"
   objects: {
+    address: Prisma.$AddressPayload<ExtArgs> | null
     buildings: Prisma.$BuildingPayload<ExtArgs>[]
     units: Prisma.$UnitPayload<ExtArgs>[]
     rooms: Prisma.$RoomPayload<ExtArgs>[]
@@ -895,10 +1452,18 @@ export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     title: string
     description: string | null
     ownerId: string
-    verified: boolean
+    verificationStatus: $Enums.VerificationStatus
+    verifiedAt: Date | null
+    verifiedBy: string | null
+    verificationNotes: string | null
     isActive: boolean
+    purchasePrice: runtime.Decimal | null
+    currentValue: runtime.Decimal | null
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
+    createdBy: string | null
+    updatedBy: string | null
   }, ExtArgs["result"]["property"]>
   composites: {}
 }
@@ -1293,6 +1858,7 @@ readonly fields: PropertyFieldRefs;
  */
 export interface Prisma__PropertyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  address<T extends Prisma.Property$addressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$addressArgs<ExtArgs>>): Prisma.Prisma__AddressClient<runtime.Types.Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   buildings<T extends Prisma.Property$buildingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$buildingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BuildingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   units<T extends Prisma.Property$unitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$unitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rooms<T extends Prisma.Property$roomsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$roomsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1330,10 +1896,18 @@ export interface PropertyFieldRefs {
   readonly title: Prisma.FieldRef<"Property", 'String'>
   readonly description: Prisma.FieldRef<"Property", 'String'>
   readonly ownerId: Prisma.FieldRef<"Property", 'String'>
-  readonly verified: Prisma.FieldRef<"Property", 'Boolean'>
+  readonly verificationStatus: Prisma.FieldRef<"Property", 'VerificationStatus'>
+  readonly verifiedAt: Prisma.FieldRef<"Property", 'DateTime'>
+  readonly verifiedBy: Prisma.FieldRef<"Property", 'String'>
+  readonly verificationNotes: Prisma.FieldRef<"Property", 'String'>
   readonly isActive: Prisma.FieldRef<"Property", 'Boolean'>
+  readonly purchasePrice: Prisma.FieldRef<"Property", 'Decimal'>
+  readonly currentValue: Prisma.FieldRef<"Property", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"Property", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Property", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Property", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"Property", 'String'>
+  readonly updatedBy: Prisma.FieldRef<"Property", 'String'>
 }
     
 
@@ -1719,6 +2293,25 @@ export type PropertyDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Properties to delete.
    */
   limit?: number
+}
+
+/**
+ * Property.address
+ */
+export type Property$addressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Address
+   */
+  select?: Prisma.AddressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Address
+   */
+  omit?: Prisma.AddressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AddressInclude<ExtArgs> | null
+  where?: Prisma.AddressWhereInput
 }
 
 /**

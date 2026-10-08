@@ -5,6 +5,7 @@ import {
   createProperty,
   deleteProperty,
   updateProperty,
+  restoreProperty,
 } from "../controllers/property.controller";
 import { extractUser } from "../middlewares/extractUser";
 
@@ -14,5 +15,6 @@ router.use(extractUser);
 
 router.route("/").get(getAllProperties).post(createProperty);
 router.route("/:id").get(getProperty).patch(updateProperty).delete(deleteProperty);
+router.route("/:id/restore").patch(restoreProperty);
 
 export default router;

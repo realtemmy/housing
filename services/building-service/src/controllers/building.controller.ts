@@ -14,7 +14,8 @@ export const getAllBuildings = async (req: Request, res: Response, next: NextFun
     const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
     const search = (req.query.search as string) || "";
     const orderBy = (req.query.orderBy as string) === "asc" ? "asc" : "desc";
-    const propertyId = (req.query.propertyId as string) || (req.params.propertyId as string);
+    const propertyId = (req.query.propertyId as string) || undefined;
+    const includeDeleted = (req.query.includeDeleted as string) === "true";
 
     const result = await buildingService.getAllBuildings(ownerId, {
       page,
@@ -22,6 +23,7 @@ export const getAllBuildings = async (req: Request, res: Response, next: NextFun
       search,
       orderBy,
       propertyId,
+      includeDeleted,
     });
 
     res.status(200).json({
@@ -80,7 +82,6 @@ export const updateBuilding = async (req: Request, res: Response, next: NextFunc
 
     const buildingId = req.params.id as string;
     const validatedData = updateBuildingValidator.parse(req.body);
-
     const updatedBuilding = await buildingService.updateBuilding(buildingId, ownerId, validatedData);
 
     res.status(200).json({
@@ -100,11 +101,30 @@ export const deleteBuilding = async (req: Request, res: Response, next: NextFunc
     }
 
     const buildingId = req.params.id as string;
-    await buildingService.deleteBuilding(buildingId, ownerId);
+    await buildingService.softDeleteBuilding(buildingId, ownerId);
 
-    res.status(204).json({
+    res.status(200).json({
       status: "success",
-      data: null,
+      message: "Building deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const restoreBuilding = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const ownerId = req.userId;
+    if (!ownerId) {
+      return next(new AppError("User unauthenticated", 401));
+    }
+
+    const buildingId = req.params.id as string;
+    const building = await buildingService.restoreBuilding(buildingId, ownerId);
+
+    res.status(200).json({
+      status: "success",
+      data: building,
     });
   } catch (error) {
     next(error);

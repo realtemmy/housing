@@ -30,6 +30,7 @@ export interface UpdateUnitInput {
   depositAmount?: number | null;
   buildingId?: string;
   occupantId?: string | null;
+  verified?: boolean;
 }
 
 export interface GetUnitsOptions {
@@ -38,6 +39,7 @@ export interface GetUnitsOptions {
   propertyId?: string;
   buildingId?: string;
   status?: string;
+  includeDeleted?: boolean;
 }
 
 export class UnitService {
@@ -46,10 +48,13 @@ export class UnitService {
     const limit = options.limit && options.limit > 0 ? options.limit : 20;
     const skip = (page - 1) * limit;
 
+    // Build where clause - exclude soft deleted records unless includeDeleted is true
     const whereClause: any = {
       property: {
         ownerId,
+        ...(options.includeDeleted ? {} : { deletedAt: null }),
       },
+      ...(options.includeDeleted ? {} : { deletedAt: null }),
     };
 
     if (options.propertyId) whereClause.propertyId = options.propertyId;
@@ -66,6 +71,12 @@ export class UnitService {
           photos: true,
           building: { select: { id: true, name: true } },
           property: { select: { id: true, title: true } },
+          maintenance: true,
+          rooms: {
+            include: {
+              beds: true,
+            },
+          },
         },
       }),
     ]);
@@ -86,6 +97,7 @@ export class UnitService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         building: { select: { id: true, name: true } },
@@ -113,6 +125,7 @@ export class UnitService {
       where: {
         id,
         ...(ownerId ? { property: { ownerId } } : {}),
+        deletedAt: null,
       },
     });
 
@@ -147,6 +160,7 @@ export class UnitService {
       where: {
         id: input.buildingId,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         property: true,
@@ -173,6 +187,14 @@ export class UnitService {
         depositAmount: input.depositAmount ?? null,
         buildingId: input.buildingId,
         propertyId,
+        // Financial information using Decimal
+        rentAmount: input.rentAmount !== undefined ? new Prisma.Decimal(input.rentAmount.toString()) : undefined,
+        depositAmount: input.depositAmount !== undefined ? new Prisma.Decimal(input.depositAmount.toString()) : undefined,
+        initializedAt: null,
+        reservedAt: null,
+        reservedUntil: null,
+        createdBy: ownerId,
+        updatedBy: ownerId,
       },
       include: {
         building: { select: { id: true, name: true } },
@@ -188,6 +210,7 @@ export class UnitService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
     });
 
@@ -200,6 +223,7 @@ export class UnitService {
         where: {
           id: input.buildingId,
           property: { ownerId },
+          deletedAt: null,
         },
       });
       if (!building) {
@@ -218,10 +242,12 @@ export class UnitService {
         ...(input.bathrooms !== undefined && { bathrooms: input.bathrooms }),
         ...(input.sqft !== undefined && { sqft: input.sqft }),
         ...(input.status !== undefined && { status: input.status }),
-        ...(input.rentAmount !== undefined && { rentAmount: input.rentAmount }),
-        ...(input.depositAmount !== undefined && { depositAmount: input.depositAmount }),
+        ...(input.rentAmount !== undefined && { rentAmount: new Prisma.Decimal(input.rentAmount.toString()) }),
+        ...(input.depositAmount !== undefined && { depositAmount: new Prisma.Decimal(input.depositAmount.toString()) }),
         ...(input.buildingId !== undefined && { buildingId: input.buildingId }),
         ...(input.occupantId !== undefined && { occupantId: input.occupantId }),
+        ...(input.verified !== undefined && { verified: input.verified }),
+        updatedBy: ownerId,
       },
       include: {
         building: { select: { id: true, name: true } },
@@ -232,11 +258,12 @@ export class UnitService {
     return updatedUnit;
   }
 
-  async deleteUnit(id: string, ownerId: string) {
+  async softDeleteUnit(id: string, ownerId: string) {
     const unit = await prisma.unit.findFirst({
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         rooms: true,
@@ -251,9 +278,46 @@ export class UnitService {
       throw new AppError("Cannot delete unit with existing rooms. Delete rooms first.", 400);
     }
 
-    await prisma.unit.delete({
+    const deletedUnit = await prisma.unit.update({
       where: { id },
+      data: {
+        deletedAt: new Date(),
+        updatedBy: ownerId,
+      },
     });
+
+    return deletedUnit;
+  }
+
+  async restoreUnit(id: string, ownerId: string) {
+    const unit = await prisma.unit.findFirst({
+      where: {
+        id,
+        property: { ownerId },
+      },
+    });
+
+    if (!unit) {
+      throw new AppError("Unit not found", 404);
+    }
+
+    if (!unit.deletedAt) {
+      throw new AppError("Unit is not deleted", 400);
+    }
+
+    const restoredUnit = await prisma.unit.update({
+      where: { id },
+      data: {
+        deletedAt: null,
+        updatedBy: ownerId,
+      },
+      include: {
+        building: { select: { id: true, name: true } },
+        property: { select: { id: true, title: true } },
+      },
+    });
+
+    return restoredUnit;
   }
 }
 

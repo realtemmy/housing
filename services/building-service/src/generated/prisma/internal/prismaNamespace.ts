@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.0.1
- * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
+ * Prisma Client JS version: 7.0.0
+ * Query Engine version: 0c19ccc313cf9911a90d99d2ac2eb0280c76c513
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.0.1",
-  engine: "f09f2815f091dbba658cdcd2264306d88bb5bda6"
+  client: "7.0.0",
+  engine: "0c19ccc313cf9911a90d99d2ac2eb0280c76c513"
 }
 
 /**
@@ -1197,10 +1197,18 @@ export const PropertyScalarFieldEnum = {
   title: 'title',
   description: 'description',
   ownerId: 'ownerId',
-  verified: 'verified',
+  verificationStatus: 'verificationStatus',
+  verifiedAt: 'verifiedAt',
+  verifiedBy: 'verifiedBy',
+  verificationNotes: 'verificationNotes',
   isActive: 'isActive',
+  purchasePrice: 'purchasePrice',
+  currentValue: 'currentValue',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy'
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
@@ -1213,8 +1221,12 @@ export const BuildingScalarFieldEnum = {
   summary: 'summary',
   propertyId: 'propertyId',
   floors: 'floors',
+  verified: 'verified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy'
 } as const
 
 export type BuildingScalarFieldEnum = (typeof BuildingScalarFieldEnum)[keyof typeof BuildingScalarFieldEnum]
@@ -1229,7 +1241,10 @@ export const AddressScalarFieldEnum = {
   country: 'country',
   longitude: 'longitude',
   latitude: 'latitude',
-  buildingId: 'buildingId'
+  buildingId: 'buildingId',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
@@ -1244,17 +1259,20 @@ export const UnitScalarFieldEnum = {
   bedrooms: 'bedrooms',
   bathrooms: 'bathrooms',
   sqft: 'sqft',
-  status: 'status',
   rentAmount: 'rentAmount',
-  occupantId: 'occupantId',
   depositAmount: 'depositAmount',
-  buildingId: 'buildingId',
-  propertyId: 'propertyId',
+  status: 'status',
+  occupantId: 'occupantId',
+  initializedAt: 'initializedAt',
   reservedAt: 'reservedAt',
   reservedUntil: 'reservedUntil',
-  initializedAt: 'initializedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  buildingId: 'buildingId',
+  propertyId: 'propertyId'
 } as const
 
 export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
@@ -1272,12 +1290,15 @@ export const RoomScalarFieldEnum = {
   status: 'status',
   occupantId: 'occupantId',
   initializedAt: 'initializedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
   unitId: 'unitId',
   propertyId: 'propertyId',
   reservedAt: 'reservedAt',
-  reservedUntil: 'reservedUntil',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  reservedUntil: 'reservedUntil'
 } as const
 
 export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
@@ -1287,16 +1308,19 @@ export const BedScalarFieldEnum = {
   id: 'id',
   label: 'label',
   rentAmount: 'rentAmount',
+  depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
-  depositAmount: 'depositAmount',
-  roomId: 'roomId',
   initializedAt: 'initializedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  roomId: 'roomId',
   propertyId: 'propertyId',
   reservedAt: 'reservedAt',
-  reservedUntil: 'reservedUntil',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  reservedUntil: 'reservedUntil'
 } as const
 
 export type BedScalarFieldEnum = (typeof BedScalarFieldEnum)[keyof typeof BedScalarFieldEnum]
@@ -1323,7 +1347,9 @@ export const MaintenanceRequestScalarFieldEnum = {
   status: 'status',
   priority: 'priority',
   requestedAt: 'requestedAt',
-  resolvedAt: 'resolvedAt'
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type MaintenanceRequestScalarFieldEnum = (typeof MaintenanceRequestScalarFieldEnum)[keyof typeof MaintenanceRequestScalarFieldEnum]
@@ -1399,9 +1425,16 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Boolean'
+ * Reference to a field of type 'VerificationStatus'
  */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+export type EnumVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'VerificationStatus[]'
+ */
+export type ListEnumVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationStatus[]'>
     
 
 
@@ -1416,6 +1449,27 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 

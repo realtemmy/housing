@@ -45,6 +45,8 @@ export type MaintenanceRequestMinAggregateOutputType = {
   priority: number | null
   requestedAt: Date | null
   resolvedAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type MaintenanceRequestMaxAggregateOutputType = {
@@ -58,6 +60,8 @@ export type MaintenanceRequestMaxAggregateOutputType = {
   priority: number | null
   requestedAt: Date | null
   resolvedAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type MaintenanceRequestCountAggregateOutputType = {
@@ -71,6 +75,8 @@ export type MaintenanceRequestCountAggregateOutputType = {
   priority: number
   requestedAt: number
   resolvedAt: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -94,6 +100,8 @@ export type MaintenanceRequestMinAggregateInputType = {
   priority?: true
   requestedAt?: true
   resolvedAt?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type MaintenanceRequestMaxAggregateInputType = {
@@ -107,6 +115,8 @@ export type MaintenanceRequestMaxAggregateInputType = {
   priority?: true
   requestedAt?: true
   resolvedAt?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type MaintenanceRequestCountAggregateInputType = {
@@ -120,6 +130,8 @@ export type MaintenanceRequestCountAggregateInputType = {
   priority?: true
   requestedAt?: true
   resolvedAt?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -220,6 +232,8 @@ export type MaintenanceRequestGroupByOutputType = {
   priority: number | null
   requestedAt: Date
   resolvedAt: Date | null
+  createdAt: Date
+  updatedAt: Date
   _count: MaintenanceRequestCountAggregateOutputType | null
   _avg: MaintenanceRequestAvgAggregateOutputType | null
   _sum: MaintenanceRequestSumAggregateOutputType | null
@@ -256,6 +270,8 @@ export type MaintenanceRequestWhereInput = {
   priority?: Prisma.IntNullableFilter<"MaintenanceRequest"> | number | null
   requestedAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
   resolvedAt?: Prisma.DateTimeNullableFilter<"MaintenanceRequest"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
   unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
   attachments?: Prisma.AttachmentListRelationFilter
   notes?: Prisma.MaintenanceNoteListRelationFilter
@@ -272,6 +288,8 @@ export type MaintenanceRequestOrderByWithRelationInput = {
   priority?: Prisma.SortOrderInput | Prisma.SortOrder
   requestedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   unit?: Prisma.UnitOrderByWithRelationInput
   attachments?: Prisma.AttachmentOrderByRelationAggregateInput
   notes?: Prisma.MaintenanceNoteOrderByRelationAggregateInput
@@ -291,6 +309,8 @@ export type MaintenanceRequestWhereUniqueInput = Prisma.AtLeast<{
   priority?: Prisma.IntNullableFilter<"MaintenanceRequest"> | number | null
   requestedAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
   resolvedAt?: Prisma.DateTimeNullableFilter<"MaintenanceRequest"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
   unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
   attachments?: Prisma.AttachmentListRelationFilter
   notes?: Prisma.MaintenanceNoteListRelationFilter
@@ -307,6 +327,8 @@ export type MaintenanceRequestOrderByWithAggregationInput = {
   priority?: Prisma.SortOrderInput | Prisma.SortOrder
   requestedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.MaintenanceRequestCountOrderByAggregateInput
   _avg?: Prisma.MaintenanceRequestAvgOrderByAggregateInput
   _max?: Prisma.MaintenanceRequestMaxOrderByAggregateInput
@@ -328,6 +350,8 @@ export type MaintenanceRequestScalarWhereWithAggregatesInput = {
   priority?: Prisma.IntNullableWithAggregatesFilter<"MaintenanceRequest"> | number | null
   requestedAt?: Prisma.DateTimeWithAggregatesFilter<"MaintenanceRequest"> | Date | string
   resolvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MaintenanceRequest"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaintenanceRequest"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MaintenanceRequest"> | Date | string
 }
 
 export type MaintenanceRequestCreateInput = {
@@ -340,6 +364,8 @@ export type MaintenanceRequestCreateInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   unit: Prisma.UnitCreateNestedOneWithoutMaintenanceInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutMaintenanceInput
   notes?: Prisma.MaintenanceNoteCreateNestedManyWithoutRequestInput
@@ -356,6 +382,8 @@ export type MaintenanceRequestUncheckedCreateInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutMaintenanceInput
   notes?: Prisma.MaintenanceNoteUncheckedCreateNestedManyWithoutRequestInput
 }
@@ -370,6 +398,8 @@ export type MaintenanceRequestUpdateInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   unit?: Prisma.UnitUpdateOneRequiredWithoutMaintenanceNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutMaintenanceNestedInput
   notes?: Prisma.MaintenanceNoteUpdateManyWithoutRequestNestedInput
@@ -386,6 +416,8 @@ export type MaintenanceRequestUncheckedUpdateInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutMaintenanceNestedInput
   notes?: Prisma.MaintenanceNoteUncheckedUpdateManyWithoutRequestNestedInput
 }
@@ -401,6 +433,8 @@ export type MaintenanceRequestCreateManyInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type MaintenanceRequestUpdateManyMutationInput = {
@@ -413,6 +447,8 @@ export type MaintenanceRequestUpdateManyMutationInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MaintenanceRequestUncheckedUpdateManyInput = {
@@ -426,6 +462,8 @@ export type MaintenanceRequestUncheckedUpdateManyInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MaintenanceRequestListRelationFilter = {
@@ -449,6 +487,8 @@ export type MaintenanceRequestCountOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   requestedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type MaintenanceRequestAvgOrderByAggregateInput = {
@@ -466,6 +506,8 @@ export type MaintenanceRequestMaxOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   requestedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type MaintenanceRequestMinOrderByAggregateInput = {
@@ -479,6 +521,8 @@ export type MaintenanceRequestMinOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   requestedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type MaintenanceRequestSumOrderByAggregateInput = {
@@ -581,6 +625,8 @@ export type MaintenanceRequestCreateWithoutUnitInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   attachments?: Prisma.AttachmentCreateNestedManyWithoutMaintenanceInput
   notes?: Prisma.MaintenanceNoteCreateNestedManyWithoutRequestInput
 }
@@ -595,6 +641,8 @@ export type MaintenanceRequestUncheckedCreateWithoutUnitInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutMaintenanceInput
   notes?: Prisma.MaintenanceNoteUncheckedCreateNestedManyWithoutRequestInput
 }
@@ -639,6 +687,8 @@ export type MaintenanceRequestScalarWhereInput = {
   priority?: Prisma.IntNullableFilter<"MaintenanceRequest"> | number | null
   requestedAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
   resolvedAt?: Prisma.DateTimeNullableFilter<"MaintenanceRequest"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"MaintenanceRequest"> | Date | string
 }
 
 export type MaintenanceRequestCreateWithoutNotesInput = {
@@ -651,6 +701,8 @@ export type MaintenanceRequestCreateWithoutNotesInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   unit: Prisma.UnitCreateNestedOneWithoutMaintenanceInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutMaintenanceInput
 }
@@ -666,6 +718,8 @@ export type MaintenanceRequestUncheckedCreateWithoutNotesInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutMaintenanceInput
 }
 
@@ -695,6 +749,8 @@ export type MaintenanceRequestUpdateWithoutNotesInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   unit?: Prisma.UnitUpdateOneRequiredWithoutMaintenanceNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutMaintenanceNestedInput
 }
@@ -710,6 +766,8 @@ export type MaintenanceRequestUncheckedUpdateWithoutNotesInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutMaintenanceNestedInput
 }
 
@@ -723,6 +781,8 @@ export type MaintenanceRequestCreateWithoutAttachmentsInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   unit: Prisma.UnitCreateNestedOneWithoutMaintenanceInput
   notes?: Prisma.MaintenanceNoteCreateNestedManyWithoutRequestInput
 }
@@ -738,6 +798,8 @@ export type MaintenanceRequestUncheckedCreateWithoutAttachmentsInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   notes?: Prisma.MaintenanceNoteUncheckedCreateNestedManyWithoutRequestInput
 }
 
@@ -767,6 +829,8 @@ export type MaintenanceRequestUpdateWithoutAttachmentsInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   unit?: Prisma.UnitUpdateOneRequiredWithoutMaintenanceNestedInput
   notes?: Prisma.MaintenanceNoteUpdateManyWithoutRequestNestedInput
 }
@@ -782,6 +846,8 @@ export type MaintenanceRequestUncheckedUpdateWithoutAttachmentsInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.MaintenanceNoteUncheckedUpdateManyWithoutRequestNestedInput
 }
 
@@ -795,6 +861,8 @@ export type MaintenanceRequestCreateManyUnitInput = {
   priority?: number | null
   requestedAt?: Date | string
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type MaintenanceRequestUpdateWithoutUnitInput = {
@@ -807,6 +875,8 @@ export type MaintenanceRequestUpdateWithoutUnitInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attachments?: Prisma.AttachmentUpdateManyWithoutMaintenanceNestedInput
   notes?: Prisma.MaintenanceNoteUpdateManyWithoutRequestNestedInput
 }
@@ -821,6 +891,8 @@ export type MaintenanceRequestUncheckedUpdateWithoutUnitInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutMaintenanceNestedInput
   notes?: Prisma.MaintenanceNoteUncheckedUpdateManyWithoutRequestNestedInput
 }
@@ -835,6 +907,8 @@ export type MaintenanceRequestUncheckedUpdateManyWithoutUnitInput = {
   priority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -888,6 +962,8 @@ export type MaintenanceRequestSelect<ExtArgs extends runtime.Types.Extensions.In
   priority?: boolean
   requestedAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   attachments?: boolean | Prisma.MaintenanceRequest$attachmentsArgs<ExtArgs>
   notes?: boolean | Prisma.MaintenanceRequest$notesArgs<ExtArgs>
@@ -905,6 +981,8 @@ export type MaintenanceRequestSelectCreateManyAndReturn<ExtArgs extends runtime.
   priority?: boolean
   requestedAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["maintenanceRequest"]>
 
@@ -919,6 +997,8 @@ export type MaintenanceRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.
   priority?: boolean
   requestedAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["maintenanceRequest"]>
 
@@ -933,9 +1013,11 @@ export type MaintenanceRequestSelectScalar = {
   priority?: boolean
   requestedAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type MaintenanceRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "unitId" | "requesterId" | "assigneeId" | "status" | "priority" | "requestedAt" | "resolvedAt", ExtArgs["result"]["maintenanceRequest"]>
+export type MaintenanceRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "unitId" | "requesterId" | "assigneeId" | "status" | "priority" | "requestedAt" | "resolvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["maintenanceRequest"]>
 export type MaintenanceRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   attachments?: boolean | Prisma.MaintenanceRequest$attachmentsArgs<ExtArgs>
@@ -967,6 +1049,8 @@ export type $MaintenanceRequestPayload<ExtArgs extends runtime.Types.Extensions.
     priority: number | null
     requestedAt: Date
     resolvedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["maintenanceRequest"]>
   composites: {}
 }
@@ -1403,6 +1487,8 @@ export interface MaintenanceRequestFieldRefs {
   readonly priority: Prisma.FieldRef<"MaintenanceRequest", 'Int'>
   readonly requestedAt: Prisma.FieldRef<"MaintenanceRequest", 'DateTime'>
   readonly resolvedAt: Prisma.FieldRef<"MaintenanceRequest", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"MaintenanceRequest", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"MaintenanceRequest", 'DateTime'>
 }
     
 

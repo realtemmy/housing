@@ -6,6 +6,7 @@ import {
   unitAvailable,
   updateUnit,
   deleteUnit,
+  restoreUnit,
 } from "../controllers/unit.controller";
 import { extractUser } from "../middlewares/extractUser";
 
@@ -16,5 +17,6 @@ router.use(extractUser);
 router.route("/:id/available").get(unitAvailable);
 router.route("/").get(getAllUnits).post(createUnit);
 router.route("/:id").get(getUnit).patch(updateUnit).delete(deleteUnit);
+router.route("/:id/restore").patch(restoreUnit);
 
 export default router;

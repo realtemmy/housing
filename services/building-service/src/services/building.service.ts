@@ -25,6 +25,7 @@ export interface UpdateBuildingInput {
   description?: string | null;
   summary?: string | null;
   floors?: number | null;
+  verified?: boolean;
 }
 
 export interface GetBuildingsOptions {
@@ -33,6 +34,7 @@ export interface GetBuildingsOptions {
   search?: string;
   propertyId?: string;
   orderBy?: "asc" | "desc";
+  includeDeleted?: boolean;
 }
 
 export class BuildingService {
@@ -43,11 +45,14 @@ export class BuildingService {
     const orderBy = options.orderBy === "asc" ? "asc" : "desc";
     const skip = (page - 1) * limit;
 
-    const whereClause = {
+    // Build where clause - exclude soft deleted records unless includeDeleted is true
+    const whereClause: any = {
       property: {
         ownerId,
+        ...(options.includeDeleted ? {} : { deletedAt: null }),
       },
       ...(options.propertyId ? { propertyId: options.propertyId } : {}),
+      ...(options.includeDeleted ? {} : { deletedAt: null }),
       name: {
         contains: search,
         mode: "insensitive" as const,
@@ -63,7 +68,7 @@ export class BuildingService {
         orderBy: { createdAt: orderBy },
         include: {
           _count: { select: { units: true } },
-          property: { select: { id: true, title: true } },
+          property: { select: { id: true, title: true, ownerId: true } },
           address: { select: { id: true, city: true, state: true, street: true, country: true, postalCode: true } },
         },
       }),
@@ -85,6 +90,7 @@ export class BuildingService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         _count: { select: { units: true } },
@@ -102,13 +108,27 @@ export class BuildingService {
   }
 
   async createBuilding(ownerId: string, input: CreateBuildingInput) {
+    // Verify property ownership
     const property = await prisma.property.findFirst({
-      where: { id: input.propertyId, ownerId },
+      where: { id: input.propertyId, ownerId, deletedAt: null },
     });
 
     if (!property) {
       throw new AppError("Property not found or unauthorized", 404);
     }
+
+    // Create address
+    const address = await prisma.address.create({
+      data: {
+        street: input.address.street,
+        city: input.address.city,
+        state: input.address.state,
+        postalCode: input.address.postalCode,
+        country: input.address.country,
+        latitude: input.address.latitude ?? null,
+        longitude: input.address.longitude ?? null,
+      },
+    });
 
     const building = await prisma.building.create({
       data: {
@@ -117,17 +137,10 @@ export class BuildingService {
         floors: input.floors ?? 0,
         description: input.description ?? null,
         summary: input.summary ?? null,
-        address: {
-          create: {
-            street: input.address.street,
-            city: input.address.city,
-            state: input.address.state,
-            postalCode: input.address.postalCode,
-            country: input.address.country,
-            latitude: input.address.latitude ?? null,
-            longitude: input.address.longitude ?? null,
-          },
-        },
+        verified: false,
+        address: { connect: { id: address.id } },
+        createdBy: ownerId,
+        updatedBy: ownerId,
       },
       include: {
         property: true,
@@ -143,6 +156,7 @@ export class BuildingService {
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
     });
 
@@ -157,6 +171,8 @@ export class BuildingService {
         ...(input.description !== undefined && { description: input.description }),
         ...(input.summary !== undefined && { summary: input.summary }),
         ...(input.floors !== undefined && { floors: input.floors }),
+        ...(input.verified !== undefined && { verified: input.verified }),
+        updatedBy: ownerId,
       },
       include: {
         property: true,
@@ -168,11 +184,12 @@ export class BuildingService {
     return updatedBuilding;
   }
 
-  async deleteBuilding(id: string, ownerId: string) {
+  async softDeleteBuilding(id: string, ownerId: string) {
     const building = await prisma.building.findFirst({
       where: {
         id,
         property: { ownerId },
+        deletedAt: null,
       },
       include: {
         units: true,
@@ -187,9 +204,46 @@ export class BuildingService {
       throw new AppError("Cannot delete building with existing units. Delete units first.", 400);
     }
 
-    await prisma.building.delete({
+    const deletedBuilding = await prisma.building.update({
       where: { id },
+      data: {
+        deletedAt: new Date(),
+        updatedBy: ownerId,
+      },
     });
+
+    return deletedBuilding;
+  }
+
+  async restoreBuilding(id: string, ownerId: string) {
+    const building = await prisma.building.findFirst({
+      where: {
+        id,
+        property: { ownerId },
+      },
+    });
+
+    if (!building) {
+      throw new AppError("Building not found", 404);
+    }
+
+    if (!building.deletedAt) {
+      throw new AppError("Building is not deleted", 400);
+    }
+
+    const restoredBuilding = await prisma.building.update({
+      where: { id },
+      data: {
+        deletedAt: null,
+        updatedBy: ownerId,
+      },
+      include: {
+        property: true,
+        address: true,
+      },
+    });
+
+    return restoredBuilding;
   }
 }
 

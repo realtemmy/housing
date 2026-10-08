@@ -38,3 +38,13 @@ export const MaintenanceStatus = {
 } as const
 
 export type MaintenanceStatus = (typeof MaintenanceStatus)[keyof typeof MaintenanceStatus]
+
+
+export const VerificationStatus = {
+  PENDING: 'PENDING',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type VerificationStatus = (typeof VerificationStatus)[keyof typeof VerificationStatus]

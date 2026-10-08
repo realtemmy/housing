@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import bedService from "../services/bed.service";
-import { bedValidator } from "../validators/bed.validator";
+import { bedValidator, updateBedValidator } from "../validators/bed.validator";
 import AppError from "../utils/appError";
 
 export const getAllBeds = async (
@@ -95,7 +95,8 @@ export const updateBed = async (
     }
 
     const bedId = req.params.id as string;
-    const updatedBed = await bedService.updateBed(bedId, ownerId, req.body);
+    const validatedData = updateBedValidator.parse(req.body);
+    const updatedBed = await bedService.updateBed(bedId, ownerId, validatedData);
 
     res.status(200).json({
       status: "success",
@@ -118,11 +119,34 @@ export const deleteBed = async (
     }
 
     const bedId = req.params.id as string;
-    await bedService.deleteBed(bedId, ownerId);
+    await bedService.softDeleteBed(bedId, ownerId);
 
-    res.status(204).json({
+    res.status(200).json({
       status: "success",
-      data: null,
+      message: "Bed deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const restoreBed = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const ownerId = req.userId;
+    if (!ownerId) {
+      return next(new AppError("User unauthenticated", 401));
+    }
+
+    const bedId = req.params.id as string;
+    const bed = await bedService.restoreBed(bedId, ownerId);
+
+    res.status(200).json({
+      status: "success",
+      data: bed,
     });
   } catch (error) {
     next(error);

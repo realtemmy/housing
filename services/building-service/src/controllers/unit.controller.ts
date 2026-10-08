@@ -20,6 +20,7 @@ export const getAllUnits = async (req: Request, res: Response, next: NextFunctio
       propertyId: propertyId as string | undefined,
       buildingId: buildingId as string | undefined,
       status: status as string | undefined,
+      includeDeleted: (req.query.includeDeleted as string) === "true",
     });
 
     res.status(200).json({
@@ -94,7 +95,6 @@ export const updateUnit = async (req: Request, res: Response, next: NextFunction
 
     const unitId = req.params.id as string;
     const validatedData = updateUnitValidator.parse(req.body);
-
     const updatedUnit = await unitService.updateUnit(unitId, ownerId, validatedData);
 
     res.status(200).json({
@@ -114,11 +114,30 @@ export const deleteUnit = async (req: Request, res: Response, next: NextFunction
     }
 
     const unitId = req.params.id as string;
-    await unitService.deleteUnit(unitId, ownerId);
+    await unitService.softDeleteUnit(unitId, ownerId);
 
-    res.status(204).json({
+    res.status(200).json({
       status: "success",
-      data: null,
+      message: "Unit deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const restoreUnit = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const ownerId = req.userId;
+    if (!ownerId) {
+      return next(new AppError("User unauthenticated", 401));
+    }
+
+    const unitId = req.params.id as string;
+    const unit = await unitService.restoreUnit(unitId, ownerId);
+
+    res.status(200).json({
+      status: "success",
+      data: unit,
     });
   } catch (error) {
     next(error);
