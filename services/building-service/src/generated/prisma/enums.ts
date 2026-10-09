@@ -48,3 +48,41 @@ export const VerificationStatus = {
 } as const
 
 export type VerificationStatus = (typeof VerificationStatus)[keyof typeof VerificationStatus]
+
+
+export const ListingStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type ListingStatus = (typeof ListingStatus)[keyof typeof ListingStatus]
+
+
+export const MoveInHandoverStatus = {
+  SCHEDULED: 'SCHEDULED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  PASSED: 'PASSED',
+  FAILED: 'FAILED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type MoveInHandoverStatus = (typeof MoveInHandoverStatus)[keyof typeof MoveInHandoverStatus]
+
+
+export const InspectionStatus = {
+  PASS: 'PASS',
+  FAIL: 'FAIL',
+  NA: 'NA'
+} as const
+
+export type InspectionStatus = (typeof InspectionStatus)[keyof typeof InspectionStatus]
+
+
+export const ConditionReportType = {
+  MOVE_IN: 'MOVE_IN',
+  MOVE_OUT: 'MOVE_OUT'
+} as const
+
+export type ConditionReportType = (typeof ConditionReportType)[keyof typeof ConditionReportType]

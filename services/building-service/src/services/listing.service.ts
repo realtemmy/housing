@@ -506,9 +506,9 @@ export class ListingService {
               where: bedWhere,
               orderBy: { listingViews: 'desc' },
               include: {
-                room: true,
-              },
-            ),
+                room: true
+              }
+            })
           ]);
 
           typeTotal = typeTotalItems;

@@ -27,11 +27,13 @@ export type AggregateProperty = {
 }
 
 export type PropertyAvgAggregateOutputType = {
+  listingViews: number | null
   purchasePrice: runtime.Decimal | null
   currentValue: runtime.Decimal | null
 }
 
 export type PropertySumAggregateOutputType = {
+  listingViews: number | null
   purchasePrice: runtime.Decimal | null
   currentValue: runtime.Decimal | null
 }
@@ -46,6 +48,12 @@ export type PropertyMinAggregateOutputType = {
   verifiedBy: string | null
   verificationNotes: string | null
   isActive: boolean | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus | null
+  listingViews: number | null
+  isFeatured: boolean | null
+  virtualTourUrl: string | null
   purchasePrice: runtime.Decimal | null
   currentValue: runtime.Decimal | null
   createdAt: Date | null
@@ -65,6 +73,12 @@ export type PropertyMaxAggregateOutputType = {
   verifiedBy: string | null
   verificationNotes: string | null
   isActive: boolean | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus | null
+  listingViews: number | null
+  isFeatured: boolean | null
+  virtualTourUrl: string | null
   purchasePrice: runtime.Decimal | null
   currentValue: runtime.Decimal | null
   createdAt: Date | null
@@ -84,6 +98,13 @@ export type PropertyCountAggregateOutputType = {
   verifiedBy: number
   verificationNotes: number
   isActive: number
+  listingTitle: number
+  listingDescription: number
+  listingStatus: number
+  listingViews: number
+  isFeatured: number
+  virtualTourUrl: number
+  amenities: number
   purchasePrice: number
   currentValue: number
   createdAt: number
@@ -96,11 +117,13 @@ export type PropertyCountAggregateOutputType = {
 
 
 export type PropertyAvgAggregateInputType = {
+  listingViews?: true
   purchasePrice?: true
   currentValue?: true
 }
 
 export type PropertySumAggregateInputType = {
+  listingViews?: true
   purchasePrice?: true
   currentValue?: true
 }
@@ -115,6 +138,12 @@ export type PropertyMinAggregateInputType = {
   verifiedBy?: true
   verificationNotes?: true
   isActive?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
   purchasePrice?: true
   currentValue?: true
   createdAt?: true
@@ -134,6 +163,12 @@ export type PropertyMaxAggregateInputType = {
   verifiedBy?: true
   verificationNotes?: true
   isActive?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
   purchasePrice?: true
   currentValue?: true
   createdAt?: true
@@ -153,6 +188,13 @@ export type PropertyCountAggregateInputType = {
   verifiedBy?: true
   verificationNotes?: true
   isActive?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
+  amenities?: true
   purchasePrice?: true
   currentValue?: true
   createdAt?: true
@@ -259,6 +301,13 @@ export type PropertyGroupByOutputType = {
   verifiedBy: string | null
   verificationNotes: string | null
   isActive: boolean
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus
+  listingViews: number
+  isFeatured: boolean
+  virtualTourUrl: string | null
+  amenities: runtime.JsonValue | null
   purchasePrice: runtime.Decimal | null
   currentValue: runtime.Decimal | null
   createdAt: Date
@@ -301,6 +350,13 @@ export type PropertyWhereInput = {
   verifiedBy?: Prisma.StringNullableFilter<"Property"> | string | null
   verificationNotes?: Prisma.StringNullableFilter<"Property"> | string | null
   isActive?: Prisma.BoolFilter<"Property"> | boolean
+  listingTitle?: Prisma.StringNullableFilter<"Property"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Property"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Property"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Property"> | number
+  isFeatured?: Prisma.BoolFilter<"Property"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Property"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Property">
   purchasePrice?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
@@ -325,6 +381,13 @@ export type PropertyOrderByWithRelationInput = {
   verifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   verificationNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  amenities?: Prisma.SortOrderInput | Prisma.SortOrder
   purchasePrice?: Prisma.SortOrderInput | Prisma.SortOrder
   currentValue?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -352,6 +415,13 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   verifiedBy?: Prisma.StringNullableFilter<"Property"> | string | null
   verificationNotes?: Prisma.StringNullableFilter<"Property"> | string | null
   isActive?: Prisma.BoolFilter<"Property"> | boolean
+  listingTitle?: Prisma.StringNullableFilter<"Property"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Property"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Property"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Property"> | number
+  isFeatured?: Prisma.BoolFilter<"Property"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Property"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Property">
   purchasePrice?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.DecimalNullableFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
@@ -376,6 +446,13 @@ export type PropertyOrderByWithAggregationInput = {
   verifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   verificationNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  amenities?: Prisma.SortOrderInput | Prisma.SortOrder
   purchasePrice?: Prisma.SortOrderInput | Prisma.SortOrder
   currentValue?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -403,6 +480,13 @@ export type PropertyScalarWhereWithAggregatesInput = {
   verifiedBy?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   verificationNotes?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
+  listingTitle?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
+  listingDescription?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
+  listingStatus?: Prisma.EnumListingStatusWithAggregatesFilter<"Property"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntWithAggregatesFilter<"Property"> | number
+  isFeatured?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
+  virtualTourUrl?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
+  amenities?: Prisma.JsonNullableWithAggregatesFilter<"Property">
   purchasePrice?: Prisma.DecimalNullableWithAggregatesFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.DecimalNullableWithAggregatesFilter<"Property"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Property"> | Date | string
@@ -422,6 +506,13 @@ export type PropertyCreateInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -446,6 +537,13 @@ export type PropertyUncheckedCreateInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -470,6 +568,13 @@ export type PropertyUpdateInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -494,6 +599,13 @@ export type PropertyUncheckedUpdateInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -518,6 +630,13 @@ export type PropertyCreateManyInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -537,6 +656,13 @@ export type PropertyUpdateManyMutationInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -556,6 +682,13 @@ export type PropertyUncheckedUpdateManyInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -575,6 +708,13 @@ export type PropertyCountOrderByAggregateInput = {
   verifiedBy?: Prisma.SortOrder
   verificationNotes?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
+  amenities?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -585,6 +725,7 @@ export type PropertyCountOrderByAggregateInput = {
 }
 
 export type PropertyAvgOrderByAggregateInput = {
+  listingViews?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
 }
@@ -599,6 +740,12 @@ export type PropertyMaxOrderByAggregateInput = {
   verifiedBy?: Prisma.SortOrder
   verificationNotes?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -618,6 +765,12 @@ export type PropertyMinOrderByAggregateInput = {
   verifiedBy?: Prisma.SortOrder
   verificationNotes?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -628,6 +781,7 @@ export type PropertyMinOrderByAggregateInput = {
 }
 
 export type PropertySumOrderByAggregateInput = {
+  listingViews?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
 }
@@ -660,6 +814,18 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type EnumListingStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ListingStatus
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableDecimalFieldUpdateOperationsInput = {
@@ -756,6 +922,13 @@ export type PropertyCreateWithoutBuildingsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -779,6 +952,13 @@ export type PropertyUncheckedCreateWithoutBuildingsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -818,6 +998,13 @@ export type PropertyUpdateWithoutBuildingsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -841,6 +1028,13 @@ export type PropertyUncheckedUpdateWithoutBuildingsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -864,6 +1058,13 @@ export type PropertyCreateWithoutAddressInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -887,6 +1088,13 @@ export type PropertyUncheckedCreateWithoutAddressInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -926,6 +1134,13 @@ export type PropertyUpdateWithoutAddressInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -949,6 +1164,13 @@ export type PropertyUncheckedUpdateWithoutAddressInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -972,6 +1194,13 @@ export type PropertyCreateWithoutUnitsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -995,6 +1224,13 @@ export type PropertyUncheckedCreateWithoutUnitsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -1034,6 +1270,13 @@ export type PropertyUpdateWithoutUnitsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1057,6 +1300,13 @@ export type PropertyUncheckedUpdateWithoutUnitsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1080,6 +1330,13 @@ export type PropertyCreateWithoutRoomsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -1103,6 +1360,13 @@ export type PropertyUncheckedCreateWithoutRoomsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -1142,6 +1406,13 @@ export type PropertyUpdateWithoutRoomsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1165,6 +1436,13 @@ export type PropertyUncheckedUpdateWithoutRoomsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1188,6 +1466,13 @@ export type PropertyCreateWithoutBedsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -1211,6 +1496,13 @@ export type PropertyUncheckedCreateWithoutBedsInput = {
   verifiedBy?: string | null
   verificationNotes?: string | null
   isActive?: boolean
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
@@ -1250,6 +1542,13 @@ export type PropertyUpdateWithoutBedsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1273,6 +1572,13 @@ export type PropertyUncheckedUpdateWithoutBedsInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   purchasePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1354,6 +1660,13 @@ export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   verifiedBy?: boolean
   verificationNotes?: boolean
   isActive?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   purchasePrice?: boolean
   currentValue?: boolean
   createdAt?: boolean
@@ -1379,6 +1692,13 @@ export type PropertySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   verifiedBy?: boolean
   verificationNotes?: boolean
   isActive?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   purchasePrice?: boolean
   currentValue?: boolean
   createdAt?: boolean
@@ -1398,6 +1718,13 @@ export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   verifiedBy?: boolean
   verificationNotes?: boolean
   isActive?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   purchasePrice?: boolean
   currentValue?: boolean
   createdAt?: boolean
@@ -1417,6 +1744,13 @@ export type PropertySelectScalar = {
   verifiedBy?: boolean
   verificationNotes?: boolean
   isActive?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   purchasePrice?: boolean
   currentValue?: boolean
   createdAt?: boolean
@@ -1426,7 +1760,7 @@ export type PropertySelectScalar = {
   updatedBy?: boolean
 }
 
-export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "ownerId" | "verificationStatus" | "verifiedAt" | "verifiedBy" | "verificationNotes" | "isActive" | "purchasePrice" | "currentValue" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy", ExtArgs["result"]["property"]>
+export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "ownerId" | "verificationStatus" | "verifiedAt" | "verifiedBy" | "verificationNotes" | "isActive" | "listingTitle" | "listingDescription" | "listingStatus" | "listingViews" | "isFeatured" | "virtualTourUrl" | "amenities" | "purchasePrice" | "currentValue" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy", ExtArgs["result"]["property"]>
 export type PropertyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   address?: boolean | Prisma.Property$addressArgs<ExtArgs>
   buildings?: boolean | Prisma.Property$buildingsArgs<ExtArgs>
@@ -1457,6 +1791,13 @@ export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     verifiedBy: string | null
     verificationNotes: string | null
     isActive: boolean
+    listingTitle: string | null
+    listingDescription: string | null
+    listingStatus: $Enums.ListingStatus
+    listingViews: number
+    isFeatured: boolean
+    virtualTourUrl: string | null
+    amenities: runtime.JsonValue | null
     purchasePrice: runtime.Decimal | null
     currentValue: runtime.Decimal | null
     createdAt: Date
@@ -1901,6 +2242,13 @@ export interface PropertyFieldRefs {
   readonly verifiedBy: Prisma.FieldRef<"Property", 'String'>
   readonly verificationNotes: Prisma.FieldRef<"Property", 'String'>
   readonly isActive: Prisma.FieldRef<"Property", 'Boolean'>
+  readonly listingTitle: Prisma.FieldRef<"Property", 'String'>
+  readonly listingDescription: Prisma.FieldRef<"Property", 'String'>
+  readonly listingStatus: Prisma.FieldRef<"Property", 'ListingStatus'>
+  readonly listingViews: Prisma.FieldRef<"Property", 'Int'>
+  readonly isFeatured: Prisma.FieldRef<"Property", 'Boolean'>
+  readonly virtualTourUrl: Prisma.FieldRef<"Property", 'String'>
+  readonly amenities: Prisma.FieldRef<"Property", 'Json'>
   readonly purchasePrice: Prisma.FieldRef<"Property", 'Decimal'>
   readonly currentValue: Prisma.FieldRef<"Property", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"Property", 'DateTime'>

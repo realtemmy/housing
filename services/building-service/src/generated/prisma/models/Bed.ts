@@ -29,11 +29,13 @@ export type AggregateBed = {
 export type BedAvgAggregateOutputType = {
   rentAmount: runtime.Decimal | null
   depositAmount: runtime.Decimal | null
+  listingViews: number | null
 }
 
 export type BedSumAggregateOutputType = {
   rentAmount: runtime.Decimal | null
   depositAmount: runtime.Decimal | null
+  listingViews: number | null
 }
 
 export type BedMinAggregateOutputType = {
@@ -43,6 +45,12 @@ export type BedMinAggregateOutputType = {
   depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus | null
   occupantId: string | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus | null
+  listingViews: number | null
+  isFeatured: boolean | null
+  virtualTourUrl: string | null
   initializedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -62,6 +70,12 @@ export type BedMaxAggregateOutputType = {
   depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus | null
   occupantId: string | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus | null
+  listingViews: number | null
+  isFeatured: boolean | null
+  virtualTourUrl: string | null
   initializedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -81,6 +95,13 @@ export type BedCountAggregateOutputType = {
   depositAmount: number
   status: number
   occupantId: number
+  listingTitle: number
+  listingDescription: number
+  listingStatus: number
+  listingViews: number
+  isFeatured: number
+  virtualTourUrl: number
+  amenities: number
   initializedAt: number
   createdAt: number
   updatedAt: number
@@ -98,11 +119,13 @@ export type BedCountAggregateOutputType = {
 export type BedAvgAggregateInputType = {
   rentAmount?: true
   depositAmount?: true
+  listingViews?: true
 }
 
 export type BedSumAggregateInputType = {
   rentAmount?: true
   depositAmount?: true
+  listingViews?: true
 }
 
 export type BedMinAggregateInputType = {
@@ -112,6 +135,12 @@ export type BedMinAggregateInputType = {
   depositAmount?: true
   status?: true
   occupantId?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
   initializedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -131,6 +160,12 @@ export type BedMaxAggregateInputType = {
   depositAmount?: true
   status?: true
   occupantId?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
   initializedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -150,6 +185,13 @@ export type BedCountAggregateInputType = {
   depositAmount?: true
   status?: true
   occupantId?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
+  amenities?: true
   initializedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -256,6 +298,13 @@ export type BedGroupByOutputType = {
   depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus
   occupantId: string | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus
+  listingViews: number
+  isFeatured: boolean
+  virtualTourUrl: string | null
+  amenities: runtime.JsonValue | null
   initializedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -298,6 +347,13 @@ export type BedWhereInput = {
   depositAmount?: Prisma.DecimalNullableFilter<"Bed"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Bed"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingTitle?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Bed"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Bed"> | number
+  isFeatured?: Prisma.BoolFilter<"Bed"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Bed"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Bed">
   initializedAt?: Prisma.DateTimeNullableFilter<"Bed"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Bed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bed"> | Date | string
@@ -319,6 +375,13 @@ export type BedOrderByWithRelationInput = {
   depositAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  amenities?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -343,6 +406,13 @@ export type BedWhereUniqueInput = Prisma.AtLeast<{
   depositAmount?: Prisma.DecimalNullableFilter<"Bed"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Bed"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingTitle?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Bed"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Bed"> | number
+  isFeatured?: Prisma.BoolFilter<"Bed"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Bed"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Bed">
   initializedAt?: Prisma.DateTimeNullableFilter<"Bed"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Bed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bed"> | Date | string
@@ -364,6 +434,13 @@ export type BedOrderByWithAggregationInput = {
   depositAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  amenities?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -391,6 +468,13 @@ export type BedScalarWhereWithAggregatesInput = {
   depositAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Bed"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusWithAggregatesFilter<"Bed"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableWithAggregatesFilter<"Bed"> | string | null
+  listingTitle?: Prisma.StringNullableWithAggregatesFilter<"Bed"> | string | null
+  listingDescription?: Prisma.StringNullableWithAggregatesFilter<"Bed"> | string | null
+  listingStatus?: Prisma.EnumListingStatusWithAggregatesFilter<"Bed"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntWithAggregatesFilter<"Bed"> | number
+  isFeatured?: Prisma.BoolWithAggregatesFilter<"Bed"> | boolean
+  virtualTourUrl?: Prisma.StringNullableWithAggregatesFilter<"Bed"> | string | null
+  amenities?: Prisma.JsonNullableWithAggregatesFilter<"Bed">
   initializedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Bed"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Bed"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Bed"> | Date | string
@@ -410,6 +494,13 @@ export type BedCreateInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -429,6 +520,13 @@ export type BedUncheckedCreateInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -448,6 +546,13 @@ export type BedUpdateInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -467,6 +572,13 @@ export type BedUncheckedUpdateInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -486,6 +598,13 @@ export type BedCreateManyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -505,6 +624,13 @@ export type BedUpdateManyMutationInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -522,6 +648,13 @@ export type BedUncheckedUpdateManyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -551,6 +684,13 @@ export type BedCountOrderByAggregateInput = {
   depositAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
+  amenities?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -566,6 +706,7 @@ export type BedCountOrderByAggregateInput = {
 export type BedAvgOrderByAggregateInput = {
   rentAmount?: Prisma.SortOrder
   depositAmount?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
 }
 
 export type BedMaxOrderByAggregateInput = {
@@ -575,6 +716,12 @@ export type BedMaxOrderByAggregateInput = {
   depositAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -594,6 +741,12 @@ export type BedMinOrderByAggregateInput = {
   depositAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -609,6 +762,7 @@ export type BedMinOrderByAggregateInput = {
 export type BedSumOrderByAggregateInput = {
   rentAmount?: Prisma.SortOrder
   depositAmount?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
 }
 
 export type BedCreateNestedManyWithoutPropertyInput = {
@@ -710,6 +864,13 @@ export type BedCreateWithoutPropertyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -728,6 +889,13 @@ export type BedUncheckedCreateWithoutPropertyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -775,6 +943,13 @@ export type BedScalarWhereInput = {
   depositAmount?: Prisma.DecimalNullableFilter<"Bed"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Bed"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingTitle?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Bed"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Bed"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Bed"> | number
+  isFeatured?: Prisma.BoolFilter<"Bed"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Bed"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Bed">
   initializedAt?: Prisma.DateTimeNullableFilter<"Bed"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Bed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bed"> | Date | string
@@ -794,6 +969,13 @@ export type BedCreateWithoutRoomInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -812,6 +994,13 @@ export type BedUncheckedCreateWithoutRoomInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -856,6 +1045,13 @@ export type BedCreateManyPropertyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -874,6 +1070,13 @@ export type BedUpdateWithoutPropertyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -892,6 +1095,13 @@ export type BedUncheckedUpdateWithoutPropertyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -910,6 +1120,13 @@ export type BedUncheckedUpdateManyWithoutPropertyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -928,6 +1145,13 @@ export type BedCreateManyRoomInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -946,6 +1170,13 @@ export type BedUpdateWithoutRoomInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -964,6 +1195,13 @@ export type BedUncheckedUpdateWithoutRoomInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -982,6 +1220,13 @@ export type BedUncheckedUpdateManyWithoutRoomInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1002,6 +1247,13 @@ export type BedSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1023,6 +1275,13 @@ export type BedSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1044,6 +1303,13 @@ export type BedSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1065,6 +1331,13 @@ export type BedSelectScalar = {
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1077,7 +1350,7 @@ export type BedSelectScalar = {
   reservedUntil?: boolean
 }
 
-export type BedOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "label" | "rentAmount" | "depositAmount" | "status" | "occupantId" | "initializedAt" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "roomId" | "propertyId" | "reservedAt" | "reservedUntil", ExtArgs["result"]["bed"]>
+export type BedOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "label" | "rentAmount" | "depositAmount" | "status" | "occupantId" | "listingTitle" | "listingDescription" | "listingStatus" | "listingViews" | "isFeatured" | "virtualTourUrl" | "amenities" | "initializedAt" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "roomId" | "propertyId" | "reservedAt" | "reservedUntil", ExtArgs["result"]["bed"]>
 export type BedInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
@@ -1104,6 +1377,13 @@ export type $BedPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     depositAmount: runtime.Decimal | null
     status: $Enums.AvailableStatus
     occupantId: string | null
+    listingTitle: string | null
+    listingDescription: string | null
+    listingStatus: $Enums.ListingStatus
+    listingViews: number
+    isFeatured: boolean
+    virtualTourUrl: string | null
+    amenities: runtime.JsonValue | null
     initializedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1545,6 +1825,13 @@ export interface BedFieldRefs {
   readonly depositAmount: Prisma.FieldRef<"Bed", 'Decimal'>
   readonly status: Prisma.FieldRef<"Bed", 'AvailableStatus'>
   readonly occupantId: Prisma.FieldRef<"Bed", 'String'>
+  readonly listingTitle: Prisma.FieldRef<"Bed", 'String'>
+  readonly listingDescription: Prisma.FieldRef<"Bed", 'String'>
+  readonly listingStatus: Prisma.FieldRef<"Bed", 'ListingStatus'>
+  readonly listingViews: Prisma.FieldRef<"Bed", 'Int'>
+  readonly isFeatured: Prisma.FieldRef<"Bed", 'Boolean'>
+  readonly virtualTourUrl: Prisma.FieldRef<"Bed", 'String'>
+  readonly amenities: Prisma.FieldRef<"Bed", 'Json'>
   readonly initializedAt: Prisma.FieldRef<"Bed", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Bed", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Bed", 'DateTime'>

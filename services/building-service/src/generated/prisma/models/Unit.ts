@@ -33,6 +33,7 @@ export type UnitAvgAggregateOutputType = {
   sqft: number | null
   rentAmount: runtime.Decimal | null
   depositAmount: runtime.Decimal | null
+  listingViews: number | null
 }
 
 export type UnitSumAggregateOutputType = {
@@ -42,6 +43,7 @@ export type UnitSumAggregateOutputType = {
   sqft: number | null
   rentAmount: runtime.Decimal | null
   depositAmount: runtime.Decimal | null
+  listingViews: number | null
 }
 
 export type UnitMinAggregateOutputType = {
@@ -57,6 +59,12 @@ export type UnitMinAggregateOutputType = {
   depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus | null
   occupantId: string | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus | null
+  listingViews: number | null
+  isFeatured: boolean | null
+  virtualTourUrl: string | null
   initializedAt: Date | null
   reservedAt: Date | null
   reservedUntil: Date | null
@@ -82,6 +90,12 @@ export type UnitMaxAggregateOutputType = {
   depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus | null
   occupantId: string | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus | null
+  listingViews: number | null
+  isFeatured: boolean | null
+  virtualTourUrl: string | null
   initializedAt: Date | null
   reservedAt: Date | null
   reservedUntil: Date | null
@@ -107,6 +121,13 @@ export type UnitCountAggregateOutputType = {
   depositAmount: number
   status: number
   occupantId: number
+  listingTitle: number
+  listingDescription: number
+  listingStatus: number
+  listingViews: number
+  isFeatured: number
+  virtualTourUrl: number
+  amenities: number
   initializedAt: number
   reservedAt: number
   reservedUntil: number
@@ -128,6 +149,7 @@ export type UnitAvgAggregateInputType = {
   sqft?: true
   rentAmount?: true
   depositAmount?: true
+  listingViews?: true
 }
 
 export type UnitSumAggregateInputType = {
@@ -137,6 +159,7 @@ export type UnitSumAggregateInputType = {
   sqft?: true
   rentAmount?: true
   depositAmount?: true
+  listingViews?: true
 }
 
 export type UnitMinAggregateInputType = {
@@ -152,6 +175,12 @@ export type UnitMinAggregateInputType = {
   depositAmount?: true
   status?: true
   occupantId?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
   initializedAt?: true
   reservedAt?: true
   reservedUntil?: true
@@ -177,6 +206,12 @@ export type UnitMaxAggregateInputType = {
   depositAmount?: true
   status?: true
   occupantId?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
   initializedAt?: true
   reservedAt?: true
   reservedUntil?: true
@@ -202,6 +237,13 @@ export type UnitCountAggregateInputType = {
   depositAmount?: true
   status?: true
   occupantId?: true
+  listingTitle?: true
+  listingDescription?: true
+  listingStatus?: true
+  listingViews?: true
+  isFeatured?: true
+  virtualTourUrl?: true
+  amenities?: true
   initializedAt?: true
   reservedAt?: true
   reservedUntil?: true
@@ -314,6 +356,13 @@ export type UnitGroupByOutputType = {
   depositAmount: runtime.Decimal | null
   status: $Enums.AvailableStatus
   occupantId: string | null
+  listingTitle: string | null
+  listingDescription: string | null
+  listingStatus: $Enums.ListingStatus
+  listingViews: number
+  isFeatured: boolean
+  virtualTourUrl: string | null
+  amenities: runtime.JsonValue | null
   initializedAt: Date | null
   reservedAt: Date | null
   reservedUntil: Date | null
@@ -362,6 +411,13 @@ export type UnitWhereInput = {
   depositAmount?: Prisma.DecimalNullableFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Unit"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingTitle?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Unit"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Unit"> | number
+  isFeatured?: Prisma.BoolFilter<"Unit"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Unit"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Unit">
   initializedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   reservedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
@@ -392,6 +448,13 @@ export type UnitOrderByWithRelationInput = {
   depositAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  amenities?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reservedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reservedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -426,6 +489,13 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   depositAmount?: Prisma.DecimalNullableFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Unit"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingTitle?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Unit"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Unit"> | number
+  isFeatured?: Prisma.BoolFilter<"Unit"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Unit"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Unit">
   initializedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   reservedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
@@ -456,6 +526,13 @@ export type UnitOrderByWithAggregationInput = {
   depositAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  amenities?: Prisma.SortOrderInput | Prisma.SortOrder
   initializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reservedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reservedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -489,6 +566,13 @@ export type UnitScalarWhereWithAggregatesInput = {
   depositAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusWithAggregatesFilter<"Unit"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
+  listingTitle?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
+  listingDescription?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
+  listingStatus?: Prisma.EnumListingStatusWithAggregatesFilter<"Unit"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntWithAggregatesFilter<"Unit"> | number
+  isFeatured?: Prisma.BoolWithAggregatesFilter<"Unit"> | boolean
+  virtualTourUrl?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
+  amenities?: Prisma.JsonNullableWithAggregatesFilter<"Unit">
   initializedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Unit"> | Date | string | null
   reservedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Unit"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Unit"> | Date | string | null
@@ -514,6 +598,13 @@ export type UnitCreateInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -542,6 +633,13 @@ export type UnitUncheckedCreateInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -570,6 +668,13 @@ export type UnitUpdateInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -598,6 +703,13 @@ export type UnitUncheckedUpdateInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -626,6 +738,13 @@ export type UnitCreateManyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -651,6 +770,13 @@ export type UnitUpdateManyMutationInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -674,6 +800,13 @@ export type UnitUncheckedUpdateManyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -714,6 +847,13 @@ export type UnitCountOrderByAggregateInput = {
   depositAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
+  amenities?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrder
   reservedUntil?: Prisma.SortOrder
@@ -733,6 +873,7 @@ export type UnitAvgOrderByAggregateInput = {
   sqft?: Prisma.SortOrder
   rentAmount?: Prisma.SortOrder
   depositAmount?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
 }
 
 export type UnitMaxOrderByAggregateInput = {
@@ -748,6 +889,12 @@ export type UnitMaxOrderByAggregateInput = {
   depositAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrder
   reservedUntil?: Prisma.SortOrder
@@ -773,6 +920,12 @@ export type UnitMinOrderByAggregateInput = {
   depositAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   occupantId?: Prisma.SortOrder
+  listingTitle?: Prisma.SortOrder
+  listingDescription?: Prisma.SortOrder
+  listingStatus?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  virtualTourUrl?: Prisma.SortOrder
   initializedAt?: Prisma.SortOrder
   reservedAt?: Prisma.SortOrder
   reservedUntil?: Prisma.SortOrder
@@ -792,6 +945,7 @@ export type UnitSumOrderByAggregateInput = {
   sqft?: Prisma.SortOrder
   rentAmount?: Prisma.SortOrder
   depositAmount?: Prisma.SortOrder
+  listingViews?: Prisma.SortOrder
 }
 
 export type UnitScalarRelationFilter = {
@@ -953,6 +1107,13 @@ export type UnitCreateWithoutPropertyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -980,6 +1141,13 @@ export type UnitUncheckedCreateWithoutPropertyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1036,6 +1204,13 @@ export type UnitScalarWhereInput = {
   depositAmount?: Prisma.DecimalNullableFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFilter<"Unit"> | $Enums.AvailableStatus
   occupantId?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingTitle?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
+  listingStatus?: Prisma.EnumListingStatusFilter<"Unit"> | $Enums.ListingStatus
+  listingViews?: Prisma.IntFilter<"Unit"> | number
+  isFeatured?: Prisma.BoolFilter<"Unit"> | boolean
+  virtualTourUrl?: Prisma.StringNullableFilter<"Unit"> | string | null
+  amenities?: Prisma.JsonNullableFilter<"Unit">
   initializedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   reservedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
   reservedUntil?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
@@ -1061,6 +1236,13 @@ export type UnitCreateWithoutBuildingInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1088,6 +1270,13 @@ export type UnitUncheckedCreateWithoutBuildingInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1141,6 +1330,13 @@ export type UnitCreateWithoutRoomsInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1168,6 +1364,13 @@ export type UnitUncheckedCreateWithoutRoomsInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1211,6 +1414,13 @@ export type UnitUpdateWithoutRoomsInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1238,6 +1448,13 @@ export type UnitUncheckedUpdateWithoutRoomsInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1265,6 +1482,13 @@ export type UnitCreateWithoutPhotosInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1292,6 +1516,13 @@ export type UnitUncheckedCreateWithoutPhotosInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1335,6 +1566,13 @@ export type UnitUpdateWithoutPhotosInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1362,6 +1600,13 @@ export type UnitUncheckedUpdateWithoutPhotosInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1389,6 +1634,13 @@ export type UnitCreateWithoutMaintenanceInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1416,6 +1668,13 @@ export type UnitUncheckedCreateWithoutMaintenanceInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1459,6 +1718,13 @@ export type UnitUpdateWithoutMaintenanceInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1486,6 +1752,13 @@ export type UnitUncheckedUpdateWithoutMaintenanceInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1513,6 +1786,13 @@ export type UnitCreateManyPropertyInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1537,6 +1817,13 @@ export type UnitUpdateWithoutPropertyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1564,6 +1851,13 @@ export type UnitUncheckedUpdateWithoutPropertyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1591,6 +1885,13 @@ export type UnitUncheckedUpdateManyWithoutPropertyInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1615,6 +1916,13 @@ export type UnitCreateManyBuildingInput = {
   depositAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.AvailableStatus
   occupantId?: string | null
+  listingTitle?: string | null
+  listingDescription?: string | null
+  listingStatus?: $Enums.ListingStatus
+  listingViews?: number
+  isFeatured?: boolean
+  virtualTourUrl?: string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Date | string | null
   reservedAt?: Date | string | null
   reservedUntil?: Date | string | null
@@ -1639,6 +1947,13 @@ export type UnitUpdateWithoutBuildingInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1666,6 +1981,13 @@ export type UnitUncheckedUpdateWithoutBuildingInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1693,6 +2015,13 @@ export type UnitUncheckedUpdateManyWithoutBuildingInput = {
   depositAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumAvailableStatusFieldUpdateOperationsInput | $Enums.AvailableStatus
   occupantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listingStatus?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  listingViews?: Prisma.IntFieldUpdateOperationsInput | number
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  virtualTourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   initializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reservedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1766,6 +2095,13 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
@@ -1797,6 +2133,13 @@ export type UnitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
@@ -1824,6 +2167,13 @@ export type UnitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
@@ -1851,6 +2201,13 @@ export type UnitSelectScalar = {
   depositAmount?: boolean
   status?: boolean
   occupantId?: boolean
+  listingTitle?: boolean
+  listingDescription?: boolean
+  listingStatus?: boolean
+  listingViews?: boolean
+  isFeatured?: boolean
+  virtualTourUrl?: boolean
+  amenities?: boolean
   initializedAt?: boolean
   reservedAt?: boolean
   reservedUntil?: boolean
@@ -1863,7 +2220,7 @@ export type UnitSelectScalar = {
   propertyId?: boolean
 }
 
-export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitNumber" | "summary" | "type" | "floor" | "bedrooms" | "bathrooms" | "sqft" | "rentAmount" | "depositAmount" | "status" | "occupantId" | "initializedAt" | "reservedAt" | "reservedUntil" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "buildingId" | "propertyId", ExtArgs["result"]["unit"]>
+export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitNumber" | "summary" | "type" | "floor" | "bedrooms" | "bathrooms" | "sqft" | "rentAmount" | "depositAmount" | "status" | "occupantId" | "listingTitle" | "listingDescription" | "listingStatus" | "listingViews" | "isFeatured" | "virtualTourUrl" | "amenities" | "initializedAt" | "reservedAt" | "reservedUntil" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "buildingId" | "propertyId", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
@@ -1903,6 +2260,13 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     depositAmount: runtime.Decimal | null
     status: $Enums.AvailableStatus
     occupantId: string | null
+    listingTitle: string | null
+    listingDescription: string | null
+    listingStatus: $Enums.ListingStatus
+    listingViews: number
+    isFeatured: boolean
+    virtualTourUrl: string | null
+    amenities: runtime.JsonValue | null
     initializedAt: Date | null
     reservedAt: Date | null
     reservedUntil: Date | null
@@ -2353,6 +2717,13 @@ export interface UnitFieldRefs {
   readonly depositAmount: Prisma.FieldRef<"Unit", 'Decimal'>
   readonly status: Prisma.FieldRef<"Unit", 'AvailableStatus'>
   readonly occupantId: Prisma.FieldRef<"Unit", 'String'>
+  readonly listingTitle: Prisma.FieldRef<"Unit", 'String'>
+  readonly listingDescription: Prisma.FieldRef<"Unit", 'String'>
+  readonly listingStatus: Prisma.FieldRef<"Unit", 'ListingStatus'>
+  readonly listingViews: Prisma.FieldRef<"Unit", 'Int'>
+  readonly isFeatured: Prisma.FieldRef<"Unit", 'Boolean'>
+  readonly virtualTourUrl: Prisma.FieldRef<"Unit", 'String'>
+  readonly amenities: Prisma.FieldRef<"Unit", 'Json'>
   readonly initializedAt: Prisma.FieldRef<"Unit", 'DateTime'>
   readonly reservedAt: Prisma.FieldRef<"Unit", 'DateTime'>
   readonly reservedUntil: Prisma.FieldRef<"Unit", 'DateTime'>

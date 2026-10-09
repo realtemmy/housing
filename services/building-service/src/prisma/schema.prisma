@@ -408,3 +408,130 @@ model Attachment {
 
   createdAt DateTime @default(now())
 }
+
+// Move-in/Handover System Models
+model MoveInHandover {
+  id            String   @id @default(uuid())
+  leaseId       String   // Reference to lease in lease-service
+
+  // Process tracking
+  status        MoveInHandoverStatus @default(SCHEDULED)
+  scheduledFor  DateTime?
+  completedAt   DateTime?
+
+  // Results
+  inspectionPassed Boolean?
+  keysHandedOver   Boolean?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  inspectionItems   InspectionChecklistResponse[]
+  conditionReports  ConditionReport[]
+  keyHandovers      KeyHandover[]
+
+  @@index([leaseId])
+  @@index([status])
+}
+
+enum MoveInHandoverStatus {
+  SCHEDULED
+  IN_PROGRESS
+  PASSED
+  FAILED
+  COMPLETED
+}
+
+model InspectionChecklistItem {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  category    String?  // e.g., "Electrical", "Plumbing", "Safety", "Cleanliness"
+  isActive    Boolean  @default(true)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  inspectionResponses InspectionChecklistResponse[] @relation("InspectionResponses")
+
+  @@index([isActive])
+}
+
+model InspectionChecklistResponse {
+  id            String   @id @default(uuid())
+  moveInHandoverId String
+  moveInHandover   MoveInHandover @relation(fields: [moveInHandoverId], references: [id])
+  inspectionItemId String
+  inspectionItem   InspectionChecklistItem @relation("InspectionResponses", fields: [inspectionItemId], references: [id])
+
+  // Response
+  status       InspectionStatus  // PASS, FAIL, NA
+  notes        String?
+  photoUrl     String?           // URL to photo evidence
+
+  // Timestamps
+  inspectedAt  DateTime @default(now())
+
+  @@index([moveInHandoverId])
+  @@index([inspectionItemId])
+}
+
+enum InspectionStatus {
+  PASS
+  FAIL
+  NA
+}
+
+model ConditionReport {
+  id            String   @id @default(uuid())
+  moveInHandoverId String
+  moveInHandover   MoveInHandover @relation(fields: [moveInHandoverId], references: [id])
+
+  // Report details
+  reportType    ConditionReportType  // MOVE_IN or MOVE_OUT
+  unitId        String?              // For unit-level reports
+  roomId        String?              // For room-level reports
+  bedId         String?              // For bed-level reports
+
+  // Condition assessment
+  overallCondition String?          // e.g., "Excellent", "Good", "Fair", "Poor"
+  notes          String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+
+  @@index([moveInHandoverId])
+  @@index([reportType])
+  @@index([unitId])
+  @@index([roomId])
+  @@index([bedId])
+}
+
+enum ConditionReportType {
+  MOVE_IN
+  MOVE_OUT
+}
+
+model KeyHandover {
+  id            String   @id @default(uuid())
+  moveInHandoverId String
+  moveInHandover   MoveInHandover @relation(fields: [moveInHandoverId], references: [id])
+
+  // Key details
+  keyType       String   // e.g., "Unit Key", "Mailbox Key", "Amenity Key", "Parking Key"
+  quantity      Int      @default(1)
+  condition     String?  // e.g., "New", "Good", "Worn", "Damaged"
+  handedOver    Boolean  @default(false)
+  handedOverAt  DateTime?
+  handedOverBy  String?  // Staff member ID
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([moveInHandoverId])
+}

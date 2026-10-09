@@ -68,6 +68,13 @@ model Lease {
   serviceCharge    Decimal          @default(0) @db.Decimal(10, 2) // Common in serviced estates
   totalAmount      Decimal          @db.Decimal(10, 2)
   paymentFrequency PaymentFrequency @default(YEARLY)
+
+  // RENT TRACKING FIELDS
+  rentDueDay       Int?             // Day of month rent is due (1-31, for monthly frequency)
+  gracePeriodDays  Int              @default(5)  // Days after due date before late fee applies
+  lateFeeAmount    Decimal          @default(0) @db.Decimal(10, 2)  // Fixed late fee amount
+  lateFeePercentage Decimal         @default(0) @db.Decimal(5, 4)  // Percentage of rent for late fee (e.g., 0.05 = 5%)
+
   status           LeaseStatus      @default(PENDING)
 
   // DIGITAL LEASE AGREEMENT

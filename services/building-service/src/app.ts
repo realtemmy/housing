@@ -9,6 +9,7 @@ import unitRoutes from "./routes/unit.routes";
 import roomRoutes from "./routes/room.routes";
 import bedRoutes from "./routes/bed.routes";
 import listingRoutes from "./routes/listing.routes";
+import moveInHandoverRoutes from "./routes/moveIn.routes";
 
 import job from "./jobs/reserved-check.jobs";
 
@@ -36,6 +37,7 @@ app.use("/api/units", unitRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/beds", bedRoutes);
 app.use("/api/listings", listingRoutes);
+app.use("/api/move-in-handover", moveInHandoverRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {

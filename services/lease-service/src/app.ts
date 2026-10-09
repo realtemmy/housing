@@ -8,6 +8,7 @@ import applicationRoutes from "./routes/application.routes";
 import reservationRoutes from "./routes/reservation.routes";
 import paymentRoutes from "./routes/payment.routes";
 import leaseAgreementRoutes from "./routes/leaseAgreement.routes";
+import rentRoutes from "./routes/rent.routes";
 
 const app: Application = express();
 
@@ -21,6 +22,7 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/lease-agreements", leaseAgreementRoutes);
+app.use("/api/rent", rentRoutes);
 
 // Catch all unknown routes
 app.use((req, res, next) => {

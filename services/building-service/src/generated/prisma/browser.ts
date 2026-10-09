@@ -67,3 +67,28 @@ export type MaintenanceNote = Prisma.MaintenanceNoteModel
  * 
  */
 export type Attachment = Prisma.AttachmentModel
+/**
+ * Model MoveInHandover
+ * 
+ */
+export type MoveInHandover = Prisma.MoveInHandoverModel
+/**
+ * Model InspectionChecklistItem
+ * 
+ */
+export type InspectionChecklistItem = Prisma.InspectionChecklistItemModel
+/**
+ * Model InspectionChecklistResponse
+ * 
+ */
+export type InspectionChecklistResponse = Prisma.InspectionChecklistResponseModel
+/**
+ * Model ConditionReport
+ * 
+ */
+export type ConditionReport = Prisma.ConditionReportModel
+/**
+ * Model KeyHandover
+ * 
+ */
+export type KeyHandover = Prisma.KeyHandoverModel

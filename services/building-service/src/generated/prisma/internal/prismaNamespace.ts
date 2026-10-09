@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.0.0
- * Query Engine version: 0c19ccc313cf9911a90d99d2ac2eb0280c76c513
+ * Prisma Client JS version: 7.0.1
+ * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.0.0",
-  engine: "0c19ccc313cf9911a90d99d2ac2eb0280c76c513"
+  client: "7.0.1",
+  engine: "f09f2815f091dbba658cdcd2264306d88bb5bda6"
 }
 
 /**
@@ -393,7 +393,12 @@ export const ModelName = {
   Photo: 'Photo',
   MaintenanceRequest: 'MaintenanceRequest',
   MaintenanceNote: 'MaintenanceNote',
-  Attachment: 'Attachment'
+  Attachment: 'Attachment',
+  MoveInHandover: 'MoveInHandover',
+  InspectionChecklistItem: 'InspectionChecklistItem',
+  InspectionChecklistResponse: 'InspectionChecklistResponse',
+  ConditionReport: 'ConditionReport',
+  KeyHandover: 'KeyHandover'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "property" | "building" | "address" | "unit" | "room" | "bed" | "photo" | "maintenanceRequest" | "maintenanceNote" | "attachment"
+    modelProps: "property" | "building" | "address" | "unit" | "room" | "bed" | "photo" | "maintenanceRequest" | "maintenanceNote" | "attachment" | "moveInHandover" | "inspectionChecklistItem" | "inspectionChecklistResponse" | "conditionReport" | "keyHandover"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1153,6 +1158,376 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MoveInHandover: {
+      payload: Prisma.$MoveInHandoverPayload<ExtArgs>
+      fields: Prisma.MoveInHandoverFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MoveInHandoverFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MoveInHandoverFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>
+        }
+        findFirst: {
+          args: Prisma.MoveInHandoverFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MoveInHandoverFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>
+        }
+        findMany: {
+          args: Prisma.MoveInHandoverFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>[]
+        }
+        create: {
+          args: Prisma.MoveInHandoverCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>
+        }
+        createMany: {
+          args: Prisma.MoveInHandoverCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MoveInHandoverCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>[]
+        }
+        delete: {
+          args: Prisma.MoveInHandoverDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>
+        }
+        update: {
+          args: Prisma.MoveInHandoverUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>
+        }
+        deleteMany: {
+          args: Prisma.MoveInHandoverDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MoveInHandoverUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MoveInHandoverUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>[]
+        }
+        upsert: {
+          args: Prisma.MoveInHandoverUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoveInHandoverPayload>
+        }
+        aggregate: {
+          args: Prisma.MoveInHandoverAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMoveInHandover>
+        }
+        groupBy: {
+          args: Prisma.MoveInHandoverGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MoveInHandoverGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MoveInHandoverCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MoveInHandoverCountAggregateOutputType> | number
+        }
+      }
+    }
+    InspectionChecklistItem: {
+      payload: Prisma.$InspectionChecklistItemPayload<ExtArgs>
+      fields: Prisma.InspectionChecklistItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InspectionChecklistItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InspectionChecklistItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>
+        }
+        findFirst: {
+          args: Prisma.InspectionChecklistItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InspectionChecklistItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>
+        }
+        findMany: {
+          args: Prisma.InspectionChecklistItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>[]
+        }
+        create: {
+          args: Prisma.InspectionChecklistItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>
+        }
+        createMany: {
+          args: Prisma.InspectionChecklistItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InspectionChecklistItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>[]
+        }
+        delete: {
+          args: Prisma.InspectionChecklistItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>
+        }
+        update: {
+          args: Prisma.InspectionChecklistItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.InspectionChecklistItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InspectionChecklistItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InspectionChecklistItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.InspectionChecklistItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistItemPayload>
+        }
+        aggregate: {
+          args: Prisma.InspectionChecklistItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInspectionChecklistItem>
+        }
+        groupBy: {
+          args: Prisma.InspectionChecklistItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InspectionChecklistItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InspectionChecklistItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InspectionChecklistItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    InspectionChecklistResponse: {
+      payload: Prisma.$InspectionChecklistResponsePayload<ExtArgs>
+      fields: Prisma.InspectionChecklistResponseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InspectionChecklistResponseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InspectionChecklistResponseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>
+        }
+        findFirst: {
+          args: Prisma.InspectionChecklistResponseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InspectionChecklistResponseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>
+        }
+        findMany: {
+          args: Prisma.InspectionChecklistResponseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>[]
+        }
+        create: {
+          args: Prisma.InspectionChecklistResponseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>
+        }
+        createMany: {
+          args: Prisma.InspectionChecklistResponseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InspectionChecklistResponseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>[]
+        }
+        delete: {
+          args: Prisma.InspectionChecklistResponseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>
+        }
+        update: {
+          args: Prisma.InspectionChecklistResponseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>
+        }
+        deleteMany: {
+          args: Prisma.InspectionChecklistResponseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InspectionChecklistResponseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InspectionChecklistResponseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>[]
+        }
+        upsert: {
+          args: Prisma.InspectionChecklistResponseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InspectionChecklistResponsePayload>
+        }
+        aggregate: {
+          args: Prisma.InspectionChecklistResponseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInspectionChecklistResponse>
+        }
+        groupBy: {
+          args: Prisma.InspectionChecklistResponseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InspectionChecklistResponseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InspectionChecklistResponseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InspectionChecklistResponseCountAggregateOutputType> | number
+        }
+      }
+    }
+    ConditionReport: {
+      payload: Prisma.$ConditionReportPayload<ExtArgs>
+      fields: Prisma.ConditionReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ConditionReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ConditionReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>
+        }
+        findFirst: {
+          args: Prisma.ConditionReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ConditionReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>
+        }
+        findMany: {
+          args: Prisma.ConditionReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>[]
+        }
+        create: {
+          args: Prisma.ConditionReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>
+        }
+        createMany: {
+          args: Prisma.ConditionReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ConditionReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>[]
+        }
+        delete: {
+          args: Prisma.ConditionReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>
+        }
+        update: {
+          args: Prisma.ConditionReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.ConditionReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ConditionReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ConditionReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.ConditionReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConditionReportPayload>
+        }
+        aggregate: {
+          args: Prisma.ConditionReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateConditionReport>
+        }
+        groupBy: {
+          args: Prisma.ConditionReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConditionReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ConditionReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConditionReportCountAggregateOutputType> | number
+        }
+      }
+    }
+    KeyHandover: {
+      payload: Prisma.$KeyHandoverPayload<ExtArgs>
+      fields: Prisma.KeyHandoverFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KeyHandoverFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KeyHandoverFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>
+        }
+        findFirst: {
+          args: Prisma.KeyHandoverFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KeyHandoverFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>
+        }
+        findMany: {
+          args: Prisma.KeyHandoverFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>[]
+        }
+        create: {
+          args: Prisma.KeyHandoverCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>
+        }
+        createMany: {
+          args: Prisma.KeyHandoverCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KeyHandoverCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>[]
+        }
+        delete: {
+          args: Prisma.KeyHandoverDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>
+        }
+        update: {
+          args: Prisma.KeyHandoverUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>
+        }
+        deleteMany: {
+          args: Prisma.KeyHandoverDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KeyHandoverUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KeyHandoverUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>[]
+        }
+        upsert: {
+          args: Prisma.KeyHandoverUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyHandoverPayload>
+        }
+        aggregate: {
+          args: Prisma.KeyHandoverAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKeyHandover>
+        }
+        groupBy: {
+          args: Prisma.KeyHandoverGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeyHandoverGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KeyHandoverCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeyHandoverCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1202,6 +1577,13 @@ export const PropertyScalarFieldEnum = {
   verifiedBy: 'verifiedBy',
   verificationNotes: 'verificationNotes',
   isActive: 'isActive',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   purchasePrice: 'purchasePrice',
   currentValue: 'currentValue',
   createdAt: 'createdAt',
@@ -1263,6 +1645,13 @@ export const UnitScalarFieldEnum = {
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   initializedAt: 'initializedAt',
   reservedAt: 'reservedAt',
   reservedUntil: 'reservedUntil',
@@ -1289,6 +1678,13 @@ export const RoomScalarFieldEnum = {
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -1311,6 +1707,13 @@ export const BedScalarFieldEnum = {
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -1380,6 +1783,78 @@ export const AttachmentScalarFieldEnum = {
 export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
 
 
+export const MoveInHandoverScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  status: 'status',
+  scheduledFor: 'scheduledFor',
+  completedAt: 'completedAt',
+  inspectionPassed: 'inspectionPassed',
+  keysHandedOver: 'keysHandedOver',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MoveInHandoverScalarFieldEnum = (typeof MoveInHandoverScalarFieldEnum)[keyof typeof MoveInHandoverScalarFieldEnum]
+
+
+export const InspectionChecklistItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InspectionChecklistItemScalarFieldEnum = (typeof InspectionChecklistItemScalarFieldEnum)[keyof typeof InspectionChecklistItemScalarFieldEnum]
+
+
+export const InspectionChecklistResponseScalarFieldEnum = {
+  id: 'id',
+  moveInHandoverId: 'moveInHandoverId',
+  inspectionItemId: 'inspectionItemId',
+  status: 'status',
+  notes: 'notes',
+  photoUrl: 'photoUrl',
+  inspectedAt: 'inspectedAt'
+} as const
+
+export type InspectionChecklistResponseScalarFieldEnum = (typeof InspectionChecklistResponseScalarFieldEnum)[keyof typeof InspectionChecklistResponseScalarFieldEnum]
+
+
+export const ConditionReportScalarFieldEnum = {
+  id: 'id',
+  moveInHandoverId: 'moveInHandoverId',
+  reportType: 'reportType',
+  unitId: 'unitId',
+  roomId: 'roomId',
+  bedId: 'bedId',
+  overallCondition: 'overallCondition',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type ConditionReportScalarFieldEnum = (typeof ConditionReportScalarFieldEnum)[keyof typeof ConditionReportScalarFieldEnum]
+
+
+export const KeyHandoverScalarFieldEnum = {
+  id: 'id',
+  moveInHandoverId: 'moveInHandoverId',
+  keyType: 'keyType',
+  quantity: 'quantity',
+  condition: 'condition',
+  handedOver: 'handedOver',
+  handedOverAt: 'handedOverAt',
+  handedOverBy: 'handedOverBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KeyHandoverScalarFieldEnum = (typeof KeyHandoverScalarFieldEnum)[keyof typeof KeyHandoverScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1388,12 +1863,29 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 export const NullsOrder = {
@@ -1460,16 +1952,16 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'Decimal'
+ * Reference to a field of type 'ListingStatus'
  */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+export type EnumListingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ListingStatus'>
     
 
 
 /**
- * Reference to a field of type 'Decimal[]'
+ * Reference to a field of type 'ListingStatus[]'
  */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+export type ListEnumListingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ListingStatus[]'>
     
 
 
@@ -1484,6 +1976,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -1540,6 +2060,48 @@ export type EnumMaintenanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'MaintenanceStatus[]'
  */
 export type ListEnumMaintenanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MaintenanceStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MoveInHandoverStatus'
+ */
+export type EnumMoveInHandoverStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoveInHandoverStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MoveInHandoverStatus[]'
+ */
+export type ListEnumMoveInHandoverStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoveInHandoverStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'InspectionStatus'
+ */
+export type EnumInspectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InspectionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'InspectionStatus[]'
+ */
+export type ListEnumInspectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InspectionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ConditionReportType'
+ */
+export type EnumConditionReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConditionReportType'>
+    
+
+
+/**
+ * Reference to a field of type 'ConditionReportType[]'
+ */
+export type ListEnumConditionReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConditionReportType[]'>
     
 
 /**
@@ -1631,6 +2193,11 @@ export type GlobalOmitConfig = {
   maintenanceRequest?: Prisma.MaintenanceRequestOmit
   maintenanceNote?: Prisma.MaintenanceNoteOmit
   attachment?: Prisma.AttachmentOmit
+  moveInHandover?: Prisma.MoveInHandoverOmit
+  inspectionChecklistItem?: Prisma.InspectionChecklistItemOmit
+  inspectionChecklistResponse?: Prisma.InspectionChecklistResponseOmit
+  conditionReport?: Prisma.ConditionReportOmit
+  keyHandover?: Prisma.KeyHandoverOmit
 }
 
 /* Types for Logging */

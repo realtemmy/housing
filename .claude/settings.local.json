@@ -11,7 +11,14 @@
       "Bash(npx prisma@7.0.0 generate --schema ./src/prisma/schema.prisma)",
       "Bash(rtk npm *)",
       "Bash(rtk tsc *)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(package.json)",
+      "Bash(npm install *)",
+      "Bash(env)",
+      "Bash(pkill -f \"npm run dev\")",
+      "Bash(PORT=3000 rtk npm run dev)",
+      "Bash(pkill -f \"nodemon.*src/server.ts\")",
+      "Bash(PORT=3000 ts-node src/server.ts)"
     ],
     "deny": [],
     "ask": [],

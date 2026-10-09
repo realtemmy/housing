@@ -60,7 +60,12 @@ export const ModelName = {
   Photo: 'Photo',
   MaintenanceRequest: 'MaintenanceRequest',
   MaintenanceNote: 'MaintenanceNote',
-  Attachment: 'Attachment'
+  Attachment: 'Attachment',
+  MoveInHandover: 'MoveInHandover',
+  InspectionChecklistItem: 'InspectionChecklistItem',
+  InspectionChecklistResponse: 'InspectionChecklistResponse',
+  ConditionReport: 'ConditionReport',
+  KeyHandover: 'KeyHandover'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -89,6 +94,13 @@ export const PropertyScalarFieldEnum = {
   verifiedBy: 'verifiedBy',
   verificationNotes: 'verificationNotes',
   isActive: 'isActive',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   purchasePrice: 'purchasePrice',
   currentValue: 'currentValue',
   createdAt: 'createdAt',
@@ -150,6 +162,13 @@ export const UnitScalarFieldEnum = {
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   initializedAt: 'initializedAt',
   reservedAt: 'reservedAt',
   reservedUntil: 'reservedUntil',
@@ -176,6 +195,13 @@ export const RoomScalarFieldEnum = {
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -198,6 +224,13 @@ export const BedScalarFieldEnum = {
   depositAmount: 'depositAmount',
   status: 'status',
   occupantId: 'occupantId',
+  listingTitle: 'listingTitle',
+  listingDescription: 'listingDescription',
+  listingStatus: 'listingStatus',
+  listingViews: 'listingViews',
+  isFeatured: 'isFeatured',
+  virtualTourUrl: 'virtualTourUrl',
+  amenities: 'amenities',
   initializedAt: 'initializedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -267,6 +300,78 @@ export const AttachmentScalarFieldEnum = {
 export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
 
 
+export const MoveInHandoverScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  status: 'status',
+  scheduledFor: 'scheduledFor',
+  completedAt: 'completedAt',
+  inspectionPassed: 'inspectionPassed',
+  keysHandedOver: 'keysHandedOver',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MoveInHandoverScalarFieldEnum = (typeof MoveInHandoverScalarFieldEnum)[keyof typeof MoveInHandoverScalarFieldEnum]
+
+
+export const InspectionChecklistItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InspectionChecklistItemScalarFieldEnum = (typeof InspectionChecklistItemScalarFieldEnum)[keyof typeof InspectionChecklistItemScalarFieldEnum]
+
+
+export const InspectionChecklistResponseScalarFieldEnum = {
+  id: 'id',
+  moveInHandoverId: 'moveInHandoverId',
+  inspectionItemId: 'inspectionItemId',
+  status: 'status',
+  notes: 'notes',
+  photoUrl: 'photoUrl',
+  inspectedAt: 'inspectedAt'
+} as const
+
+export type InspectionChecklistResponseScalarFieldEnum = (typeof InspectionChecklistResponseScalarFieldEnum)[keyof typeof InspectionChecklistResponseScalarFieldEnum]
+
+
+export const ConditionReportScalarFieldEnum = {
+  id: 'id',
+  moveInHandoverId: 'moveInHandoverId',
+  reportType: 'reportType',
+  unitId: 'unitId',
+  roomId: 'roomId',
+  bedId: 'bedId',
+  overallCondition: 'overallCondition',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type ConditionReportScalarFieldEnum = (typeof ConditionReportScalarFieldEnum)[keyof typeof ConditionReportScalarFieldEnum]
+
+
+export const KeyHandoverScalarFieldEnum = {
+  id: 'id',
+  moveInHandoverId: 'moveInHandoverId',
+  keyType: 'keyType',
+  quantity: 'quantity',
+  condition: 'condition',
+  handedOver: 'handedOver',
+  handedOverAt: 'handedOverAt',
+  handedOverBy: 'handedOverBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KeyHandoverScalarFieldEnum = (typeof KeyHandoverScalarFieldEnum)[keyof typeof KeyHandoverScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -275,12 +380,29 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull'
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 export const NullsOrder = {
