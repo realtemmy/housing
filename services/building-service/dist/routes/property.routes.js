@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const property_controller_1 = require("../controllers/property.controller");
+const extractUser_1 = require("../middlewares/extractUser");
+const router = (0, express_1.Router)();
+router.use(extractUser_1.extractUser);
+router.route("/").get(property_controller_1.getAllProperties).post(property_controller_1.createProperty);
+router.route("/:id").get(property_controller_1.getProperty).patch(property_controller_1.updateProperty).delete(property_controller_1.deleteProperty);
+router.route("/:id/restore").patch(property_controller_1.restoreProperty);
+exports.default = router;

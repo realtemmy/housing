@@ -10,6 +10,9 @@ dotenv.config({ path: "./config.env" });
 // App
 import app from "./app";
 
+// Rent payment job
+import rentPaymentJob from "./services/rentPaymentJob";
+
 // Server
 process.on("uncaughtException", (err: Error) => {
   console.error("UNCAUGHT EXCEPTION! 💥 Shutting down...");
@@ -19,6 +22,9 @@ process.on("uncaughtException", (err: Error) => {
 
 const server = app.listen(process.env.PORT || 4003, () => {
   console.log(`App running on port ${process.env.PORT || 4003}...`);
+
+  // Start the rent payment job
+  rentPaymentJob.start();
 });
 
 process.on("unhandledRejection", (err: Error) => {
@@ -26,5 +32,14 @@ process.on("unhandledRejection", (err: Error) => {
   console.error(err.name, err.message, err.stack);
   server.close(() => {
     process.exit(1);
+  });
+});
+
+// Graceful shutdown
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received, shutting down gracefully");
+  rentPaymentJob.stop();
+  server.close(() => {
+    console.log("Process terminated");
   });
 });
