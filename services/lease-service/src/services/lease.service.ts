@@ -1,9 +1,12 @@
 import { prisma } from "../lib/prisma";
 import AppError from "../utils/appError";
-import { LeaseStatus, PaymentFrequency, RentableType } from "../generated/prisma/client";
+import { LeaseStatus, PaymentFrequency, RentableType, PaymentStatus } from "../generated/prisma/client";
 import { Prisma } from "../generated/prisma/client";
+import { LeaseCreateInput, LeaseUpdateInput, LeaseModel } from "../generated/prisma/models/Lease";
+import { calculateNextDueDate, isPaymentLate, calculateLateFee } from "../utils/rentCalculation";
+import kafkaService from "../kafka/kafka";
 
-export interface CreateLeaseInput {
+export interface LeaseCreateInputData {
   rentableId: string;
   rentableType: RentableType;
   tenantId: string;
@@ -109,7 +112,7 @@ export class LeaseService {
     return lease;
   }
 
-  async createLease(input: CreateLeaseInput) {
+  async createLease(input: LeaseCreateInputData) {
     // Verify tenant exists
     const tenant = await prisma.tenant.findUnique({
       where: { id: input.tenantId },
@@ -150,8 +153,7 @@ export class LeaseService {
         gracePeriodDays: input.gracePeriodDays ?? 5,
         lateFeeAmount: input.lateFeeAmount ?? 0,
         lateFeePercentage: input.lateFeePercentage ?? 0,
-        initializedAt: null,
-      },
+      } as any,
       include: {
         tenant: true,
         payments: true,
@@ -269,8 +271,8 @@ export class LeaseService {
 
       const nextDueDate = calculateNextDueDate(
         effectiveStartDate,
-        lease.paymentFrequency,
-        lease.rentDueDay
+        lease.paymentFrequency as PaymentFrequency,
+        ((lease as any).rentDueDay as number | null) ?? undefined
       );
 
       return nextDueDate;
@@ -335,7 +337,7 @@ export class LeaseService {
    * @param lease The lease object
    * @param dueDate The date the rent is due
    */
-  async createPendingLeasePayment(lease: any, dueDate: Date): Promise<void> {
+  async createPendingLeasePayment(lease: LeaseModel, dueDate: Date): Promise<void> {
     try {
       // Check if there's already a pending payment for this due date
       const existingPayment = await prisma.leasePayment.findFirst({
@@ -359,14 +361,27 @@ export class LeaseService {
           leaseId: lease.id,
           amount: lease.rentAmount,
           reference: `RENT-${lease.id}-${dueDate.toISOString().split('T')[0]}`,
-          status: "PENDING", // Will be updated when payment is processed
+          status: "PENDING" as any, // Will be updated when payment is processed
           currency: "NGN",
+          paymentId: null as unknown as string,
           paidAt: dueDate // Expected payment date
         }
       });
 
-      // TODO: Send notification about upcoming rent payment
-      // This would integrate with notification-service when available
+      // Send notification about upcoming rent payment
+      try {
+        await kafkaService.rentDue({
+          leaseId: lease.id,
+          rentableId: lease.rentableId,
+          rentableType: lease.rentableType,
+          tenantId: lease.tenantId,
+          amount: lease.rentAmount.toNumber(),
+          dueDate: dueDate.toISOString(),
+        });
+      } catch (kafkaError) {
+        console.error("Failed to send RENT_DUE event:", kafkaError);
+        // Don't throw - we don't want notification failures to break rent processing
+      }
     } catch (error) {
       console.error("Error creating pending lease payment:", error);
       throw error;
@@ -377,11 +392,11 @@ export class LeaseService {
    * Apply late fees to overdue payments
    * @param lease The lease object
    */
-  async applyLateFeesIfApplicable(lease: any): Promise<void> {
+  async applyLateFeesIfApplicable(lease: LeaseModel): Promise<void> {
     try {
       // Skip if no late fee configuration
-      if ((lease.lateFeeAmount === 0 || lease.lateFeeAmount === null) &&
-          (lease.lateFeePercentage === 0 || lease.lateFeePercentage === null)) {
+      if (((lease as any).lateFeeAmount === 0 || (lease as any).lateFeeAmount === null) &&
+          ((lease as any).lateFeePercentage === 0 || (lease as any).lateFeePercentage === null)) {
         return;
       }
 
@@ -389,7 +404,7 @@ export class LeaseService {
       const overduePayments = await prisma.leasePayment.findMany({
         where: {
           leaseId: lease.id,
-          status: { in: ["PENDING", "FAILED"] },
+          status: { in: ["PENDING" as PaymentStatus, "FAILED" as PaymentStatus] },
           paidAt: {
             lt: new Date() // Due date is in the past
           }
@@ -401,15 +416,31 @@ export class LeaseService {
           // Check if payment is actually late considering grace period
           const isLate = isPaymentLate(
             payment.paidAt,
-            lease.gracePeriodDays ?? 5
+            (lease as any).gracePeriodDays ?? 5
           );
 
           if (isLate) {
+            // Send notification about late rent payment
+            try {
+              await kafkaService.rentLate({
+                leaseId: lease.id,
+                rentableId: lease.rentableId,
+                rentableType: lease.rentableType,
+                tenantId: lease.tenantId,
+                amount: lease.rentAmount.toNumber(),
+                dueDate: payment.paidAt.toISOString(), // Using paidAt as approximate due date
+                lateDays: Math.ceil((new Date().getTime() - payment.paidAt.getTime()) / (1000 * 60 * 60 * 24)) - ((lease as any).gracePeriodDays ?? 5),
+              });
+            } catch (kafkaError) {
+              console.error("Failed to send RENT_LATE event:", kafkaError);
+              // Don't throw - we don't want notification failures to break rent processing
+            }
+
             // Calculate late fee
             const lateFee = calculateLateFee(
               lease.rentAmount,
-              new Prisma.Decimal(lease.lateFeeAmount || 0),
-              new Prisma.Decimal(lease.lateFeePercentage || 0)
+              new Prisma.Decimal((lease as any).lateFeeAmount || 0),
+              new Prisma.Decimal((lease as any).lateFeePercentage || 0)
             );
 
             // Update the payment amount to include late fee
@@ -425,8 +456,21 @@ export class LeaseService {
               }
             });
 
-            // TODO: Send notification about late fee being applied
-            // This would integrate with notification-service when available
+            // Send notification about late fee being applied
+            try {
+              await kafkaService.lateFeeApplied({
+                leaseId: lease.id,
+                rentableId: lease.rentableId,
+                rentableType: lease.rentableType,
+                tenantId: lease.tenantId,
+                lateFeeAmount: lateFee.toNumber(),
+                lateFeePercentage: (lease as any).lateFeePercentage || 0,
+                rentAmount: lease.rentAmount.toNumber(),
+              });
+            } catch (kafkaError) {
+              console.error("Failed to send LATE_FEE_APPLIED event:", kafkaError);
+              // Don't throw - we don't want notification failures to break rent processing
+            }
           }
         } catch (paymentError) {
           console.error(`Error applying late fee to payment ${payment.id}:`, paymentError);
@@ -463,13 +507,53 @@ export class LeaseService {
       });
 
       if (successfulPayments > 0) {
+        // Get the most recent successful payment for notification details
+        const latestPayment = await prisma.leasePayment.findFirst({
+          where: {
+            leaseId: leaseId,
+            status: "SUCCESS"
+          },
+          orderBy: {
+            paidAt: "desc"
+          }
+        });
+
         // Update lease status to ACTIVE
         await this.updateLease(leaseId, {
           status: "ACTIVE"
         });
 
-        // TODO: Send notification about lease activation
-        // This would integrate with notification-service when available
+        // Send notification about lease activation
+        try {
+          await kafkaService.leaseActivated({
+            leaseId: lease.id,
+            rentableId: lease.rentableId,
+            rentableType: lease.rentableType,
+            tenantId: lease.tenantId,
+            activatedDate: new Date().toISOString(),
+          });
+        } catch (kafkaError) {
+          console.error("Failed to send LEASE_ACTIVATED event:", kafkaError);
+          // Don't throw - we don't want notification failures to break status updates
+        }
+
+        // Send notification about rent payment received
+        if (latestPayment) {
+          try {
+            await kafkaService.rentPaid({
+              leaseId: lease.id,
+              rentableId: lease.rentableId,
+              rentableType: lease.rentableType,
+              tenantId: lease.tenantId,
+              amount: latestPayment.amount.toNumber(),
+              paymentDate: latestPayment.paidAt.toISOString(),
+              reference: latestPayment.reference,
+            });
+          } catch (kafkaError) {
+            console.error("Failed to send RENT_PAID event:", kafkaError);
+            // Don't throw - we don't want notification failures to break status updates
+          }
+        }
       }
     } catch (error) {
       console.error("Error updating lease status from payments:", error);

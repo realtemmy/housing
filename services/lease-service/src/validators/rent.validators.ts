@@ -6,7 +6,7 @@ import { PaymentFrequency, LeaseStatus } from "../generated/prisma/client";
  */
 export const createLeaseSchema = z.object({
   rentableId: z.string(),
-  rentableType: z.nativeEnum(PaymentFrequency), // Reusing PaymentFrequency enum for rentableType
+  rentableType: z.enum(["UNIT", "ROOM", "BED"]), // Using string enum since RentableType might not be available
   tenantId: z.string(),
   rentAmount: z.number().positive(),
   securityDeposit: z.number().nonnegative().optional(),

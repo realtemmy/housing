@@ -1,0 +1,74 @@
+// Prisma Schema for Maintenance Service
+// Defines models for maintenance requests, work orders, and related entities
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MaintenanceType {
+  REPAIR
+  PREVENTIVE
+  INSPECTION
+  EMERGENCY
+  RENOVATION
+}
+
+enum MaintenanceStatus {
+  REQUESTED
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PriorityLevel {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model MaintenanceRequest {
+  id           String               @id @default(uuid())
+  tenantId     String
+  propertyId   String
+  unitId       String?
+  description  String
+  type         MaintenanceType
+  priority     PriorityLevel
+  status       MaintenanceStatus
+  requestedAt  DateTime             @default(now())
+  scheduledFor DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  history      MaintenanceHistory[]
+
+  // Relations (would link to other services in a real implementation)
+  // tenant     Tenant    @relation(fields: [tenantId], references: [id])
+  // property   Property  @relation(fields: [propertyId], references: [id])
+  // unit       Unit?     @relation(fields: [unitId], references: [id])
+
+  @@index([status])
+  @@index([tenantId])
+  @@index([propertyId])
+  @@index([priority])
+}
+
+model MaintenanceHistory {
+  id          String   @id @default(uuid())
+  requestId   String
+  action      String // e.g., "Assigned to technician", "Parts ordered", "Work completed"
+  performedBy String // Could be tenant ID or staff ID
+  performedAt DateTime @default(now())
+  notes       String?
+
+  request MaintenanceRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@index([requestId])
+}

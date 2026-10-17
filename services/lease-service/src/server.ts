@@ -2,8 +2,6 @@
 
 // lease events: lease.created, lease.activated, lease.paymentDue, lease.expired, lease.renewed
 // background jobs to check for expiring/soon to expire leases and send notifications
-import express from "express";
-
 import dotenv from "dotenv";
 dotenv.config({ path: "./config.env" });
 
