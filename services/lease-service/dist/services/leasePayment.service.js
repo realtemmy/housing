@@ -8,7 +8,7 @@ const prisma_1 = require("../lib/prisma");
 const appError_1 = __importDefault(require("../utils/appError"));
 const client_1 = require("../generated/prisma/client");
 class LeasePaymentService {
-    getAllLeasePayments(options = {}) {
+    async getAllLeasePayments(options = {}) {
         const page = options.page && options.page > 0 ? options.page : 1;
         const limit = options.limit && options.limit > 0 ? options.limit : 20;
         const skip = (page - 1) * limit;

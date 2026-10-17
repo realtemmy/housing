@@ -6,8 +6,7 @@ import {
   createLeaseSchema,
   updateLeaseSchema,
   rentPaymentOptionsSchema,
-  generatePaymentScheduleSchema,
-  calculateNextDueDateSchema
+  generatePaymentScheduleSchema
 } from "../validators/rent.validators";
 
 /**
@@ -15,13 +14,6 @@ import {
  */
 export const calculateNextDueDate = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { error, value } = calculateNextDueDateSchema.validate(req.body);
-    if (error) {
-      return next(new AppError(error.message, 400));
-    }
-
-    const { startDate, paymentFrequency, rentDueDay } = value;
-
     const nextDueDate = await leaseService.calculateNextRentDueDate(
       req.params.leaseId
     );
@@ -58,7 +50,8 @@ export const processRecurringRent = asyncHandler(
  */
 export const applyLateFees = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    await leaseService.applyLateFeesIfApplicable(req.params.leaseId);
+    const lease = await leaseService.getLeaseById(req.params.leaseId);
+    await leaseService.applyLateFeesIfApplicable(lease);
 
     res.status(200).json({
       status: "success",
@@ -86,20 +79,28 @@ export const updateLeaseStatusFromPayments = asyncHandler(
  */
 export const generatePaymentSchedule = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { error, value } = generatePaymentScheduleSchema.validate(req.body);
-    if (error) {
-      return next(new AppError(error.message, 400));
+    const result = generatePaymentScheduleSchema.safeParse(req.body);
+    if (!result.success) {
+      return next(new AppError(result.error.issues[0].message, 400));
     }
 
-    const { startDate, endDate, paymentFrequency, rentDueDay } = value;
+    const { startDate, endDate, paymentFrequency, rentDueDay } = result.data;
 
-    // In a real implementation, we would calculate this based on lease data
-    // For now, we'll return a placeholder response
+    // Import the utility function
+    const { generatePaymentSchedule: generateSchedule } = require("../utils/rentCalculation");
+
+    // Generate the payment schedule
+    const schedule = generateSchedule(
+      new Date(startDate),
+      new Date(endDate),
+      paymentFrequency,
+      rentDueDay
+    );
+
     res.status(200).json({
       status: "success",
       data: {
-        message: "Payment schedule generation would be implemented here",
-        // In reality, we'd return the actual schedule
+        schedule
       }
     });
   }

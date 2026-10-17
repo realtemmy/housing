@@ -1,6 +1,6 @@
 import cron from "node-cron";
+import type { ScheduledTask } from "node-cron";
 import leaseService from "./lease.service";
-import { logger } from "../utils/logger"; // Assuming we have a logger utility
 
 /**
  * Rent Payment Job Service
@@ -8,7 +8,7 @@ import { logger } from "../utils/logger"; // Assuming we have a logger utility
  */
 class RentPaymentJob {
   private isRunning: boolean = false;
-  private job: cron.ScheduledTask | null = null;
+  private job: ScheduledTask | null = null;
 
   /**
    * Start the rent payment job
@@ -16,24 +16,24 @@ class RentPaymentJob {
    */
   start(cronExpression: string = "0 2 * * *"): void {
     if (this.isRunning) {
-      logger.warn("Rent payment job is already running");
+      console.warn("Rent payment job is already running");
       return;
     }
 
-    logger.info(`Starting rent payment job with cron expression: ${cronExpression}`);
+    console.log(`Starting rent payment job with cron expression: ${cronExpression}`);
 
     this.job = cron.schedule(cronExpression, async () => {
-      logger.info("Rent payment job started");
+      console.log("Rent payment job started");
       try {
         await this.processRentPayments();
-        logger.info("Rent payment job completed successfully");
+        console.log("Rent payment job completed successfully");
       } catch (error) {
-        logger.error("Error in rent payment job:", error);
+        console.error("Error in rent payment job:", error);
       }
     });
 
     this.isRunning = true;
-    logger.info("Rent payment job started successfully");
+    console.log("Rent payment job started successfully");
   }
 
   /**
@@ -41,15 +41,15 @@ class RentPaymentJob {
    */
   stop(): void {
     if (!this.isRunning || !this.job) {
-      logger.warn("Rent payment job is not running");
+      console.warn("Rent payment job is not running");
       return;
     }
 
-    logger.info("Stopping rent payment job");
+    console.log("Stopping rent payment job");
     this.job.stop();
     this.job = null;
     this.isRunning = false;
-    logger.info("Rent payment job stopped");
+    console.log("Rent payment job stopped");
   }
 
   /**
@@ -58,11 +58,11 @@ class RentPaymentJob {
    */
   async processRentPayments(): Promise<void> {
     try {
-      logger.info("Processing recurring rent payments...");
+      console.log("Processing recurring rent payments...");
       await leaseService.processRecurringRent();
-      logger.info("Finished processing recurring rent payments");
+      console.log("Finished processing recurring rent payments");
     } catch (error) {
-      logger.error("Error processing recurring rent payments:", error);
+      console.error("Error processing recurring rent payments:", error);
       throw error;
     }
   }
@@ -71,12 +71,12 @@ class RentPaymentJob {
    * Run the job once immediately (for testing or manual triggering)
    */
   async runOnce(): Promise<void> {
-    logger.info("Running rent payment job once");
+    console.log("Running rent payment job once");
     try {
       await this.processRentPayments();
-      logger.info("Completed one-time rent payment job run");
+      console.log("Completed one-time rent payment job run");
     } catch (error) {
-      logger.error("Error in one-time rent payment job run:", error);
+      console.error("Error in one-time rent payment job run:", error);
       throw error;
     }
   }

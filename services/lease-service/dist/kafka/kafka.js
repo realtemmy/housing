@@ -20,7 +20,7 @@ class KafkaService {
         this.isConnected = true;
         console.log("✅ Kafka connected");
     }
-    async leaseInitiated(lease) {
+    async leaseInitiated(event) {
         if (!this.isConnected) {
             await this.connect();
         }
@@ -30,15 +30,14 @@ class KafkaService {
                 {
                     value: JSON.stringify({
                         type: "LEASE_INITIATED",
-                        payload: lease,
+                        payload: event,
                         timestamp: new Date().toISOString(),
                     }),
                 },
             ],
         });
     }
-    // Listen to payment channel webhook
-    async leaseConfirmed(lease) {
+    async leaseConfirmed(event) {
         if (!this.isConnected) {
             await this.connect();
         }
@@ -48,7 +47,7 @@ class KafkaService {
                 {
                     value: JSON.stringify({
                         type: "LEASE_CONFIRMED",
-                        payload: lease,
+                        payload: event,
                         timestamp: new Date().toISOString(),
                     }),
                 },
@@ -65,17 +64,153 @@ class KafkaService {
                 {
                     value: JSON.stringify({
                         type: "LEASE_CANCELLED",
-                        payload,
+                        payload: {
+                            ...payload,
+                            leaseId: "" // leaseId not available in cancelled event, but we can add it if needed
+                        },
                         timestamp: new Date().toISOString(),
                     }),
                 },
             ],
         });
     }
-    async leaseRenewed() {
-        // Leaseid, calculate new start date ie currentEnding + 1 year, end.
+    async leaseRenewed(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "LEASE_RENEWED",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
     }
-    async leaseExpiringSoon() { }
+    async leaseExpiringSoon(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "LEASE_EXPIRING_SOON",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
+    }
+    // Rent management events
+    async rentDue(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "RENT_DUE",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
+    }
+    async rentPaid(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "RENT_PAID",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
+    }
+    async rentLate(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "RENT_LATE",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
+    }
+    async lateFeeApplied(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "LATE_FEE_APPLIED",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
+    }
+    async leaseActivated(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "LEASE_ACTIVATED",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
+    }
+    async leaseTerminated(event) {
+        if (!this.isConnected) {
+            await this.connect();
+        }
+        await this.producer.send({
+            topic: "lease.events",
+            messages: [
+                {
+                    value: JSON.stringify({
+                        type: "LEASE_TERMINATED",
+                        payload: event,
+                        timestamp: new Date().toISOString(),
+                    }),
+                },
+            ],
+        });
+    }
 }
 const kafkaService = new KafkaService();
 exports.default = kafkaService;
